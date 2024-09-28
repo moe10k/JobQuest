@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ ! -d "venv" ]; then 
-    echo "Virtual environment not found!Create it using 'p>
+    echo "Virtual environment not found!Create it using "p>
     python3 -venv venv
 fi
 
