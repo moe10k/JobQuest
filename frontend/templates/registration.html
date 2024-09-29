@@ -64,9 +64,9 @@
             </div>
                 <div class = "form-group">
                 <label for="start year">Start Year</label>
-                <select id = "start_year" name ="start_year" required>
+                <select id = "start_year" name ="start_year">
                     <option value="">Select start year</option>
-                    {% for year in range(2020, 2024) %}
+                    {% for year in range(1990, 2024) %}
                         <option value="{{ year }}">{{ year }}</option>
                     {% endfor %}
                 </select>
@@ -74,9 +74,9 @@
             </div>
             <div class = "form-group">
                 <label for="end year">End Year</label>
-                <select id = "end_year" name ="end_year" required>
+                <select id = "end_year" name ="end_year">
                     <option value="">Select end year</option>
-                    {% for year in range(2020, 2024) %}
+                    {% for year in range(2000, 2024) %}
                         <option value="{{ year }}">{{ year }}</option>
                     {% endfor %}
             </div>
