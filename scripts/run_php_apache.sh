@@ -28,7 +28,7 @@ else
     sudo systemctl start apache2
 fi
 
-# Create a basic index.php file if it doesn't exist
+# Create a basic index.php file if it doesn't exist but need to find out how to make the directory consistent with everyone else's VM
 if [ ! -f "/home/moe/Capstone-Group-03/backend/index.php" ]; then
     echo "Creating index.php..."
     sudo bash -c 'cat <<EOF > /home/moe/Capstone-Group-03/backend/index.php
