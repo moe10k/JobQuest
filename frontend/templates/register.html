@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
+    <title>Register</title>
+    <nav>
+        <ul>
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/search">Search</a></li>
+            <li><a href="/tracker">Tracker</a></li>
+        </ul>
+    </nav>
     <link rel="stylesheet" href="/static/styles.css"> <!-- Links to css-->
+    
+
 </head>
 
 <body>
     <div class="container">
-        <h2>Registration</h2>
+        <h2>Register</h2>
         <form action="/register" method="POST">
             <div class = "form-group">
                 <label for="username">Username</label>
@@ -79,6 +90,7 @@
                     {% for year in range(2000, 2024) %}
                         <option value="{{ year }}">{{ year }}</option>
                     {% endfor %}
+                </select>
             </div>
             <div class = "form-group">
                 <label for="Job Title">Job Title</label>
@@ -98,4 +110,5 @@
         <p>Already have an account? <a href="/login">Login</a></p>
     </div>
 </body>
+
 </html>
