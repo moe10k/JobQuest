@@ -29,13 +29,14 @@ else
 fi
 
 # Create a basic index.php file if it doesn't exist but need to find out how to make the directory consistent with everyone else's VM
-if [ ! -f "~/Capstone-Group-03/backend/index.php" ]; then
+if [ ! -f "$HOME/Capstone-Group-03/backend/index.php" ]; then
     echo "Creating index.php..."
-    sudo bash -c 'cat <<EOF > ~/Capstone-Group-03/backend/index.php
+    mkdir -p "$HOME/Capstone-Group-03/backend"
+    cat <<EOF > "$HOME/Capstone-Group-03/backend/index.php"
 <?php
     echo "Hello, World!";
 ?>
-EOF'
+EOF
     echo "index.php created"
 else
     echo "index.php already exists"
