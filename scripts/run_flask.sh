@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Navigate to the frontend directory
+cd ../frontend
+
 # Creates a virtual environment if it doesn't exist.
 if [ ! -d "venv" ]; then 
     echo "Virtual environment not found! Creating it...."
@@ -50,4 +53,4 @@ export FLASK_ENV=development
 
 #Run the Flask app on port 7012
 echo "Starting the  FLask app on port 7012..."
-flask run --port=7012
+flask run --host=0.0.0.0 --port=7012
