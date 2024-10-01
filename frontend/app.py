@@ -14,6 +14,21 @@ test_user ={
 def home():
     return redirect('/login')
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return render_template('login.html')
+    # if request.method == 'POST':
+    #     username = request.form.get['username']
+    #     password = request.form.get['password']
+
+    # if not username or not password:
+    #     flash('Please fill out all values!', 'danger')
+    # elif username != test_user['username'] or password != test_user['password']:
+    #     flash('Invalid Credentials. Please try again.', 'danger')
+    # else:
+    #     flash('You have been successfully logged in!', 'success')
+    # return redirect('/home') # Redirect to home page if the user is authenticated
+
 
 @app.route('/register', methods=['GET', 'POST']) #GET for form display, POST for form submission
 def register():
@@ -46,21 +61,6 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    return render_template('login.html')
-    # if request.method == 'POST':
-    #     username = request.form.get['username']
-    #     password = request.form.get['password']
-
-    # if not username or not password:
-    #     flash('Please fill out all values!', 'danger')
-    # elif username != test_user['username'] or password != test_user['password']:
-    #     flash('Invalid Credentials. Please try again.', 'danger')
-    # else:
-    #     flash('You have been successfully logged in!', 'success')
-    # return redirect('/home') # Redirect to home page if the user is authenticated
 
 if __name__ == "__main__":
-    app.run(debug=True, port=7012)
     app.run(debug=True, port=7012)
