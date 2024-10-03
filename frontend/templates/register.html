@@ -22,87 +22,20 @@
     <div class="container">
         <h2>Register</h2>
         <form action="/register" method="POST">
+
             <div class = "form-group">
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username" required>
             </div>
-            <div class = "form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" name="confirm_password" id="confirm_password" required>
-            </div>
+
             <div class = "form-group">
                 <label for="email">Email</label>
                 <input type="email" name="email" id="email" required>
             </div>
+
             <div class = "form-group">
-                <label for="First Name">First Name</label>
-                <input type="text" name="First Name" id="first_name" required>
-            </div>
-            <div class = "form-group">
-                <label for="Last Name">Last Name</label>
-                <input type="text" name="Last Name" id="last_name" required>
-            </div>
-            <div class = "form-group">
-                <label for="address">Address</label>
-                <input type="text" name="address" id="address" required>
-            </div>
-            <div class = "form-group">
-                <label for="city">City</label>
-                <input type="text" name="city" id="city" required>
-            </div>
-            <div class = "form-group">
-                <label for="state">State</label>
-                <input type="text" name="state" id="state" required>
-            </div>
-            <div class = "form-group">
-                <label for="zip">Zip</label>
-                <input type="text" name="zip" id="zip" required>
-            </div>
-            <div class = "form-group">
-                <label for="job">Recent Job</label>
-                <input type="text" name="job" id="job" required>
-            </div>
-            <div class = "form-group">
-                <label for="School">School</label>
-                <input type="text" name="school" id="school">
-            </div>
-            <div class = "form-group">
-                <label for="major">Major</label>
-                <input type="text" name="major" id="major">
-            </div>
-                <div class = "form-group">
-                <label for="start year">Start Year</label>
-                <select id = "start_year" name ="start_year">
-                    <option value="">Select start year</option>
-                    {% for year in range(1990, 2024) %}
-                        <option value="{{ year }}">{{ year }}</option>
-                    {% endfor %}
-                </select>
-                
-            </div>
-            <div class = "form-group">
-                <label for="end year">End Year</label>
-                <select id = "end_year" name ="end_year">
-                    <option value="">Select end year</option>
-                    {% for year in range(2000, 2024) %}
-                        <option value="{{ year }}">{{ year }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class = "form-group">
-                <label for="Job Title">Job Title</label>
-                <input type="text" name="job_title" id="job_title">
-            </div>
-            <div class = "form-group">
-                <label for="Employment Type">Employment Type</label>
-                <input type="dropdown" name="employment_type" id="employment_type">
-            </div>
-            <div class = "form-group">
-                <label for="Company">Company</label>
-                <input type="text" name="company" id="company">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
             </div>
             
             <button type="submit">Register</button>

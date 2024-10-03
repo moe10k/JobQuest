@@ -1,64 +1,134 @@
-from flask import Flask, flash, render_template, request, redirect, url_for
+import pika
+from flask import Flask, flash, render_template, request, redirect, url_for, session
 
 app =  Flask (__name__) 
 app.secret_key = "secret_key" #Secret key for flashing messages
 #Source: www.geeksforgeeks.org/flask-message-flashing/-->
 
+
+# RabbitMQ connection details
+rabbitmq_host = '192.168.1.227'  # I used my VM IP but Change this to your RabbitMQ server's address if needed
+
+login_queue = 'login_queue'
+login_response_queue = 'login_response_queue'
+
+
 #Test user for authentication 
-test_user ={
-    "username" : "admin",
-    "password" : "admin123"
-}
+#test_user ={
+#    "username" : "admin",
+#    "password" : "admin123"
+#}
+
+# Function to send registration data to RabbitMQ
+def send_registration_data_rabbitmq(message):
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
+    channel = connection.channel()
+    
+    # Declare a queue
+    channel.queue_declare(queue='registration_queue', durable=True)
+
+    # Send a message to the queue
+    channel.basic_publish(exchange='',
+                          routing_key='registration_queue',
+                          body=message,
+                          properties=pika.BasicProperties(
+                              delivery_mode=2,  # Made message persistent
+                          ))
+    print(" [x] Sent registration message to RabbitMQ:", message) #confirmation message if the frontend succesfully sent a message to rabbitMQ
+    connection.close()
+
+# Function to send login data to RabbitMQ
+def send_login_to_rabbitmq(message):
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
+    channel = connection.channel()
+    
+    # Declare a queue
+    channel.queue_declare(queue=login_queue, durable=True)
+
+    # Send the message to the queue
+    channel.basic_publish(exchange='',
+                          routing_key=login_queue,
+                          body=message,
+                          properties=pika.BasicProperties(
+                              delivery_mode=2,  # Make message persistent
+                          ))
+    print(" [x] Sent login data to RabbitMQ:", message)  # confirmation message if the frontend successfully sent a message to RabbitMQ
+    connection.close()
+
+# Function to consume response from RabbitMQ
+def consume_login_response():
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
+    channel = connection.channel()
+    channel.queue_declare(queue=login_response_queue, durable=True)
+
+    method_frame, header_frame, body = channel.basic_get(queue=login_response_queue, auto_ack=True)
+    channel.close()
+    connection.close()
+
+    if body:
+        return body.decode('utf-8')  # Decode the response
+    else:
+        return None  # No message received
+
 
 @app.route('/')
 def home():
-    return redirect('/login')
+    return redirect('/login') #User is automatically redirected to the login screen when loading into our site
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
-    # if request.method == 'POST':
-    #     username = request.form.get['username']
-    #     password = request.form.get['password']
-
-    # if not username or not password:
-    #     flash('Please fill out all values!', 'danger')
-    # elif username != test_user['username'] or password != test_user['password']:
-    #     flash('Invalid Credentials. Please try again.', 'danger')
-    # else:
-    #     flash('You have been successfully logged in!', 'success')
-    # return redirect('/home') # Redirect to home page if the user is authenticated
-
-
-@app.route('/register', methods=['GET', 'POST']) #GET for form display, POST for form submission
-def register():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
+        # Extract login form data
         email = request.form['email']
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        address= request.form['address']
-        city = request.form['city']
-        state = request.form['state']
-        zip = request.form['zip']
-        recent_job = request.form['job']
-        school  = request.form['school']
-        major = request.form['major']
-        start_year = request.form['start_year']
-        end_year = request.form['end_year']
-        job_title = request.form['job_title']
-        employment_type = request.form['employment_type']
-        company_name = request.form['company']
+        password = request.form['password']
+        
+        # Create a message to send to RabbitMQ
+        message = f"{email},{password}"
+        
+        # Send the login data to RabbitMQ
+        send_login_to_rabbitmq(message)
 
-        return redirect('/register.html')
+        # Wait for the response from RabbitMQ
+        response = consume_login_response()
+        if response == 'success':
+            session['user'] = email
+            flash('Login successful!', 'success')
+            return redirect('/dashboard')
+        else:
+            flash('Invalid credentials. Please try again.', 'danger')
+            return redirect('/login')
     
+    # Render the login form if it's a GET request
+    return render_template('login.html')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST': #once the user clicks submit, the following will happen
+        # Extract form data
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        
+        # Create a message to send to RabbitMQ, can learn to use JSON later if we want
+        message = f"{username},{email},{password}"
+        
+        # Send the message to RabbitMQ
+        send_registration_data_rabbitmq(message)
+
+        # Redirect to login screen after form submission
+        return redirect('/login')
+
+    # Render the registration form if it's a GET request
     return render_template('register.html')
+
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    if 'user' in session:
+        return f"Welcome {session['user']}!"
+    else:
+        return redirect('/login')
 
 
 
