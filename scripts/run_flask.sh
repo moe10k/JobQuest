@@ -3,6 +3,8 @@
 # Navigate to the frontend directory
 cd ../frontend
 
+# sudo apt install python3-venv
+
 # Creates a virtual environment if it doesn't exist.
 if [ ! -d "venv" ]; then 
     echo "Virtual environment not found! Creating it...."
@@ -26,6 +28,8 @@ else
     echo "Flask is already installed."
 fi
 
+pip install requests #php
+pip install pika #rabitmq
 # Create app.py if it doesn't exist
 if [ ! -f "app.py" ]; then
      echo "Creating app.py..."
