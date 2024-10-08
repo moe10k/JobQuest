@@ -1,6 +1,26 @@
 /* Importing Bootstrap */
 @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
 
+.error {   /* Front end Validation */
+    border: 2px solid red;
+    animation: flashRed 1.5s ease-in-out;
+}
+
+.valid { /* Front end Validation */
+    border:2px solid green;
+    animation: flashGreen 1.5s ease-in-out;
+}
+
+@keyframes flashRed {  /*Animation */
+    0% {background-color: #ffe6e6; }
+    100% {background-color: white; }
+}
+
+@keyframes flashGreen {  /*Animation */
+    0% {background-color: #e6ffed; }
+    100% {background-color: white; }
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f8f9fa;
