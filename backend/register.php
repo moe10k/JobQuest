@@ -31,7 +31,7 @@ try {
         $password = $data[2];
 
         // Confirmation message
-        echo " [x] Processing registration for user: $username, email: $email\n";
+        echo " [x] Processing registration for user: $username, email: $email, password: $password\n";
 
         // Create a new message to send back to RabbitMQ for MySQL to process
         $processedMessage = json_encode([
@@ -43,7 +43,7 @@ try {
         // Send processed data to RabbitMQ (mysql_queue)
         $message = new AMQPMessage($processedMessage, ['delivery_mode' => 2]); // Make message persistent
         $channel->basic_publish($message, '', 'mysql_queue');
-        echo " [x] Sent processed data to mysql_queue\n";
+        echo " [x] Sent processed data to RabbitMQ: mysql_queue\n";
     };
 
     // Consume messages from the RabbitMQ queue
