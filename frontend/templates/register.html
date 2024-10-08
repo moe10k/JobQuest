@@ -114,10 +114,19 @@
     const password = document.getElementById('password').value;
     const email = document.getElementById('email').value;
 
+    password.classList.remove('error', 'valid'); //removes classes s it starts from nothing
+    email.classList.remove('error', 'valid');
+
+
     const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;  // regex to verify email
     if (!emailPattern.test(email)) {
+        email.classList.add('error'); //adding it to the error class
         alert ("Please enter a valid email address.");
         isValid = false;
+        
+    } else {
+        email.classList.add('valid'); //adding it to the valid class
+        isValid = true;
     }
     
     // Prevents form from being submitted if any validation check fails.
