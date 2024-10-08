@@ -7,17 +7,10 @@ app.secret_key = "secret_key" #Secret key for flashing messages
 
 
 # RabbitMQ connection details
-rabbitmq_host = '192.168.1.227'  # I used my VM IP but Change this to your RabbitMQ server's address if needed
+rabbitmq_host = '10.147.17.228'  # I used my VM IP but Change this to your RabbitMQ server's address if needed
 
 login_queue = 'login_queue'
 login_response_queue = 'login_response_queue'
-
-
-#Test user for authentication 
-#test_user ={
-#    "username" : "admin",
-#    "password" : "admin123"
-#}
 
 # Function to send registration data to RabbitMQ
 def send_registration_data_rabbitmq(message):
