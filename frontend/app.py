@@ -13,8 +13,8 @@ rabbitmq_host = '192.168.1.227'  # I used my VM IP but Change this to your Rabbi
 login_queue = 'login_queue'
 login_response_queue = 'login_response_queue'
 
-php_login_url = "http://10.147.17.288:80/login.url"
-php_register_url = "http://10.147.17.288:80/register.php"
+php_login_url = "http://10.147.17.228:80/login.php"
+php_register_url = "http://10.147.17.228:80/register.php"
 
 #Test user for authentication 
 #test_user ={
