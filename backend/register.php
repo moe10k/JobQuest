@@ -14,11 +14,11 @@ try {
     $channel->queue_declare('registration_queue', false, true, false, false);
 
     //script waiting for messages on the backend
-    echo " [*] Waiting for messages. To exit press CTRL+C\n";
+    echo " [*] Waiting for messages from rabbitmq. To exit press CTRL+C\n";
 
     // Callback function to handle incoming RabbitMQ messages
     $callback = function($msg) {
-        echo " [x] Received: ", $msg->body, "\n";
+        echo " [x] Received from rabbitmq: ", $msg->body, "\n";
 
         // Split the received message into username, email, and password
         $data = explode(",", $msg->body);
