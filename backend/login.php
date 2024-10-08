@@ -59,6 +59,7 @@ try {
             // Send response back to the frontend via RabbitMQ
             $msg_response = new AMQPMessage($response);
             $channel->basic_publish($msg_response, '', 'login_response_queue');
+            echo " [x] Sent login response: $response\n";
 
         } catch (Exception $e) {
             echo " [x] Database Error: " . $e->getMessage() . "\n";

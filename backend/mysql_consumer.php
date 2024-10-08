@@ -10,7 +10,7 @@ try {
     $rabbitMQConnection = new AMQPStreamConnection('10.147.17.228', 5672, 'guest', 'guest'); // Ensure correct IP
     $channel = $rabbitMQConnection->channel();
 
-    // Declare the queue to listen for processed data
+    // Declare the queue to listen for processed registration data
     $channel->queue_declare('mysql_queue', false, true, false, false);
 
     // Script waiting for messages on the mysql_queue
