@@ -18,11 +18,11 @@ try {
     $channel->queue_declare('mysql_queue', false, true, false, false);
 
     // Script waiting for messages on the backend
-    echo " [*] Waiting for messages. To exit press CTRL+C\n";
+    echo " [*] Waiting for messages from RabbitMQ\n";
 
     // Callback function to handle incoming RabbitMQ messages
     $callback = function($msg) use ($channel) {
-        echo " [x] Received: ", $msg->body, "\n";
+        echo " [x] Received Registration Data: ", $msg->body, "\n";
 
         // Split the received message into username, email, and password
         $data = explode(",", $msg->body);
@@ -31,7 +31,7 @@ try {
         $password = $data[2];
 
         // Confirmation message
-        echo " [x] Processing registration for user: $username, email: $email, password: $password\n";
+        echo " [x] Processing Registration Data for user: $username, email: $email, password: $password\n";
 
         // Create a new message to send back to RabbitMQ for MySQL to process
         $processedMessage = json_encode([
