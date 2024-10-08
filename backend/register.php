@@ -1,24 +1,28 @@
 <?php
-// PHP libraries for RabbitMQ and also to connect to database
+// PHP libraries for RabbitMQ and database connection
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/db.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 try {
-    // Establishing RabbitMQ connection
-    $rabbitMQConnection = new AMQPStreamConnection('10.147.17.228', 5672, 'guest', 'guest');
+    // Establish RabbitMQ connection
+    $rabbitMQConnection = new AMQPStreamConnection('10.147.17.228', 5672, 'guest', 'guest'); // Ensure correct IP
     $channel = $rabbitMQConnection->channel();
 
     // Declare the queue to listen to (same queue name in Flask)
     $channel->queue_declare('registration_queue', false, true, false, false);
 
-    //script waiting for messages on the backend
-    echo " [*] Waiting for messages from rabbitmq. To exit press CTRL+C\n";
+    // Declare the queue for MySQL data processing
+    $channel->queue_declare('mysql_queue', false, true, false, false);
+
+    // Script waiting for messages on the backend
+    echo " [*] Waiting for messages. To exit press CTRL+C\n";
 
     // Callback function to handle incoming RabbitMQ messages
-    $callback = function($msg) {
-        echo " [x] Received from rabbitmq: ", $msg->body, "\n";
+    $callback = function($msg) use ($channel) {
+        echo " [x] Received: ", $msg->body, "\n";
 
         // Split the received message into username, email, and password
         $data = explode(",", $msg->body);
@@ -26,24 +30,20 @@ try {
         $email = $data[1];
         $password = $data[2];
 
-        //Confirmation message
+        // Confirmation message
         echo " [x] Processing registration for user: $username, email: $email\n";
 
-        // Insert data into the MySQL database
-        try {
-            $dbConnection = getDB(); // Get database connection
-            $stmt = $dbConnection->prepare("INSERT INTO User (username, email, password) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $username, $email, $password);
+        // Create a new message to send back to RabbitMQ for MySQL to process
+        $processedMessage = json_encode([
+            'username' => $username,
+            'email' => $email,
+            'password' => $password
+        ]);
 
-            if ($stmt->execute()) {
-                echo " [x] User data inserted successfully\n";
-            } else {
-                echo " [x] Error inserting data: " . $stmt->error . "\n";
-            }
-            $stmt->close(); // Close statement
-        } catch (Exception $e) {
-            echo " [x] Database Error: " . $e->getMessage() . "\n";
-        }
+        // Send processed data to RabbitMQ (mysql_queue)
+        $message = new AMQPMessage($processedMessage, ['delivery_mode' => 2]); // Make message persistent
+        $channel->basic_publish($message, '', 'mysql_queue');
+        echo " [x] Sent processed data to mysql_queue\n";
     };
 
     // Consume messages from the RabbitMQ queue
