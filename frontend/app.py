@@ -6,7 +6,7 @@ app =  Flask (__name__)
 app.secret_key = "secret_key" #Secret key for flashing messages
 #Source: www.geeksforgeeks.org/flask-message-flashing/-->
 
-
+#shshs
 # RabbitMQ connection details
 rabbitmq_host = '10.147.17.228'  # I used my VM IP but Change this to your RabbitMQ server's address if needed
 
