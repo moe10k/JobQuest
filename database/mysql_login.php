@@ -14,8 +14,11 @@ try {
     // Declare the queue to listen for login verification
     $channel->queue_declare('mysql_login_request_queue', false, true, false, false);
 
+    // Declare the queue to send login responses
+    $channel->queue_declare('mysql_login_response_queue', false, true, false, false);
+
     // Script waiting for messages
-    echo " [*] Waiting for messages on mysql_login_request_queue. To exit press CTRL+C\n";
+    echo " [*] Waiting for messages from RabbitMQ: mysql_login_request_queue\n";
 
     // Callback function to handle incoming RabbitMQ messages
     $callback = function($msg) use ($channel) {
@@ -34,7 +37,7 @@ try {
             $stmt->execute();
             $result = $stmt->get_result();
 
-            // Prepare a response for RabbitMQ based on the result
+            // Responses for RabbitMQ based on the result
             if ($result->num_rows > 0) {
                 $responseMessage = 'success';
                 echo " [x] Login successful for email: $email\n";
