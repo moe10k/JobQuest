@@ -7,7 +7,7 @@ app.secret_key = "secret_key" #Secret key for flashing messages
 
 
 # RabbitMQ connection details
-rabbitmq_host = '10.147.17.65'  # I used my VM IP but Change this to your RabbitMQ server's address if needed
+rabbitmq_host = '10.147.17.228'  # I used my VM IP but Change this to your RabbitMQ server's address if needed
 
 registration_queue = 'registration_queue'
 login_request_queue = 'login_request_queue'
