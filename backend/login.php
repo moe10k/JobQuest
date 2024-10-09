@@ -12,20 +12,20 @@ session_start();
 
 try {
     // Establishing RabbitMQ connection
-    $rabbitMQConnection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+    $rabbitMQConnection = new AMQPStreamConnection('10.147.17.228', 5672, 'guest', 'guest');
     $channel = $rabbitMQConnection->channel();
 
     // Declare the queue to listen to (same queue name in Flask)
-    $channel->queue_declare('login_queue', false, true, false, false);
+    $channel->queue_declare('login_request_queue', false, true, false, false);
     // Declare the response queue (for sending login result back to frontend)
     $channel->queue_declare('login_response_queue', false, true, false, false);
 
     //script waiting for messages on the backend
-    echo " [*] Waiting for messages. To exit press CTRL+C\n";
+    echo " [*] Waiting for messages from rabbitmq. To exit press CTRL+C\n";
 
     // Callback function to handle incoming RabbitMQ messages
     $callback = function($msg) use ($channel) {
-        echo " [x] Received: ", $msg->body, "\n";
+        echo " [x] Received from rabbitmq: ", $msg->body, "\n";
 
         // Split the received message into email and password
         $data = explode(",", $msg->body);
@@ -59,6 +59,7 @@ try {
             // Send response back to the frontend via RabbitMQ
             $msg_response = new AMQPMessage($response);
             $channel->basic_publish($msg_response, '', 'login_response_queue');
+            echo " [x] Sent login response: $response\n";
 
         } catch (Exception $e) {
             echo " [x] Database Error: " . $e->getMessage() . "\n";
@@ -66,7 +67,7 @@ try {
     };
 
     // Consume messages from the RabbitMQ login queue
-    $channel->basic_consume('login_queue', '', false, true, false, false, $callback);
+    $channel->basic_consume('login_request_queue', '', false, true, false, false, $callback);
 
     // Keep the script running to listen for incoming messages
     while ($channel->is_consuming()) {

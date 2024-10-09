@@ -6,21 +6,13 @@ app =  Flask (__name__)
 app.secret_key = "secret_key" #Secret key for flashing messages
 #Source: www.geeksforgeeks.org/flask-message-flashing/-->
 
-
+#shshs
 # RabbitMQ connection details
-rabbitmq_host = '192.168.1.227'  # I used my VM IP but Change this to your RabbitMQ server's address if needed
+rabbitmq_host = '10.147.17.228'  # I used my VM IP but Change this to your RabbitMQ server's address if needed
 
-login_queue = 'login_queue'
+registration_queue = 'registration_queue'
+login_request_queue = 'login_request_queue'
 login_response_queue = 'login_response_queue'
-
-php_login_url = "http://10.147.17.288:80/login.url"
-php_register_url = "http://10.147.17.288:80/register.php"
-
-#Test user for authentication 
-#test_user ={
-#    "username" : "admin",
-#    "password" : "admin123"
-#}
 
 # Function to send registration data to RabbitMQ
 def send_registration_data_rabbitmq(message):
@@ -28,11 +20,11 @@ def send_registration_data_rabbitmq(message):
     channel = connection.channel()
     
     # Declare a queue
-    channel.queue_declare(queue='registration_queue', durable=True)
+    channel.queue_declare(queue=registration_queue, durable=True)
 
     # Send a message to the queue
     channel.basic_publish(exchange='',
-                          routing_key='registration_queue',
+                          routing_key=registration_queue,
                           body=message,
                           properties=pika.BasicProperties(
                               delivery_mode=2,  # Made message persistent
@@ -46,11 +38,11 @@ def send_login_to_rabbitmq(message):
     channel = connection.channel()
     
     # Declare a queue
-    channel.queue_declare(queue=login_queue, durable=True)
+    channel.queue_declare(queue=login_request_queue, durable=True)
 
     # Send the message to the queue
     channel.basic_publish(exchange='',
-                          routing_key=login_queue,
+                          routing_key=login_request_queue,
                           body=message,
                           properties=pika.BasicProperties(
                               delivery_mode=2,  # Make message persistent
