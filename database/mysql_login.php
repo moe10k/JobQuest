@@ -1,7 +1,7 @@
 <?php
 // PHP libraries for RabbitMQ and database connection
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/../backend1/vendor/autoload.php';
+require_once __DIR__ . '/../backend1/db.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -12,10 +12,10 @@ try {
     $channel = $rabbitMQConnection->channel();
 
     // Declare the queue to listen for login verification
-    $channel->queue_declare('mysql_login_queue', false, true, false, false);
+    $channel->queue_declare('mysql_login_request_queue', false, true, false, false);
 
     // Script waiting for messages
-    echo " [*] Waiting for messages on mysql_login_queue. To exit press CTRL+C\n";
+    echo " [*] Waiting for messages on mysql_login_request_queue. To exit press CTRL+C\n";
 
     // Callback function to handle incoming RabbitMQ messages
     $callback = function($msg) use ($channel) {
@@ -50,14 +50,14 @@ try {
             echo " [x] Database Error: " . $e->getMessage() . "\n";
         }
 
-        // Send the result back to the login_response_queue
+        // Send the result back to the mysql_login_response_queue
         $message = new AMQPMessage($responseMessage, ['delivery_mode' => 2]);
-        $channel->basic_publish($message, '', 'login_response_queue');
-        echo " [x] Sent login result to RabbitMQ: login_response_queue\n";
+        $channel->basic_publish($message, '', 'mysql_login_response_queue');
+        echo " [x] Sent login result to RabbitMQ: mysql_login_response_queue\n";
     };
 
     // Consume messages from the RabbitMQ queue
-    $channel->basic_consume('mysql_login_queue', '', false, true, false, false, $callback);
+    $channel->basic_consume('mysql_login_request_queue', '', false, true, false, false, $callback);
 
     // Keep the script running to listen for incoming messages
     while ($channel->is_consuming()) {

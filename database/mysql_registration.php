@@ -1,7 +1,7 @@
 <?php
 // PHP libraries for RabbitMQ and database connection
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/../backend1/vendor/autoload.php';
+require_once __DIR__ . '/../backend1/db.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
@@ -11,10 +11,10 @@ try {
     $channel = $rabbitMQConnection->channel();
 
     // Declare the queue to listen for processed registration data
-    $channel->queue_declare('mysql_queue', false, true, false, false);
+    $channel->queue_declare('mysql_registration_queue', false, true, false, false);
 
-    // Script waiting for messages on the mysql_queue
-    echo " [*] Waiting for messages on mysql_queue. To exit press CTRL+C\n";
+    // Script waiting for messages on the mysql_registration_queue
+    echo " [*] Waiting for messages on mysql_registration_queue. To exit press CTRL+C\n";
 
     // Callback function to handle incoming RabbitMQ messages
     $callback = function($msg) {
@@ -44,7 +44,7 @@ try {
     };
 
     // Consume messages from the RabbitMQ queue
-    $channel->basic_consume('mysql_queue', '', false, true, false, false, $callback);
+    $channel->basic_consume('mysql_registration_queue', '', false, true, false, false, $callback);
 
     // Keep the script running to listen for incoming messages
     while ($channel->is_consuming()) {

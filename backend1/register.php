@@ -15,7 +15,7 @@ try {
     $channel->queue_declare('registration_queue', false, true, false, false);
 
     // Declare the queue for MySQL data processing
-    $channel->queue_declare('mysql_queue', false, true, false, false);
+    $channel->queue_declare('mysql_registration_queue', false, true, false, false);
 
     // Script waiting for messages on the backend
     echo " [*] Waiting for messages from RabbitMQ\n";
@@ -40,10 +40,10 @@ try {
             'password' => $password
         ]);
 
-        // Send processed data to RabbitMQ (mysql_queue)
+        // Send processed data to RabbitMQ (mysql_registration_queue)
         $message = new AMQPMessage($processedMessage, ['delivery_mode' => 2]); // Make message persistent
-        $channel->basic_publish($message, '', 'mysql_queue');
-        echo " [x] Sent processed data to RabbitMQ: mysql_queue\n";
+        $channel->basic_publish($message, '', 'mysql_registration_queue');
+        echo " [x] Sent processed data to RabbitMQ: mysql_registration_queue\n";
     };
 
     // Consume messages from the RabbitMQ queue
