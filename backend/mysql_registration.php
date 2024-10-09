@@ -7,7 +7,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 try {
     // Establish RabbitMQ connection
-    $rabbitMQConnection = new AMQPStreamConnection('10.147.17.65', 5672, 'guest', 'guest'); // Ensure correct IP
+    $rabbitMQConnection = new AMQPStreamConnection('10.147.17.228', 5672, 'guest', 'guest'); // Ensure correct IP
     $channel = $rabbitMQConnection->channel();
 
     // Declare the queue to listen for processed registration data
