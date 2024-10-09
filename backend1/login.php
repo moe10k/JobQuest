@@ -18,7 +18,7 @@ try {
     $channel->queue_declare('mysql_login_request_queue', false, true, false, false);
 
     // Script waiting for messages
-    echo " [*] Waiting for login messages from RabbitMQ\n";
+    echo " [*] Waiting for login messages from RabbitMQ: login_request_queue\n";
 
     // Callback function to handle incoming RabbitMQ messages
     $callback = function($msg) use ($channel) {
@@ -41,7 +41,7 @@ try {
         // Send processed data to RabbitMQ (mysql_login_request_queue)
         $message = new AMQPMessage($processedMessage, ['delivery_mode' => 2]); // Make message persistent
         $channel->basic_publish($message, '', 'mysql_login_request_queue');
-        echo " [x] Sent processed login data to RabbitMQ: mysql_login_request_queue\n";
+        echo " [x] Sent login data to RabbitMQ: mysql_login_request_queue\n";
     };
 
     // Consume messages from the RabbitMQ queue

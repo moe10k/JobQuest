@@ -18,7 +18,7 @@ try {
     $channel->queue_declare('mysql_registration_queue', false, true, false, false);
 
     // Script waiting for messages on the backend
-    echo " [*] Waiting for messages from RabbitMQ\n";
+    echo " [*] Waiting for messages from RabbitMQ: registration_queue\n";
 
     // Callback function to handle incoming RabbitMQ messages
     $callback = function($msg) use ($channel) {
