@@ -1,10 +1,10 @@
-from flask import Flask, flash, render_template, request, redirect, url_for, session
 import pika
-import requests
+from flask import Flask, flash, render_template, request, redirect, url_for, session
 
 app =  Flask (__name__) 
 app.secret_key = "secret_key" #Secret key for flashing messages
 #Source: www.geeksforgeeks.org/flask-message-flashing/-->
+
 
 # RabbitMQ connection details
 rabbitmq_host = '10.147.17.65'  # I used my VM IP but Change this to your RabbitMQ server's address if needed
@@ -98,38 +98,23 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        # Extract registration form data
+    if request.method == 'POST': #once the user clicks submit, the following will happen
+        # Extract form data
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
         
-        # Create a dictionary with form data to send to PHP backend
-        data = {
-            'username': username,
-            'email': email,
-            'password': password
-        }
+        # Create a message to send to RabbitMQ, can learn to use JSON later if we want
+        message = f"{username},{email},{password}"
+        
+        # Send the message to RabbitMQ
+        send_registration_data_rabbitmq(message)
 
-        # Send the registration data to the PHP backend via POST
-        try:
-            response = requests.post(php_register_url, data=data)
-            response.raise_for_status()  # Check if the request was successful
-
-            # Process the PHP backend response
-            if response.text == 'success':  # Based on what your PHP returns
-                flash('Registration successful! Please log in.', 'success')
-                return redirect('/login')
-            else:
-                flash('Registration failed. Please try again.', 'danger')
-                return redirect('/register')
-
-        except requests.exceptions.RequestException as e:
-            return f"Error communicating with PHP backend: {e}", 500
+        # Redirect to login screen after form submission
+        return redirect('/login')
 
     # Render the registration form if it's a GET request
     return render_template('register.html')
-
 
 
 @app.route('/dashboard')
