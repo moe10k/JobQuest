@@ -24,26 +24,35 @@ try {
     $callback = function($msg) use ($channel) {
         echo " [x] Received login data: ", $msg->body, "\n";
 
-        // Decode the received message (assumed to be JSON format)
+        // Decode the received message
         $data = json_decode($msg->body, true);
         $email = $data['email'];
-        $password = $data['password'];
+        $password = $data['password']; //were retrieving the plaintext password
 
         // Check the database for the user credentials
         try {
             $dbConnection = getDB(); // Get database connection
-            $stmt = $dbConnection->prepare("SELECT * FROM User WHERE email = ? AND password = ?");
-            $stmt->bind_param("ss", $email, $password);
+            $stmt = $dbConnection->prepare("SELECT password FROM User WHERE email = ?");
+            $stmt->bind_param("s", $email);
             $stmt->execute();
             $result = $stmt->get_result();
 
-            // Responses for RabbitMQ based on the result
+            // Check if the user exists and verify the password
             if ($result->num_rows > 0) {
-                $responseMessage = 'success';
-                echo " [x] Login successful for email: $email\n";
+                $user = $result->fetch_assoc();
+                $hashedPassword = $user['password']; // Retrieve the hashed password from the database
+
+                // Verify the password using password_verify() and send result to rabbitmq
+                if (password_verify($password, $hashedPassword)) {
+                    $responseMessage = 'success';
+                    echo " [x] Login successful for email: $email\n";
+                } else {
+                    $responseMessage = 'failure';
+                    echo " [x] Login failed for email: $email - Invalid password\n";
+                }
             } else {
                 $responseMessage = 'failure';
-                echo " [x] Login failed for email: $email\n";
+                echo " [x] Login failed for email: $email - No such user found\n";
             }
 
             // Close the statement
