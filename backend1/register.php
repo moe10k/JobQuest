@@ -8,7 +8,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 try {
     // Establishing RabbitMQ connection
-    $rabbitMQConnection = new AMQPStreamConnection('10.147.17.65', 5672, 'guest', 'guest');
+    $rabbitMQConnection = new AMQPStreamConnection('10.147.17.228', 5672, 'guest', 'guest');
     $channel = $rabbitMQConnection->channel();
 
     // Declare the queue to listen to (same queue name in Flask)
@@ -30,14 +30,17 @@ try {
         $email = $data[1];
         $password = $data[2];
 
+        // Hash the password before sending it further
+        $hashedpassword = password_hash($password, PASSWORD_BCRYPT);
+
         // Confirmation message
-        echo " [x] Processing Registration Data for user: $username, email: $email, password: $password\n";
+        echo " [x] Processing Registration Data for user: $username, email: $email, password: $hashedpassword\n";
 
         // Create a new message to send back to RabbitMQ for MySQL to process
         $processedMessage = json_encode([
             'username' => $username,
             'email' => $email,
-            'password' => $password
+            'password' => $hashedpassword
         ]);
 
         // Send processed data to RabbitMQ (mysql_registration_queue)
