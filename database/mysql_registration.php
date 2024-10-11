@@ -11,10 +11,10 @@ try {
     $channel = $rabbitMQConnection->channel();
 
     // Declare the queue to listen for processed registration data
-    $channel->queue_declare('mysql_registration_queue', false, true, false, false);
+    $channel->queue_declare('mysql_registration_request_queue', false, true, false, false);
 
-    // Script waiting for messages on the mysql_registration_queue
-    echo " [*] Waiting for messages from RabbitMQ: mysql_registration_queue\n";
+    // Script waiting for messages on the mysql_registration_request_queue
+    echo " [*] Waiting for messages from RabbitMQ: mysql_registration_request_queue\n";
 
     // Callback function to handle incoming RabbitMQ messages
     $callback = function($msg) {
@@ -44,7 +44,7 @@ try {
     };
 
     // Consume messages from the RabbitMQ queue
-    $channel->basic_consume('mysql_registration_queue', '', false, true, false, false, $callback);
+    $channel->basic_consume('mysql_registration_request_queue', '', false, true, false, false, $callback);
 
     // Keep the script running to listen for incoming messages
     while ($channel->is_consuming()) {

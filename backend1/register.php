@@ -12,13 +12,13 @@ try {
     $channel = $rabbitMQConnection->channel();
 
     // Declare the queue to listen to (same queue name in Flask)
-    $channel->queue_declare('registration_queue', false, true, false, false);
+    $channel->queue_declare('registration_request_queue', false, true, false, false);
 
     // Declare the queue for MySQL data processing
-    $channel->queue_declare('mysql_registration_queue', false, true, false, false);
+    $channel->queue_declare('mysql_registration_request_queue', false, true, false, false);
 
     // Script waiting for messages on the backend
-    echo " [*] Waiting for messages from RabbitMQ: registration_queue\n";
+    echo " [*] Waiting for messages from RabbitMQ: registration_request_queue\n";
 
     // Callback function to handle incoming RabbitMQ messages
     $callback = function($msg) use ($channel) {
@@ -43,14 +43,14 @@ try {
             'password' => $hashedpassword
         ]);
 
-        // Send processed data to RabbitMQ (mysql_registration_queue)
+        // Send processed data to RabbitMQ (mysql_registration_request_queue)
         $message = new AMQPMessage($processedMessage, ['delivery_mode' => 2]); // Make message persistent
-        $channel->basic_publish($message, '', 'mysql_registration_queue');
-        echo " [x] Sent processed data to RabbitMQ: mysql_registration_queue\n";
+        $channel->basic_publish($message, '', 'mysql_registration_request_queue');
+        echo " [x] Sent processed data to RabbitMQ: mysql_registration_request_queue\n";
     };
 
     // Consume messages from the RabbitMQ queue
-    $channel->basic_consume('registration_queue', '', false, true, false, false, $callback);
+    $channel->basic_consume('registration_request_queue', '', false, true, false, false, $callback);
 
     // Keep the script running to listen for incoming messages
     while ($channel->is_consuming()) {
