@@ -1,24 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">   <!-- Source: www.geeksforgeeks.org/flask-message-flashing/-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Links to css--> 
+    <style>
+        .flash-message {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1050;
+        }
+    </style>
+    <title> Register </title>
     <nav>
         <ul>
-            <li><a href="/">Dashboard</a></li>
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Register</a></li>
-            <li><a href="/search">Search</a></li>
-            <li><a href="/tracker">Tracker</a></li>
         </ul>
     </nav>
-    <link rel="stylesheet" href="/static/styles.css"> <!-- Links to css-->
-    
-
 </head>
 
 <body>
+
+    <!-- Flash message section -->
+    <div class="flash-message">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                        <li class="alert alert-{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
     <div class="container">
         <h2>Register</h2>
         <form id="registrationForm" action="/register" method="POST">

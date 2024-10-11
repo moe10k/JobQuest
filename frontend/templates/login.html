@@ -8,23 +8,34 @@
         .flash-message {
             position: fixed;
             top: 10px;
-            right: 10px;
+            left: 10px;
             z-index: 1050;
         }
     </style>
     <title> Login </title>
     <nav>
         <ul>
-            <li><a href="/">Dashboard</a></li>
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Register</a></li>
-            <li><a href="/search">Search</a></li>
-            <li><a href="/tracker">Tracker</a></li>
         </ul>
     </nav>
 </head>
 
 <body>
+
+    <!-- Flash message section -->
+    <div class="flash-message">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                        <li class="alert alert-{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
     <div class="container">
         <h2>Login</h2>
         <form action="/login" method="POST">
