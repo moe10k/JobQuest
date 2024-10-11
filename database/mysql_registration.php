@@ -4,6 +4,7 @@ require_once __DIR__ . '/../backend1/vendor/autoload.php';
 require_once __DIR__ . '/../backend1/db.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 try {
     // Establish RabbitMQ connection
@@ -11,13 +12,16 @@ try {
     $channel = $rabbitMQConnection->channel();
 
     // Declare the queue to listen for processed registration data
-    $channel->queue_declare('mysql_registration_queue', false, true, false, false);
+    $channel->queue_declare('mysql_registration_request_queue', false, true, false, false);
 
-    // Script waiting for messages on the mysql_registration_queue
-    echo " [*] Waiting for messages from RabbitMQ: mysql_registration_queue. To exit press CTRL+C\n";
+    // Declare the queue to send registration responses
+    $channel->queue_declare('mysql_registration_response_queue', false, true, false, false);
+
+    // Script waiting for messages on the mysql_registration_request_queue
+    echo " [*] Waiting for messages from RabbitMQ: mysql_registration_request_queue\n";
 
     // Callback function to handle incoming RabbitMQ messages
-    $callback = function($msg) {
+    $callback = function($msg) use ($channel) {
         echo " [x] Received processed data: ", $msg->body, "\n";
 
         // Decode the received message (assumed to be JSON format)
@@ -26,25 +30,48 @@ try {
         $email = $data['email'];
         $password = $data['password'];
 
-        // Insert data into the MySQL database
         try {
             $dbConnection = getDB(); // Get database connection
-            $stmt = $dbConnection->prepare("INSERT INTO User (username, email, password) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $username, $email, $password);
 
-            if ($stmt->execute()) {
-                echo " [x] User data inserted successfully into MySQL\n";
+            // Check if the email already exists in the User table
+            $checkStmt = $dbConnection->prepare("SELECT email FROM User WHERE email = ?");
+            $checkStmt->bind_param("s", $email);
+            $checkStmt->execute();
+            $checkStmt->store_result();
+
+            if ($checkStmt->num_rows > 0) {
+                // Email is already registered
+                echo " [x] Email already exists in the database\n";
+                $responseMessage = 'failure'; // Email exists, send failure message
             } else {
-                echo " [x] Error inserting data: " . $stmt->error . "\n";
+                // Email does not exist, insert new user data
+                $insertStmt = $dbConnection->prepare("INSERT INTO User (username, email, password) VALUES (?, ?, ?)");
+                $insertStmt->bind_param("sss", $username, $email, $password);
+
+                if ($insertStmt->execute()) {
+                    echo " [x] User data inserted successfully into MySQL\n";
+                    $responseMessage = 'success';
+                } else {
+                    echo " [x] Error inserting data: " . $insertStmt->error . "\n";
+                    $responseMessage = 'failure'; // Handle insert error
+                }
+                $insertStmt->close(); // Close insert statement
             }
-            $stmt->close(); // Close statement
+
+            $checkStmt->close(); // Close check statement
         } catch (Exception $e) {
             echo " [x] Database Error: " . $e->getMessage() . "\n";
+            $responseMessage = 'failure'; // Handle database error
         }
+
+        // Send the result back to the mysql_registration_response_queue
+        $message = new AMQPMessage($responseMessage, ['delivery_mode' => 2]); // Make message persistent
+        $channel->basic_publish($message, '', 'mysql_registration_response_queue');
+        echo " [x] Sent registration result to RabbitMQ: mysql_registration_response_queue\n";
     };
 
     // Consume messages from the RabbitMQ queue
-    $channel->basic_consume('mysql_registration_queue', '', false, true, false, false, $callback);
+    $channel->basic_consume('mysql_registration_request_queue', '', false, true, false, false, $callback);
 
     // Keep the script running to listen for incoming messages
     while ($channel->is_consuming()) {

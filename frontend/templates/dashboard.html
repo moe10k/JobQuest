@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">   <!-- Source: www.geeksforgeeks.org/flask-message-flashing/-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Links to css--> 
+    <style>
+        .flash-message {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1050;
+        }
+    </style>
+    <title> Dashboard </title>
+    <nav>
+        <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/search">Search</a></li>
+            <li><a href="/tracker">Tracker</a></li>
+        </ul>
+    </nav>
+</head>
+<body>
+
+    <!-- Flash message section -->
+    <div class="flash-message">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                        <li class="alert alert-{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="container">
+        <h1>Welcome to your dashboard, {{ user }}!</h1>
+        <p>Here is where your content will go...</p>
+    </div>
+</body>
+</html>
