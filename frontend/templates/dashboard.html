@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles.css"> <!-- Links to css--> 
-    <style>
-        .flash-message {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 1050;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/dashboard.css"> <!-- Links to css--> 
     <title> Dashboard </title>
-    <nav>
-        <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/search">Search</a></li>
-            <li><a href="/tracker">Tracker</a></li>
-        </ul>
-    </nav>
 </head>
 <body>
+
+    <nav class="navbar">
+        <a href="/" class="title-link">
+            <h1>JobQuest</h1>
+        </a>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/search">Search</a>
+            <a href="/tracker">Tracker</a>
+        </div>
+    </nav>
 
     <!-- Flash message section -->
     <div class="flash-message">
@@ -40,5 +36,65 @@
         <h1>Welcome to your dashboard, {{ user }}!</h1>
         <p>Here is where your content will go...</p>
     </div>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup()">&times;</button>
+            <h2>We'd love to learn more about you!</h2>
+            <form id="additionalInfoForm">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <input type="text" id="state" name="state" placeholder="e.g., New York">
+                </div>
+                <div class="form-group">
+                    <label for="recentJobTitle">Most Recent Job Title or I'm a Student</label>
+                    <input type="text" id="recentJobTitle" name="recentJobTitle" placeholder="e.g., Software Engineer or Student">
+                </div>
+                <div class="form-group">
+                    <label for="studentInfo">Student Information</label>
+                    <input type="text" id="schoolName" name="schoolName" placeholder="School/College Name">
+                    <input type="text" id="startYear" name="startYear" placeholder="Start Year">
+                    <input type="text" id="endYear" name="endYear" placeholder="End Year">
+                </div>
+                <div class="form-group">
+                    <label for="otherJobInfo">Other Job Information</label>
+                    <input type="text" id="jobTitle" name="jobTitle" placeholder="Job Title">
+                    <input type="text" id="employmentType" name="employmentType" placeholder="Employment Type">
+                    <input type="text" id="companyName" name="companyName" placeholder="Company Name">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Show the popup after login
+            let popup = document.getElementById('popup');
+            popup.style.display = 'flex';
+
+            // Handle form submission
+            document.getElementById('additionalInfoForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                alert("Thank you for sharing your information!");
+                popup.style.display = 'none'; // Hide the popup after form submission
+            });
+        });
+
+        function closePopup() {
+            let popup = document.getElementById('popup');
+            popup.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
