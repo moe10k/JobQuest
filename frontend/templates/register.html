@@ -17,28 +17,12 @@
 
 <body>
 
-    <nav class="navbar">
-        <a href="/" class="title-link">
-            <h1>JobQuest</h1>
-        </a>
-        <div class="nav-links">
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        </div>
-    </nav>
+    <!-- nav bar section -->
+    {% include 'partials/nav.html' %}
 
     <!-- Flash message section -->
-    <div class="flash-message">
-        {% with messages = get_flashed_messages(with_categories=True) %}
-            {% if messages %}
-                <ul>
-                    {% for category, message in messages %}
-                        <li class="alert alert-{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
-    </div>
+    {% include 'partials/flash.html' %}
+
 
     <div class="container">
         <h2>Register</h2>

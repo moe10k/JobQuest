@@ -8,32 +8,15 @@
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="/" class="title-link">
-            <h1>JobQuest</h1>
-        </a>
-        <div class="nav-links">
-            <a href="/dashboard">Dashboard</a>
-            <a href="/search">Search</a>
-            <a href="/tracker">Tracker</a>
-        </div>
-    </nav>
+    <!-- nav bar section -->
+    {% include 'partials/nav.html' %}
 
     <!-- Flash message section -->
-    <div class="flash-message">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <ul>
-                    {% for category, message in messages %}
-                        <li class="alert alert-{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
-    </div>
+    {% include 'partials/flash.html' %}
+
 
     <div class="container">
-        <h1>Welcome to your dashboard, {{ user }}!</h1>
+        <h1>Welcome to your dashboard, {{ user.username }}!</h1>
         <p>Here is where your content will go...</p>
     </div>
 
