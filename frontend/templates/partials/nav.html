@@ -1,0 +1,16 @@
+<nav class="navbar">
+    <a href="/" class="title-link">
+        <h1>JobQuest</h1>
+    </a>
+    <div class="nav-links">
+        {% if is_logged_in %}
+            <a href="/dashboard">Dashboard</a>
+            <a href="/search">Search</a>
+            <a href="/tracker">Tracker</a>
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        {% endif %}
+    </div>
+</nav>

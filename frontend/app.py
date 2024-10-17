@@ -1,4 +1,4 @@
-import pika, time
+import pika, time, json
 from flask import Flask, flash, render_template, request, redirect, url_for, session
 
 app =  Flask (__name__) 
@@ -10,6 +10,12 @@ registration_request_queue = 'registration_request_queue'
 registration_response_queue = 'registration_response_queue'
 login_request_queue = 'login_request_queue'
 login_response_queue = 'login_response_queue'
+
+def is_logged_in():
+    if 'user' in session:
+        return True
+    else:
+        return False
 
 # Function to send registration data to RabbitMQ
 def send_registration_rabbitmq(message):
@@ -84,7 +90,8 @@ def consume_login_response():
     connection.close()
 
     if body:
-        return body.decode('utf-8')  # Decode the response
+        response = json.loads(body.decode('utf-8'))  # Decode the JSON response
+        return response  # Return the entire response (status and username)
     else:
         return None  # No message received
 
@@ -96,6 +103,9 @@ def landing():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if is_logged_in():
+        return redirect('/dashboard') #checks if user is in session and will redirect to dashboard
+    
     if request.method == 'POST': #once the user clicks submit, the following will happen
         
         print("Registration Form Submitted, Processing...") #message that registration form was submitted
@@ -126,6 +136,9 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if is_logged_in():
+        return redirect('/dashboard') #checks if user is in session and will redirect to dashboard
+    
     if request.method == 'POST':
 
         print("Login Form Submitted, Processing...")
@@ -143,8 +156,11 @@ def login():
         # Wait for the response from RabbitMQ
         response = consume_login_response() 
         print(f"Message recieved: {response}")#Checking what messaged was received from backend
-        if response == 'success':
-            session['user'] = email
+        if response['status'] == 'success':
+            session['user'] = {
+                'email': email,
+                'username': response['username']  # Store username in the session
+            }
             flash('Login successful!', 'success')
             print("Login Successful!")
             return redirect('/dashboard')
@@ -159,11 +175,26 @@ def login():
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user' in session:
+    if is_logged_in():
         return render_template('dashboard.html', user=session['user'])
     else:
+        flash('You must login first', 'danger')
+        return redirect('/login')
+    
+
+@app.route('/logout')
+def logout():
+    if is_logged_in():
+        session.clear()  # Clear the entire session
+        flash('You have been logged out.', 'success')
+        return redirect('/login')
+    else:
+        flash('You must login first', 'danger')
         return redirect('/login')
 
+@app.context_processor
+def inject_is_logged_in():
+    return dict(is_logged_in=is_logged_in())
 
 
 if __name__ == "__main__":
