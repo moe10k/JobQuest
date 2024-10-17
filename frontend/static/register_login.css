@@ -1,75 +1,7 @@
-.flash-message {
-    position: fixed;
-    top: 65px;
-    left: 0;
-    z-index: 1000;
-}
-
-.alert {
-    display: inline-block;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-.alert-success {
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-    color: #155724;
-}
-
-.alert-error, .alert-danger {
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    color: #721c24;
-}
-
-.alert-info {
-    background-color: #d1ecf1;
-    border: 1px solid #bee5eb;
-    color: #0c5460;
-}
-
-.alert-warning {
-    background-color: #fff3cd;
-    border: 1px solid #ffeeba;
-    color: #856404;
-}
-
-
-
-
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
     background-color: #f4f5f7;
-}
-
-.navbar {
-    background-color: #2d2d39;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 40px;
-    align-items: center;
-}
-.navbar h1 {
-    font-size: 28px;
-    margin: 0;
-}
-.navbar .nav-links {
-    display: flex;
-    gap: 30px;
-}
-.navbar .nav-links a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 18px;
-}
-.navbar .title-link {
-    text-decoration: none;
-    color: inherit;
 }
 
 .container {
