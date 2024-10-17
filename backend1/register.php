@@ -43,6 +43,32 @@ try {
             'password' => $hashedpassword
         ]);
 
+
+        // tracks all errors
+        $errors = [];
+
+        // Validate email format using built in php function
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "Invalid email format.";
+        }
+
+        // Validate password - might change this later
+        if (strlen($password) < 6) {
+            $errors[] = "Password must be at least 6 characters long.";
+        }
+
+        // Validate username - also might change this later
+        if (empty($username)) {
+            $errors[] = "Username is required.";
+        }
+
+        // if there are any errors than it ends script early
+        if (!empty($errors)) {
+            echo " [x] Validation failed: " . implode(", ", $errors) . "\n";
+            return;
+        }
+
+
         // Send processed data to RabbitMQ (mysql_registration_request_queue)
         $message = new AMQPMessage($processedMessage, ['delivery_mode' => 2]); // Make message persistent
         $channel->basic_publish($message, '', 'mysql_registration_request_queue');

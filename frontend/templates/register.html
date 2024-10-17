@@ -3,42 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles.css"> <!-- Links to css--> 
+    <link rel="stylesheet" href="/static/register_login.css"> <!-- Links to css--> 
+    <title> Register </title>
     <style>
-        .flash-message {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 1050;
+        .error {
+            border-color: red;
+        }
+        .valid {
+            border-color: green;
         }
     </style>
-    <title> Register </title>
-    <nav>
-        <ul>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-        </ul>
-    </nav>
 </head>
 
 <body>
 
+    <!-- nav bar section -->
+    {% include 'partials/nav.html' %}
+
     <!-- Flash message section -->
-    <div class="flash-message">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <ul>
-                    {% for category, message in messages %}
-                        <li class="alert alert-{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
-    </div>
+    {% include 'partials/flash.html' %}
+
 
     <div class="container">
         <h2>Register</h2>
         <form id="registrationForm" action="/register" method="POST">
+            <div class = "form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
             <div class = "form-group">
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username" required>
@@ -47,77 +39,8 @@
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required minlength ="6">
                 <small>Password must be at least 6 characters long.</small>
-            <div class = "form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" required>
             </div>
-            <!-- <div class = "form-group">
-                <label for="First Name">First Name</label>
-                <input type="text" name="First Name" id="first_name" required>
-            </div>
-            <div class = "form-group">
-                <label for="Last Name">Last Name</label>
-                <input type="text" name="Last Name" id="last_name" required>
-            </div>
-            <div class = "form-group">
-                <label for="address">Address</label>
-                <input type="text" name="address" id="address" required>
-            </div>
-            <div class = "form-group">
-                <label for="city">City</label>
-                <input type="text" name="city" id="city" required>
-            </div>
-            <div class = "form-group">
-                <label for="state">State</label>
-                <input type="text" name="state" id="state" required>
-            </div>
-            <div class = "form-group">
-                <label for="zip">Zip</label>
-                <input type="text" name="zip" id="zip" required pattern= "\d{5}">
-            </div>
-            <div class = "form-group">
-                <label for="job">Recent Job</label>
-                <input type="text" name="job" id="job" required>
-            </div>
-            <div class = "form-group">
-                <label for="School">School</label>
-                <input type="text" name="school" id="school">
-            </div>
-            <div class = "form-group">
-                <label for="major">Major</label>
-                <input type="text" name="major" id="major">
-            </div>
-                <div class = "form-group">
-                <label for="start year">Start Year</label>
-                <select id = "start_year" name ="start_year">
-                    <option value="">Select start year</option>
-                    {% for year in range(1990, 2024) %}
-                        <option value="{{ year }}">{{ year }}</option>
-                    {% endfor %}
-                </select>
-                
-            </div>
-            <div class = "form-group">
-                <label for="end year">End Year</label>
-                <select id = "end_year" name ="end_year">
-                    <option value="">Select end year</option>
-                    {% for year in range(2000, 2024) %}
-                        <option value="{{ year }}">{{ year }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class = "form-group">
-                <label for="Job Title">Job Title</label>
-                <input type="text" name="job_title" id="job_title">
-            </div>
-            <div class = "form-group">
-                <label for="Employment Type">Employment Type</label>
-                <input type="dropdown" name="employment_type" id="employment_type">
-            </div>
-            <div class = "form-group">
-                <label for="Company">Company</label>
-                <input type="text" name="company" id="company">
-            </div> -->
+
             
             <button type="submit">Register</button>
         </form>
@@ -126,30 +49,29 @@
 
 <script>
     document.getElementById('registrationForm').addEventListener('submit', function(event) {
-    let isValid = true;
+        let isValid = true;
 
-    const password = document.getElementById('password').value;
-    const email = document.getElementById('email').value;
+        const passwordField = document.getElementById('password');
+        const emailField = document.getElementById('email');
+        const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;  // regex to verify email
 
-    password.classList.remove('error', 'valid'); //removes classes s it starts from nothing
-    email.classList.remove('error', 'valid');
+        // Reset classes
+        emailField.classList.remove('error', 'valid');
+        passwordField.classList.remove('error', 'valid');
 
+        // Validate email
+        if (!emailPattern.test(emailField.value)) {
+            emailField.classList.add('error');
+            alert("Please enter a valid email address.");
+            isValid = false;
+        } else {
+            emailField.classList.add('valid');
+        }
 
-    const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;  // regex to verify email
-    if (!emailPattern.test(email)) {
-        email.classList.add('error'); //adding it to the error class
-        alert ("Please enter a valid email address.");
-        isValid = false;
-        
-    } else {
-        email.classList.add('valid'); //adding it to the valid class
-        isValid = true;
-    }
-    
-    // Prevents form from being submitted if any validation check fails.
-    if (!isValid) {
-        event.preventDefault(); 
-    }
+        // Prevents form from being submitted if any validation check fails.
+        if (!isValid) {
+            event.preventDefault(); 
+        }
     });
 </script>
 </body>

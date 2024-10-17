@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles.css"> <!-- Links to css--> 
-    <style>
-        .flash-message {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1050;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/landing.css"> <!-- Links to css-->
     <title> Landing </title>
-    <nav>
-        <ul>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-        </ul>
-    </nav>
 </head>
 <body>
-    Landing Page!
+    
+    <!-- nav bar section -->
+    {% include 'partials/nav.html' %}
+    
+    <div class="content">
+        <div class="welcome-section">
+            <h1>Welcome to JobQuest</h1>
+            <p>Your next career starts here.</p>
+            <a href="/register" class="btn">Get Started</a>
+            <p>Already have an account? <a href="/login">Log in here.</a></p>
+        </div>
+        <div class="image-section">
+            Image Placeholder for a cool lookin pic
+        </div>
+    </div>
 </body>
 </html>

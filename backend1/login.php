@@ -29,6 +29,27 @@ try {
         $email = $data[0];
         $password = $data[1];
 
+
+        // tracks all errors
+        $errors = [];
+
+        // Validate email format using built in php function
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "Invalid email format.";
+        }
+
+        // Validate password - might change this later
+        if (empty($password)) {
+            $errors[] = "Password cannot be empty.";
+        }
+
+        // if any errors than the scripts ends early
+        if (!empty($errors)) {
+            echo " [x] Validation failed: " . implode(", ", $errors) . "\n";
+            return;
+        }
+
+
         // Confirmation message
         echo " [x] Processing Login Data for email: $email, password: $password\n";
 

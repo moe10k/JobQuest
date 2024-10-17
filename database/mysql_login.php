@@ -32,7 +32,7 @@ try {
         // Check the database for the user credentials
         try {
             $dbConnection = getDB(); // Get database connection
-            $stmt = $dbConnection->prepare("SELECT password FROM User WHERE email = ?");
+            $stmt = $dbConnection->prepare("SELECT password, username FROM User WHERE email = ?");
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -41,17 +41,21 @@ try {
             if ($result->num_rows > 0) {
                 $user = $result->fetch_assoc();
                 $hashedPassword = $user['password']; // Retrieve the hashed password from the database
+                $username = $user['username']; // also retrieve the username from the database
 
                 // Verify the password using password_verify() and send result to rabbitmq
                 if (password_verify($password, $hashedPassword)) {
-                    $responseMessage = 'success';
+                    $responseMessage = json_encode([
+                        'status' => 'success',
+                        'username' => $username
+                    ]);
                     echo " [x] Login successful for email: $email\n";
                 } else {
-                    $responseMessage = 'failure';
+                    $responseMessage = json_encode(['status' => 'failure']);
                     echo " [x] Login failed for email: $email - Invalid password\n";
                 }
             } else {
-                $responseMessage = 'failure';
+                $responseMessage = json_encode(['status' => 'failure']);
                 echo " [x] Login failed for email: $email - No such user found\n";
             }
 
