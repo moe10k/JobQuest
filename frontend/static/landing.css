@@ -1,39 +1,7 @@
-.flash-message {
-    position: fixed;
-    top: 30px;
-    left: 10px;
-    z-index: 1050;
-}
-
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
     background-color: #f4f5f7;
-}
-.navbar {
-    background-color: #2d2d39;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 40px;
-    align-items: center;
-}
-.navbar h1 {
-    font-size: 28px;
-    margin: 0;
-}
-.navbar .nav-links {
-    display: flex;
-    gap: 30px;
-}
-.navbar .nav-links a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 18px;
-}
-.navbar .title-link {
-    text-decoration: none;
-    color: inherit;
 }
 .content {
     display: flex;
