@@ -54,6 +54,11 @@
         const passwordField = document.getElementById('password');
         const emailField = document.getElementById('email');
         const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;  // regex to verify email
+        const usernameField = document.getElementbyID('username');
+        const flashContainer = document.getElementID('frontend-flash');
+
+        flashContainer.innerHTML = "";    //clears the existing flash messages
+
 
         // Reset classes
         emailField.classList.remove('error', 'valid');
@@ -61,11 +66,8 @@
 
         // Validate email
         if (!emailPattern.test(emailField.value)) {
-            emailField.classList.add('error');
-            alert("Please enter a valid email address.");
             isValid = false;
-        } else {
-            emailField.classList.add('valid');
+            flashMessage('Please enter a valid email address.','error');
         }
 
         // Prevents form from being submitted if any validation check fails.
