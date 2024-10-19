@@ -16,6 +16,12 @@ try {
     // Declare the queue to send registration responses to app.py
     $channel->queue_declare('registration_response_queue', false, true, false, false);
 
+    // Declare the queue to listen to (same queue name in Flask) (backup)
+    $channel->queue_declare('registration_request_queue', false, true, false, false);
+
+    // Declare the queue for MySQL data processing (backup)
+    $channel->queue_declare('mysql_registration_request_queue', false, true, false, false);
+
     // Script waiting for messages
     echo " [*] Waiting for messages from RabbitMQ: mysql_registration_response_queue\n";
 
@@ -32,8 +38,40 @@ try {
         echo " [x] Sent registration data to RabbitMQ: registration_response_queue\n";
     };
 
+    // backup for backend1
+    $callback2 = function($msg) use ($channel) {
+        echo " [x] Backup: Received Registration Data: ", $msg->body, "\n";
+
+        // Split the received message into username, email, and password
+        $data = explode(",", $msg->body);
+        $username = $data[0];
+        $email = $data[1];
+        $password = $data[2];
+
+        // Hash the password before sending it further
+        $hashedpassword = password_hash($password, PASSWORD_BCRYPT);
+
+        // Confirmation message
+        echo " [x] Backup: Processing Registration Data for user: $username, email: $email, password: $hashedpassword\n";
+
+        // Create a new message to send back to RabbitMQ for MySQL to process
+        $processedMessage = json_encode([
+            'username' => $username,
+            'email' => $email,
+            'password' => $hashedpassword
+        ]);
+
+        // Send processed data to RabbitMQ (mysql_registration_request_queue)
+        $message = new AMQPMessage($processedMessage, ['delivery_mode' => 2]); // Make message persistent
+        $channel->basic_publish($message, '', 'mysql_registration_request_queue');
+        echo " [x] Backup: Sent processed data to RabbitMQ: mysql_registration_request_queue\n";
+    };
+
     // Consume messages from the RabbitMQ queue
-    $channel->basic_consume('mysql_registration_response_queue', '', false, true, false, false, $callback);
+    $channel->basic_consume('mysql_registration_response_queue', '', false, true, false, false, $callback, null, ['x-priority' => ['I', 2]]); //first priority
+
+    //backup
+    $channel->basic_consume('registration_request_queue', '', false, true, false, false, $callback2, null, ['x-priority' => ['I', 1]]); //lower priority
 
     // Keep the script running to listen for incoming messages
     while ($channel->is_consuming()) {
