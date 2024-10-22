@@ -10,6 +10,8 @@ registration_request_queue = 'registration_request_queue'
 registration_response_queue = 'registration_response_queue'
 login_request_queue = 'login_request_queue'
 login_response_queue = 'login_response_queue'
+popup_request_queue = 'popup_request_queue'
+popup_response_queue = 'popup_response_queue'
 
 def is_logged_in():
     if 'user' in session:
@@ -94,6 +96,45 @@ def consume_login_response():
         return response  # Return the entire response (status and username)
     else:
         return None  # No message received
+    
+
+def send_popup_rabbitmq(message):
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
+    channel = connection.channel()
+    
+    # Declare the popup request queue
+    channel.queue_declare(queue=popup_request_queue, durable=True)
+
+    # Send the form data to the queue
+    channel.basic_publish(
+        exchange='',
+        routing_key=popup_request_queue,
+        body=message,
+        properties=pika.BasicProperties(delivery_mode=2)  # Make message persistent
+    )
+
+    print(f" [x] Sent popup data to RabbitMQ: {message}")
+    connection.close()
+
+def consume_popup_response():
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
+    channel = connection.channel()
+    channel.queue_declare(queue=popup_response_queue, durable=True)
+
+    time.sleep(6)  # Delay to allow the response to be processed
+
+    method_frame, header_frame, body = channel.basic_get(queue=popup_response_queue, auto_ack=True)
+
+    channel.close()
+    connection.close()
+
+    if body:
+        popup_response = body.decode('utf-8')
+        print(f"Message received from popup2.php: {popup_response}")
+        return popup_response
+    else:
+        return None
+
 
 
 @app.route('/')
@@ -171,6 +212,51 @@ def login():
     
     # Render the login form if it's a GET request
     return render_template('login.html')
+
+
+@app.route('/submit_popup', methods=['POST'])
+def submit_popup():
+    first_name = request.form.get('firstName')
+    last_name = request.form.get('lastName')
+    country = request.form.get('country')
+    state = request.form.get('state')
+    zip_code = request.form.get('zip')
+    job_title = request.form.get('jobTitle')
+    job_start_month = request.form.get('jobStartMonth')
+    job_end_month = request.form.get('jobEndMonth')
+    job_current = request.form.get('jobCurrent')  # This will be 'on' if checked, or None if unchecked
+    school_name = request.form.get('schoolName')
+    school_start_month = request.form.get('schoolStartMonth')
+    school_end_month = request.form.get('schoolEndMonth')
+    school_current = request.form.get('schoolCurrent')  # Same as job_current
+
+    message = json.dumps({
+        "first_name": first_name,
+        "last_name": last_name,
+        "country": country,
+        "state": state,
+        "zip_code": zip_code,
+        "job_title": job_title,
+        "job_start_month": job_start_month,
+        "job_end_month": job_end_month,
+        "job_current": job_current,
+        "school_name": school_name,
+        "school_start_month": school_start_month,
+        "school_end_month": school_end_month,
+        "school_current": school_current
+    })
+
+    send_popup_rabbitmq(message)
+
+    response = consume_popup_response()
+
+    if response == 'success':
+        flash('Additional information submitted successfully!', 'success')
+    else:
+        flash('Error - Please Try again later', 'danger')
+
+    flash('Additional information submitted successfully!', 'success')
+    return redirect('/dashboard')
 
 
 @app.route('/dashboard')
