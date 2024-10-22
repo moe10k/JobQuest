@@ -17,6 +17,12 @@ try {
     // Declare the queue for MySQL data processing
     $channel->queue_declare('mysql_registration_request_queue', false, true, false, false);
 
+    // Declare the queue to listen for MySQL registration responses (backup for backend2)
+    $channel->queue_declare('mysql_registration_response_queue', false, true, false, false);
+
+    // Declare the queue to send registration responses to app.py (backup for backend2)
+    $channel->queue_declare('registration_response_queue', false, true, false, false);
+
     // Script waiting for messages on the backend
     echo " [*] Waiting for messages from RabbitMQ: registration_request_queue\n";
 
@@ -75,8 +81,25 @@ try {
         echo " [x] Sent processed data to RabbitMQ: mysql_registration_request_queue\n";
     };
 
+    //backup for backend2
+    $callback2 = function($msg) use ($channel) {
+        echo " [x] Backup: Received registration data: ", $msg->body, "\n";
+
+        // Holds successful or failure data in variable
+        $registrationResponse = $msg->body;
+
+        // Forward the registration response to the registration_response_queue
+        $message = new AMQPMessage($registrationResponse, ['delivery_mode' => 2]); // Make message persistent
+        $channel->basic_publish($message, '', 'registration_response_queue');
+        echo " [x] Backup: Sent registration data to RabbitMQ: registration_response_queue\n";
+    };
+    
+
     // Consume messages from the RabbitMQ queue
-    $channel->basic_consume('registration_request_queue', '', false, true, false, false, $callback);
+    $channel->basic_consume('registration_request_queue', '', false, true, false, false, $callback, null, ['x-priority' => ['I', 2]]); //higher priority
+
+    // Consume messages from the RabbitMQ queue
+    $channel->basic_consume('mysql_registration_response_queue', '', false, true, false, false, $callback2, null, ['x-priority' => ['I', 1]]); //and this has lower priortiy since its the backup
 
     // Keep the script running to listen for incoming messages
     while ($channel->is_consuming()) {
