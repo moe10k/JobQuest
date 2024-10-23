@@ -70,6 +70,11 @@
             flashMessage('Please enter a valid email address.','error');
         }
 
+        if (passwordField.value.length < 6) {
+            isValid = false;
+            flashMessage ('Password must be at least 6 characters long.', 'warning');
+        }
+
         // Prevents form from being submitted if any validation check fails.
         if (!isValid) {
             event.preventDefault(); 
