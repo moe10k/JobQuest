@@ -197,11 +197,25 @@ def login():
     
     if request.method == 'POST':
 
-        print("Login Form Submitted, Processing...")
+        print("Login Form Submitted, Validation Processing...")
 
         # Extract login form data
         email = request.form['email']
         password = request.form['password']
+
+        #Validates Email using regex
+
+        email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        if not re.match(email_pattern, email):
+            flash('Invalid email address. Please provide a valid email.', 'danger')
+            print("Invalid email address, Submission to RabitMQ failed.")
+            return render_template('login.html')
+         
+        # Validates password length
+        if len(password) < 6:
+            flash('Password must be at least 6 characters long.', 'danger')
+            print("Password is not long enough, Submission to RabitMQ failed.")
+            return render_template('login.html')
         
         # Create a message to send to RabbitMQ
         message = f"{email},{password}"
