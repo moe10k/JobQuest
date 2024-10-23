@@ -1,4 +1,4 @@
-import pika, time, json
+import pika, time, json, re
 from flask import Flask, flash, render_template, request, redirect, url_for, session
 
 app =  Flask (__name__) 
@@ -149,13 +149,28 @@ def register():
     
     if request.method == 'POST': #once the user clicks submit, the following will happen
         
-        print("Registration Form Submitted, Processing...") #message that registration form was submitted
+        print("Registration Form Submitted, Validation Processing...") #message that registration form was submitted
 
         # Extract form data
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+
+        #Validates Email using regex
+
+        email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        if not re.match(email_pattern, email):
+            flash('Invalid email address. Please provide a valid email.', 'danger')
+            print("Invalid email address, Submission to RabitMQ failed.")
+            return render_template('register.html')
+         
+        # Validates password length
+        if len(password) < 6:
+            flash('Password must be at least 6 characters long.', 'danger')
+            print("Password is not long enough, Submission to RabitMQ failed.")
+            return render_template('register.html')
         
+
         message = f"{username},{email},{password}" #message that data is sent to queue
         
         # Send the message to RabbitMQ
