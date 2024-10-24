@@ -9,9 +9,10 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 
 try {
-    // Establishing RabbitMQ connection
-    $rabbitMQConnection = new AMQPStreamConnection('10.147.17.65', 5672, 'guest', 'guest');
-    $channel = $rabbitMQConnection->channel();
+   // Establishing RabbitMQ connection
+   $rabbitMQConnection = new AMQPStreamConnection('10.147.17.228', 5672, 'guest', 'guest');
+   $channel = $rabbitMQConnection->channel();
+
 
    // Declare the queue to listen to (same queue name in Flask)
    $channel->queue_declare('registration_request_queue', false, true, false, false);
