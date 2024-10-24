@@ -6,8 +6,17 @@ USE it490_db;
 
 -- Create the User table
 CREATE TABLE User (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
+    CREATE TABLE Users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    password_hash VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    name VARCHAR(100),
+    education TEXT,
+    experience TEXT,
+    profile_picture VARCHAR(255),
+    resume_url VARCHAR(255),
+    biography TEXT,
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 );
