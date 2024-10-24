@@ -8,9 +8,11 @@
     <style>
         .error {
             border-color: red;
+            background-color: #f8d7da;
         }
         .valid {
             border-color: green;
+            background-color: #d4edda;
         }
     </style>
 </head>
@@ -25,6 +27,7 @@
 
 
     <div class="container">
+        <div class ="box">
         <h2>Login</h2>
         <form id="loginForm" action="/login" method="POST">
             <div class="form-group">
@@ -39,31 +42,50 @@
         </form>
         <p>Don't have an account? <a href="/register">Register</a></p>
     </div>
+</div>
 
 <script>
     document.getElementById('loginForm').addEventListener('submit', function(event) {
         let isValid = true;
 
+        //  Get form field
+        const passwordField = document.getElementById('password');
         const emailField = document.getElementById('email');
-        const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;  // regex to verify email
+        const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //regex
 
         // Reset classes
         emailField.classList.remove('error', 'valid');
+        passwordField.classList.remove('error', 'valid');
 
-        // Validate email
+        //Validate password length
+        if (passwordField.value.length < 6) { //if password is less than 6 characters then it is an error
+            passwordField.classList.add('error');
+            isValid = false;
+        } else {
+            passwordField.classList.add('valid');
+        }
+
+        //Validate email pattern
         if (!emailPattern.test(emailField.value)) {
             emailField.classList.add('error');
-            alert("Please enter a valid email address.");
             isValid = false;
         } else {
             emailField.classList.add('valid');
         }
 
-        // Prevents form from being submitted if any validation check fails.
-        if (!isValid) {
-            event.preventDefault(); 
-        }
+        // // Prevents form from being submitted if any validation check fails.
+        // if (!isValid) {
+        //     event.preventDefault(); 
+        // }
     });
+
+    function flashMessage(message, category) {
+        const flashContainer = document.getElementById('frontend-flash');
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('alert', 'alert-${category}');
+        messageDiv.innerText = message;
+        flashContainer.appendChild(messageDiv);
+    }
 </script>
 </body>
 
