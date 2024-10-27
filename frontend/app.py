@@ -12,6 +12,8 @@ login_request_queue = 'login_request_queue'
 login_response_queue = 'login_response_queue'
 popup_request_queue = 'popup_request_queue'
 popup_response_queue = 'popup_response_queue'
+forgot_password_request_queue = 'forgot_password_request_queue'
+forgot_password_response_queue = 'forgot_password_response_queue'
 
 def is_logged_in():
     if 'user' in session:
@@ -134,8 +136,45 @@ def consume_popup_response():
         return popup_response
     else:
         return None
+    
+def send_forgot_password_rabbitmq(message):
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
+    channel = connection.channel()
+    
+    # Declare the forgot password request queue
+    channel.queue_declare(queue=forgot_password_request_queue, durable=True)
 
+    # Send the email to the queue
+    channel.basic_publish(
+        exchange='',
+        routing_key=forgot_password_request_queue,
+        body=message,
+        properties=pika.BasicProperties(delivery_mode=2)  # Make message persistent
+    )
 
+    print(f" [x] Sent forgot password data to RabbitMQ: {message}")
+    connection.close()
+
+def consume_forgot_password_response():
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
+    channel = connection.channel()
+    channel.queue_declare(queue=forgot_password_response_queue, durable=True)
+
+    time.sleep(20)  # Delay to allow the response to be processed
+
+    method_frame, header_frame, body = channel.basic_get(queue=forgot_password_response_queue, auto_ack=True)
+
+    channel.close()
+    connection.close()
+
+    if body:
+        forgot_password_response = body.decode('utf-8')
+        print(f"Message received from forgot_password2.php: {forgot_password_response}")
+        return forgot_password_response
+    else:
+        return None             # No message received
+
+  
 
 @app.route('/')
 def landing():
@@ -294,6 +333,30 @@ def submit_popup():
     flash('Additional information submitted successfully!', 'success')
     return redirect('/dashboard')
 
+@app.route('/forgot_password', methods=['POST'])
+def forgot_password():
+    email = request.form.get('forgotEmail')
+
+    #Validates Email using regex
+
+    email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    if not re.match(email_pattern, email):
+        flash('Invalid email address. Please provide a valid email.', 'danger')
+        print("Invalid email address, Submission to RabitMQ failed.")
+        return render_template('forgot_password.html')
+    
+    message = json.dumps({"email": email})
+
+    send_forgot_password_rabbitmq(message)
+
+    response = consume_forgot_password_response()
+
+    if response == 'success':
+        flash('Password reset link sent to your email!', 'success')
+    else:
+        flash('Error - Please Try again later', 'danger')
+
+    return redirect('/login')
 
 @app.route('/dashboard')
 def dashboard():
