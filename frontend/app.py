@@ -155,6 +155,7 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        confirm_password = request.form['confirm_password']
 
         #Validates Email using regex
 
@@ -168,6 +169,12 @@ def register():
         if len(password) < 6:
             flash('Password must be at least 6 characters long.', 'danger')
             print("Password is not long enough, Submission to RabitMQ failed.")
+            return render_template('register.html')
+        
+        # Validates password match
+        if password != confirm_password:
+            flash('Passwords do not match.', 'danger')
+            print("Passwords do not match, Submission to RabitMQ failed.")
             return render_template('register.html')
         
 
