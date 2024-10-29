@@ -248,7 +248,7 @@ def consume_forgot_password_response():
     else:
         return None             # No message received
 
-  
+
 
 @app.route('/')
 def landing():
@@ -429,6 +429,12 @@ def forgot_password():
     if not re.match(email_pattern, email):
         flash('Invalid email address. Please provide a valid email.', 'danger')
         print("Invalid email address, Submission to RabitMQ failed.")
+        return render_template('forgot_password.html')
+    
+    # Check if email exists in the database
+    if not check_email_exists(email):
+        flash('Email not found', 'danger')
+        print("Email does not exist in database, Submission to RabitMQ failed.")
         return render_template('forgot_password.html')
     
     message = json.dumps({"email": email})
