@@ -42,16 +42,12 @@
             <div class = "form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required>
-                <label>
-                    <input type="checkbox" id="showPassword"> Show Password
-                </label>
+                <span id = "togglePassword" style="cursor: pointer; color: #6f42c1; text-decoration: underline;">Show Password</span>
             </div>
             <div class = "form-group">
                 <label for="confirm_password">Confirm Password</label>
                 <input type="password" name="confirm_password" id="confirm_password" required>
-                <label>
-                    <input type="checkbox" id="showConfirmPassword"> Show Password
-                </label>
+                <span id = "toggleConfirmPassword" style="cursor: pointer; color: #6f42c1; text-decoration: underline;">Show Password</span>
             </div>
             
             <button type="submit">Register</button>
@@ -107,14 +103,18 @@
     });
 
     // Toggle password visibility
-    document.getElementById('showPassword').addEventListener('change', function() {
+    document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordField = document.getElementById('password');
-            passwordField.type = this.checked ? 'text' : 'password';
+            const isPasswordVisible = passwordField.type === 'text';
+            passwordField.type = isPasswordVisible ? 'password' : 'text';
+            this.textContent = isPasswordVisible ? 'Show Password' : 'Hide Password'; // Toggle the text
         });
 
-    document.getElementById('showConfirmPassword').addEventListener('change', function() {
+    document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
         const confirmPasswordField = document.getElementById('confirm_password');
-        confirmPasswordField.type = this.checked ? 'text' : 'password';
+        const isConfirmPasswordVisible = confirmPasswordField.type === 'text';
+        confirmPasswordField.type = isConfirmPasswordVisible ? 'password' : 'text';
+        this.textContent = isConfirmPasswordVisible ? 'Show Password' : 'Hide Password'; // Toggle the text
     });
 
     function flashMessage(message, category) {

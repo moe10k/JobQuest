@@ -55,7 +55,7 @@ body {
 }
 
 .form-group input {
-    width: 100%;
+    width: 400px;
     padding: 12px;
     font-size: 18px;
     border: 1px solid #ccc;
