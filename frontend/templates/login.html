@@ -75,6 +75,9 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required>
+                <label>
+                    <input type="checkbox" id="showPassword"> Show Password
+                </label>
             </div>
             <button type="submit">Login</button>
         </form>
@@ -152,6 +155,12 @@
             forgotPasswordModal.style.display = 'none';
         }
     }
+
+    // Toggle password visibility
+    document.getElementById('showPassword').addEventListener('change', function() {
+            const passwordField = document.getElementById('password');
+            passwordField.type = this.checked ? 'text' : 'password';
+        });
 
     function flashMessage(message, category) {
         const flashContainer = document.getElementById('frontend-flash');
