@@ -3,6 +3,13 @@ body {
     font-family: 'Roboto', sans-serif;
     background-color: #f4f5f7;
 }
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #1a1a24;
+    color: #f4f5f7;
+}
+
 .content {
     display: flex;
     justify-content: space-between;
@@ -12,6 +19,12 @@ body {
 .welcome-section {
     max-width: 600px;
 }
+
+/* Dark mode for welcome section */
+.welcome-section {
+    max-width: 600px;
+}
+
 .welcome-section h1 {
     font-size: 42px;
     margin-bottom: 25px;
@@ -21,6 +34,12 @@ body {
     color: #555;
     margin-top: 15px;
 }
+
+/* Dark mode paragraph color */
+body.dark-mode .welcome-section p {
+    color: #ccc;
+}
+
 .welcome-section .btn {
     margin-top: 30px;
     background-color: #6f42c1;
@@ -31,11 +50,23 @@ body {
     display: inline-block;
     font-size: 18px;
 }
+
+/* Dark mode button color */
+body.dark-mode .welcome-section .btn {
+    background-color: #5a32a3;
+}
+
 .welcome-section p a {
     color: #6f42c1;
     text-decoration: none;
     font-weight: bold;
 }
+
+/* Dark mode link color */
+body.dark-mode .welcome-section p a {
+    color: #d1b6f4;
+}
+
 .image-section {
     width: 350px;
     height: 350px;
@@ -49,6 +80,14 @@ body {
     color: #777;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Dark mode image-section styling */
+body.dark-mode .image-section {
+    background-color: #333;
+    color: #aaa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
 .responsive-image {
     width: 90%;
     border-radius: 20px;

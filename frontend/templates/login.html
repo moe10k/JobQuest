@@ -19,38 +19,56 @@
 
         /* Style for forgot password popup */
         .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1000; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
+        display: none; 
+        position: fixed; 
+        z-index: 1000; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: none;
+        background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 25%;
+        text-align: center;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Dark mode styling */
+    .dark-mode {
+        background-color: #1a1a24;
+        color: #f4f5f7;
+    }
+    .dark-mode .modal-content {
+        background-color: #333;
+        color: #f4f5f7;
+        border: 1px solid #555;
+    }
+    .dark-mode .modal-content .close {
+        color: #f4f5f7;
+    }
+    .dark-mode .modal-content .close:hover,
+    .dark-mode .modal-content .close:focus {
+        color: #ddd;
+    }
 
     </style>
 </head>
@@ -92,7 +110,7 @@
             <p>Enter your email to receive reset instructions:</p>
             <form id="forgotPasswordForm" action="/forgot_password" method="POST">
                 <div class="form-group">
-                    <label for="forgotEmail">Email</label>
+                    <!-- <label for="forgotEmail">Email</label>   -->
                     <input type="email" name="forgotEmail" id="forgotEmail" required>
                 </div>
                 <button type="submit">Submit</button>

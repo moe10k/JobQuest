@@ -24,6 +24,26 @@
         text-decoration: none;
         color: inherit;
     }
+    /* Dark Mode Toggle Button Styles */
+    .dark-mode-toggle {
+        padding: 3px 13px;
+        background-color: #6f42c1;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.2s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .dark-mode-toggle:hover {
+        background-color: #5a32a3;
+        transform: scale(1.05);
+    }
+    .dark-mode-toggle:active {
+        background-color: #482685;
+        transform: scale(0.95);
+    }
 </style>
 
 <nav class="navbar">
@@ -43,5 +63,15 @@
             <a href="/login">Login</a>
             <a href="/register">Register</a>
         {% endif %}
+        <button id="toggle-dark-mode" class="dark-mode-toggle">Dark Mode</button>
     </div>
 </nav>
+
+<script>
+     // Toggle Dark Mode and Update Button Text
+     document.getElementById('toggle-dark-mode').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        // Update button text based on the current mode
+        this.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+    });
+</script>
