@@ -4,3 +4,8 @@ body {
     padding: 0;
     background-color: #f5f5f5;
 }
+/* Dark Mode */
+body.dark-mode {
+    background-color: #121212;
+    color: #f5f5f5;
+}
