@@ -2,6 +2,7 @@ import pika, time, json, re
 import mysql.connector
 from flask import Flask, flash, render_template, request, redirect, url_for, session
 from flask_mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
 app =  Flask (__name__) 
 app.secret_key = "secret_key" #Secret key for flashing messages
@@ -14,13 +15,11 @@ login_request_queue = 'login_request_queue'
 login_response_queue = 'login_response_queue'
 popup_request_queue = 'popup_request_queue'
 popup_response_queue = 'popup_response_queue'
-forgot_password_request_queue = 'forgot_password_request_queue'
-forgot_password_response_queue = 'forgot_password_response_queue'
-# email_check_request_queue = 'email_check_request_queue'
+forgot_password_request_log_queue = 'forgot_password_request_queue'
 
+serializer = URLSafeTimedSerializer('secret_key') #Secret key for the URLSafeTimedSerializer
 
 # Mail settings
-
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
@@ -215,18 +214,17 @@ def send_forgot_password_rabbitmq(message):
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
     channel = connection.channel()
     
-    # Declare the forgot password request queue
-    channel.queue_declare(queue=forgot_password_request_queue, durable=True)
+    # Declare the forgot password log request queue
+    channel.queue_declare(queue=forgot_password_request_log_queue, durable=True)
 
-    # Send the email to the queue
+    # Send the log to the queue
     channel.basic_publish(
         exchange='',
-        routing_key=forgot_password_request_queue,
+        routing_key=forgot_password_request_log_queue,
         body=message,
-        properties=pika.BasicProperties(delivery_mode=2)  # Make message persistent
     )
 
-    print(f" [x] Sent forgot password data to RabbitMQ: {message}")
+    print(f" [x] Logged Password Reset Request to RabitMQ : {message}")
     connection.close()
 
 def consume_forgot_password_response():
@@ -248,6 +246,20 @@ def consume_forgot_password_response():
     else:
         return None             # No message received
 
+def send_password_reset_email(recipient_email, reset_link):
+    try:
+        msg = Message(
+            subject="Password Reset Request",
+            recipients=[recipient_email],
+            body=f"Hi,\n\nTo reset your password, please click on the following link:\n{reset_link}\n\nIf you did not request a password reset, please ignore this email.",
+            sender=app.config['MAIL_DEFAULT_SENDER']
+        )
+        mail.send(msg)
+        print("Password reset email sent successfully.")
+        return True
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+        return False
 
 
 @app.route('/')
@@ -437,18 +449,28 @@ def forgot_password():
         print("Email does not exist in database, Submission to RabitMQ failed.")
         return render_template('forgot_password.html')
     
-    message = json.dumps({"email": email})
+    # Generate password reset link
+    token = serializer.dumps(email, salt='password-reset-salt')
+    reset_link = url_for('reset_password', token=token, _external=True)
 
-    send_forgot_password_rabbitmq(message)
+    #log password reset request to RabitMQ
+    log_message = json.dumps({"email": email, "reset_link": reset_link})
+    send_forgot_password_rabbitmq(log_message)
 
-    response = consume_forgot_password_response()
-
-    if response == 'success':
+    # Send password reset email
+    if send_password_reset_email(email, reset_link):
         flash('Password reset link sent to your email!', 'success')
+        print("Password reset link sent successfully.")
     else:
         flash('Error - Please Try again later', 'danger')
+        print("Failed to send password reset email.")
 
     return redirect('/login')
+
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+
+
 
 @app.route('/dashboard')
 def dashboard():

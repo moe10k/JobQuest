@@ -64,6 +64,7 @@ pip install requests pika  # installs requests and pika packages
 pip install Flask-Mail
 pip install mysql-connector-python
 pip install mysql-connector-python pika
+pip install itsdangerous
 
 # Create app.py if it doesn't exist
 if [ ! -f "app.py" ]; then
