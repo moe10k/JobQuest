@@ -60,6 +60,11 @@ fi
 # Install other necessary packages
 pip install requests pika  # installs requests and pika packages
 
+# Install mail package
+pip install Flask-Mail
+pip install mysql-connector-python
+pip install mysql-connector-python pika
+
 # Create app.py if it doesn't exist
 if [ ! -f "app.py" ]; then
     echo "Creating app.py..."

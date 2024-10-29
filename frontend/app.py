@@ -1,5 +1,7 @@
 import pika, time, json, re
+import mysql.connector
 from flask import Flask, flash, render_template, request, redirect, url_for, session
+from flask_mail import Mail, Message
 
 app =  Flask (__name__) 
 app.secret_key = "secret_key" #Secret key for flashing messages
@@ -14,12 +16,54 @@ popup_request_queue = 'popup_request_queue'
 popup_response_queue = 'popup_response_queue'
 forgot_password_request_queue = 'forgot_password_request_queue'
 forgot_password_response_queue = 'forgot_password_response_queue'
+# email_check_request_queue = 'email_check_request_queue'
+
+
+# Mail settings
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'jobquest93@gmail.com' #Company email
+app.config['MAIL_PASSWORD'] = "]';5jN0xV>R$" #Company email password
+app.config['MAIL_DEFAULT_SENDER'] = 'jobquest93@gmail.com' #Company email
+
+mail = Mail(app)
 
 def is_logged_in():
     if 'user' in session:
         return True
     else:
+        return False   
+
+def check_email_exists(email):
+    #Database connection
+    config = {
+        'user': 'root',       # might need to change not sure yet
+        'password': 'your_password',    
+        'host': 'localhost',            
+        'database': 'it490_db'          
+    }
+
+    try:
+        db_connection = mysql.connector.connect(**config)
+        cursor = db_connection.cursor()
+
+        query = "SELECT * FROM users WHERE email = %s"
+        cursor.execute(query, (email,))
+
+        result = cursor.fetchone()[0]
+        return result > 0 # True if email exists, False if not
+    
+    except mysql.connector.Error as e:
+        print(f"Database error: {e}")
         return False
+    
+    finally:
+        cursor.close()
+        db_connection.close()
+
+
 
 # Function to send registration data to RabbitMQ
 def send_registration_rabbitmq(message):
