@@ -36,6 +36,8 @@ def is_logged_in():
     else:
         return False   
 
+# Function to check if the email already exists in the database
+
 def check_email_exists(email):
     #Database connection
     config = {
@@ -51,6 +53,34 @@ def check_email_exists(email):
 
         query = "SELECT * FROM users WHERE email = %s"
         cursor.execute(query, (email,))
+
+        result = cursor.fetchone()[0]
+        return result > 0 # True if email exists, False if not
+    
+    except mysql.connector.Error as e:
+        print(f"Database error: {e}")
+        return False
+    
+    finally:
+        cursor.close()
+        db_connection.close()
+
+#Function to check if the username already exists in the database
+def check_username_exists(username):
+    #Database connection
+    config = {
+        'user': 'root',       # might need to change not sure yet
+        'password': 'your_password',    
+        'host': 'localhost',            
+        'database': 'it490_db'          
+    }
+
+    try:
+        db_connection = mysql.connector.connect(**config)
+        cursor = db_connection.cursor()
+
+        query = "SELECT * FROM users WHERE username = %s"
+        cursor.execute(query, (username,))
 
         result = cursor.fetchone()[0]
         return result > 0 # True if email exists, False if not
@@ -258,6 +288,18 @@ def register():
         if password != confirm_password:
             flash('Passwords do not match.', 'danger')
             print("Passwords do not match, Submission to RabitMQ failed.")
+            return render_template('register.html')
+        
+        # Check if the email already exists in the database
+        if check_email_exists(email):
+            flash('Email already exists. Please login instead.', 'danger')
+            print("Email already exists, Submission to RabitMQ failed.")
+            return render_template('register.html')
+        
+        # Check if the username already exists in the database
+        if check_username_exists(username):
+            flash('Username already exists. Please choose a different username.', 'danger')
+            print("Username already exists, Submission to RabitMQ failed.")
             return render_template('register.html')
         
 
