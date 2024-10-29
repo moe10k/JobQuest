@@ -42,12 +42,16 @@
             <div class = "form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required>
-                <small id = "passwordHint">Password must be at least 6 characters long.</small>
+                <label>
+                    <input type="checkbox" id="showPassword"> Show Password
+                </label>
             </div>
             <div class = "form-group">
                 <label for="confirm_password">Confirm Password</label>
                 <input type="password" name="confirm_password" id="confirm_password" required>
-                <small id="confirm_passwordHint">Passwords must match.</small>
+                <label>
+                    <input type="checkbox" id="showConfirmPassword"> Show Password
+                </label>
             </div>
             
             <button type="submit">Register</button>
@@ -67,15 +71,10 @@
         const confirm_password = document.getElementById('confirm_password');
         const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //regex
 
-        // Hint elements
-        const passwordHint = document.getElementById('passwordHint');
-        const confirm_passwordHint = document.getElementById('confirm_passwordHint');
-
         // Reset classes
         emailField.classList.remove('error', 'valid');
         passwordField.classList.remove('error', 'valid');
         confirm_password.classList.remove('error', 'valid');
-        passwordHint.textContent = 'Password must be at least 6 characters long.';
 
         //Validate password length
         if (passwordField.value.length < 6) { //if password is less than 6 characters then it is an error
@@ -96,7 +95,6 @@
         //Validate that password and confirm password match
         if (passwordField.value !== confirm_password.value) {
             confirm_password.classList.add('error');
-            confirm_passwordHint.textContent = 'Passwords do not match.';
             isValid = false;
         } else {
             confirm_password.classList.add('valid');
@@ -106,6 +104,17 @@
         if (!isValid) {
             event.preventDefault(); 
         }
+    });
+
+    // Toggle password visibility
+    document.getElementById('showPassword').addEventListener('change', function() {
+            const passwordField = document.getElementById('password');
+            passwordField.type = this.checked ? 'text' : 'password';
+        });
+
+    document.getElementById('showConfirmPassword').addEventListener('change', function() {
+        const confirmPasswordField = document.getElementById('confirm_password');
+        confirmPasswordField.type = this.checked ? 'text' : 'password';
     });
 
     function flashMessage(message, category) {
