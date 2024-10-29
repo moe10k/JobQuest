@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="/static/register_login.css"> <!-- Links to css--> 
     <title> Login </title>
     <style>
+
+        /* Style for error and valid input fields */
         .error {
             border-color: red;
             background-color: #f8d7da;
@@ -14,6 +16,60 @@
             border-color: green;
             background-color: #d4edda;
         }
+
+        /* Style for forgot password popup */
+        .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 1000; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: none;
+        background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 25%;
+        text-align: center;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Dark mode styling */
+    .dark-mode {
+        background-color: #1a1a24;
+        color: #f4f5f7;
+    }
+    .dark-mode .modal-content {
+        background-color: #333;
+        color: #f4f5f7;
+        border: 1px solid #555;
+    }
+    .dark-mode .modal-content .close {
+        color: #f4f5f7;
+    }
+    .dark-mode .modal-content .close:hover,
+    .dark-mode .modal-content .close:focus {
+        color: #ddd;
+    }
+
     </style>
 </head>
 
@@ -37,12 +93,30 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required>
+                <span id = "togglePassword" style="cursor: pointer; color: #6f42c1; text-decoration: underline;">Show Password</span>
             </div>
             <button type="submit">Login</button>
         </form>
         <p>Don't have an account? <a href="/register">Register</a></p>
+        <p><a href="#" id = "forgotPasswordLink">Forgot Password?</a></p>
+        </div>
     </div>
-</div>
+
+    <!-- Forgot password popup -->
+     <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id = "closeForgotPasswordModal">&times;</span>
+            <h2>Forgot Password</h2>
+            <p>Enter your email to receive reset instructions:</p>
+            <form id="forgotPasswordForm" action="/forgot_password" method="POST">
+                <div class="form-group">
+                    <!-- <label for="forgotEmail">Email</label>   -->
+                    <input type="email" name="forgotEmail" id="forgotEmail" required>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
 
 <script>
     document.getElementById('loginForm').addEventListener('submit', function(event) {
@@ -78,6 +152,33 @@
         //     event.preventDefault(); 
         // }
     });
+
+    // Forgot password popup
+    const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+    const closeForgotPasswordModal = document.getElementById('closeForgotPasswordModal');
+
+    forgotPasswordLink.onclick = function() {
+        forgotPasswordModal.style.display = 'block';
+    }
+
+    closeForgotPasswordModal.onclick = function() {
+        forgotPasswordModal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        if (event.target == forgotPasswordModal) {
+            forgotPasswordModal.style.display = 'none';
+        }
+    }
+
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordField = document.getElementById('password');
+            const isPasswordVisible = passwordField.type === 'text';
+            passwordField.type = isPasswordVisible ? 'password' : 'text';
+            this.textContent = isPasswordVisible ? 'Show Password' : 'Hide Password'; // Toggle the text
+        });
 
     function flashMessage(message, category) {
         const flashContainer = document.getElementById('frontend-flash');
