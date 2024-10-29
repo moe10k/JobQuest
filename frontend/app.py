@@ -120,7 +120,7 @@ def consume_registration_response():
     channel.queue_declare(queue=registration_response_queue, durable=True)
 
     # Introduce a small delay to allow the message to reach the queue
-    time.sleep(6)  # Wait x seconds before consuming the message
+    time.sleep(15)  # Wait x seconds before consuming the message
 
     method_frame, header_frame, body = channel.basic_get(queue=registration_response_queue, auto_ack=True)
 
@@ -159,7 +159,7 @@ def consume_login_response():
     channel = connection.channel()
     channel.queue_declare(queue=login_response_queue, durable=True)
 
-    time.sleep(6)  # Wait x seconds before consuming the message
+    time.sleep(15)  # Wait x seconds before consuming the message
 
     method_frame, header_frame, body = channel.basic_get(queue=login_response_queue, auto_ack=True)
     
@@ -196,7 +196,7 @@ def consume_popup_response():
     channel = connection.channel()
     channel.queue_declare(queue=popup_response_queue, durable=True)
 
-    time.sleep(6)  # Delay to allow the response to be processed
+    time.sleep(15)  # Delay to allow the response to be processed
 
     method_frame, header_frame, body = channel.basic_get(queue=popup_response_queue, auto_ack=True)
 
@@ -232,7 +232,7 @@ def consume_forgot_password_response():
     channel = connection.channel()
     channel.queue_declare(queue=forgot_password_response_queue, durable=True)
 
-    time.sleep(20)  # Delay to allow the response to be processed
+    time.sleep(15)  # Delay to allow the response to be processed
 
     method_frame, header_frame, body = channel.basic_get(queue=forgot_password_response_queue, auto_ack=True)
 
