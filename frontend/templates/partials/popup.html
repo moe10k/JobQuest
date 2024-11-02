@@ -115,9 +115,11 @@
  
  <div id="popup" class="popup">
     <div class="popup-content">
+
+        <div id="form1">
         <button class="close-btn" onclick="closePopup()">&times;</button>
         <h2>We'd love to learn more about you!</h2>
-        <form id="additionalInfoForm" action="/submit_popup" method="POST">
+        <form id="additionalInfoForm">
             <!-- First Name and Last Name -->
             <div class="form-inline">
                 <div class="form-group">
@@ -172,8 +174,8 @@
             <!-- School Name, Start Month/Year, End Month/Year with Current Checkbox -->
             <div class="form-inline">
                 <div class="form-group">
-                    <label for="schoolName">School/College Name</label>
-                    <input type="text" id="schoolName" name="schoolName" placeholder="e.g., XYZ University">
+                    <label for="schoolName">School</label>
+                    <input type="text" id="schoolName" name="schoolName" placeholder="School Name">
                 </div>
                 <div class="form-group">
                     <label for="schoolStartMonth">Start Month/Year</label>
@@ -188,31 +190,73 @@
                     <label for="schoolCurrent">Current</label>
                 </div>
             </div>
- 
- 
-            <button type="submit">Submit</button>
+            <button type="button" onclick="showSecondForm()">Next</button>
         </form>
+        </div>
+
+
+        <!-- once the user clicks Next, the second page with security questions will show up-->
+        <div id="form2" style="display: none;">
+            <h2>Security Questions</h2>
+            <form action="/submit_popup" method="POST">
+                <div class="form-group">
+                    <label for="securityQuestion1">In What City Were You Born In?</label>
+                    <input type="text" id="securityQuestion1" name="securityQuestion1" placeholder="Your answer">
+                </div>
+                <div class="form-group">
+                    <label for="securityQuestion2">What Is Your Favorite Food?</label>
+                    <input type="text" id="securityQuestion2" name="securityQuestion2" placeholder="Your answer">
+                </div>
+                <div class="form-group">
+                    <label for="securityQuestion3">What Is Your Favorite Book or Movie?</label>
+                    <input type="text" id="securityQuestion3" name="securityQuestion3" placeholder="Your answer">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
     </div>
  </div>
  
  
  <script>
+    function showSecondForm() {
+    document.getElementById('form1').style.display = 'none';
+    document.getElementById('form2').style.display = 'block';
+    }
+    
     document.addEventListener("DOMContentLoaded", function () {
         let popup = document.getElementById('popup');
         popup.style.display = 'flex';
- 
- 
-        // Handle form submission
-        document.getElementById('additionalInfoForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            alert("Thank you for sharing your information!");
-            popup.style.display = 'none'; // Hide the popup after form submission
-        });
     });
- 
- 
+
     function closePopup() {
         let popup = document.getElementById('popup');
         popup.style.display = 'none';
     }
- </script>
+
+    // Function to toggle end date fields
+    function toggleEndDate(checkbox, endDateInput) {
+            if (checkbox.checked) {
+                endDateInput.disabled = true;
+                endDateInput.style.backgroundColor = '#e0e0e0';
+            } else {
+                endDateInput.disabled = false;
+                endDateInput.style.backgroundColor = '';
+            }
+        }
+
+        // Job "Current" checkbox toggle
+        const jobCurrentCheckbox = document.getElementById('jobCurrent');
+        const jobEndDate = document.getElementById('jobEndMonth');
+        jobCurrentCheckbox.addEventListener('change', function () {
+            toggleEndDate(jobCurrentCheckbox, jobEndDate);
+        });
+
+        // School "Current" checkbox toggle
+        const schoolCurrentCheckbox = document.getElementById('schoolCurrent');
+        const schoolEndDate = document.getElementById('schoolEndMonth');
+        schoolCurrentCheckbox.addEventListener('change', function () {
+            toggleEndDate(schoolCurrentCheckbox, schoolEndDate);
+        });
+</script>

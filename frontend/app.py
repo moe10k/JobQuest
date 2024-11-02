@@ -16,6 +16,7 @@ login_response_queue = 'login_response_queue'
 popup_request_queue = 'popup_request_queue'
 popup_response_queue = 'popup_response_queue'
 forgot_password_request_log_queue = 'forgot_password_request_queue'
+forgot_password_response_queue = 'forgot_password_response_queue'
 
 serializer = URLSafeTimedSerializer('secret_key') #Secret key for the URLSafeTimedSerializer
 
@@ -185,7 +186,7 @@ def send_popup_rabbitmq(message):
         exchange='',
         routing_key=popup_request_queue,
         body=message,
-        properties=pika.BasicProperties(delivery_mode=2)  # Make message persistent
+        properties=pika.BasicProperties(delivery_mode=2)
     )
 
     print(f" [x] Sent popup data to RabbitMQ: {message}")
@@ -389,6 +390,8 @@ def login():
 
 @app.route('/submit_popup', methods=['POST'])
 def submit_popup():
+    print("Form submitted")  # Debug print
+
     first_name = request.form.get('firstName')
     last_name = request.form.get('lastName')
     country = request.form.get('country')
@@ -403,6 +406,10 @@ def submit_popup():
     school_end_month = request.form.get('schoolEndMonth')
     school_current = request.form.get('schoolCurrent')  # Same as job_current
 
+    security_question_1 = request.form.get('securityQuestion1')
+    security_question_2 = request.form.get('securityQuestion2')
+    security_question_3 = request.form.get('securityQuestion3')
+
     message = json.dumps({
         "first_name": first_name,
         "last_name": last_name,
@@ -416,7 +423,10 @@ def submit_popup():
         "school_name": school_name,
         "school_start_month": school_start_month,
         "school_end_month": school_end_month,
-        "school_current": school_current
+        "school_current": school_current,
+        "security_question_1": security_question_1,
+        "security_question_2": security_question_2,
+        "security_question_3": security_question_3
     })
 
     send_popup_rabbitmq(message)
