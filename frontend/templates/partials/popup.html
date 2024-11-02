@@ -234,4 +234,29 @@
         let popup = document.getElementById('popup');
         popup.style.display = 'none';
     }
+
+    // Function to toggle end date fields
+    function toggleEndDate(checkbox, endDateInput) {
+            if (checkbox.checked) {
+                endDateInput.disabled = true;
+                endDateInput.style.backgroundColor = '#e0e0e0';
+            } else {
+                endDateInput.disabled = false;
+                endDateInput.style.backgroundColor = '';
+            }
+        }
+
+        // Job "Current" checkbox toggle
+        const jobCurrentCheckbox = document.getElementById('jobCurrent');
+        const jobEndDate = document.getElementById('jobEndMonth');
+        jobCurrentCheckbox.addEventListener('change', function () {
+            toggleEndDate(jobCurrentCheckbox, jobEndDate);
+        });
+
+        // School "Current" checkbox toggle
+        const schoolCurrentCheckbox = document.getElementById('schoolCurrent');
+        const schoolEndDate = document.getElementById('schoolEndMonth');
+        schoolCurrentCheckbox.addEventListener('change', function () {
+            toggleEndDate(schoolCurrentCheckbox, schoolEndDate);
+        });
 </script>
