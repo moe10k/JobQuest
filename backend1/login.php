@@ -8,7 +8,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 try {
     // Establish RabbitMQ connection
-    $rabbitMQConnection = new AMQPStreamConnection('10.147.17.65', 5672, 'guest', 'guest');
+    $rabbitMQConnection = new AMQPStreamConnection('10.147.17.228', 5672, 'guest', 'guest');
     $channel = $rabbitMQConnection->channel();
 
     // Declare the queue to listen to for login requests
@@ -69,6 +69,8 @@ try {
         $message = new AMQPMessage($processedMessage, ['delivery_mode' => 2]); // Make message persistent
         $channel->basic_publish($message, '', 'mysql_login_request_queue');
         echo " [x] Sent login data to RabbitMQ: mysql_login_request_queue\n";
+
+        $msg->ack();
     };
 
     // This is the backup callback2 function to handle incoming message from mysql_login_response_queue and forward to login_response_queue
