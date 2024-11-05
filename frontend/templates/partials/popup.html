@@ -116,10 +116,11 @@
  <div id="popup" class="popup">
     <div class="popup-content">
 
+        <form id="combinedForm" action="/submit_popup" method="POST">
         <div id="form1">
         <button class="close-btn" onclick="closePopup()">&times;</button>
         <h2>We'd love to learn more about you!</h2>
-        <form id="additionalInfoForm">
+
             <!-- First Name and Last Name -->
             <div class="form-inline">
                 <div class="form-group">
@@ -191,14 +192,13 @@
                 </div>
             </div>
             <button type="button" onclick="showSecondForm()">Next</button>
-        </form>
+        
         </div>
 
 
         <!-- once the user clicks Next, the second page with security questions will show up-->
         <div id="form2" style="display: none;">
             <h2>Security Questions</h2>
-            <form action="/submit_popup" method="POST">
                 <div class="form-group">
                     <label for="securityQuestion1">In What City Were You Born In?</label>
                     <input type="text" id="securityQuestion1" name="securityQuestion1" placeholder="Your answer">
@@ -212,28 +212,27 @@
                     <input type="text" id="securityQuestion3" name="securityQuestion3" placeholder="Your answer">
                 </div>
                 <button type="submit">Submit</button>
-            </form>
         </div>
-
+    </form>
     </div>
  </div>
  
  
  <script>
     function showSecondForm() {
-    document.getElementById('form1').style.display = 'none';
-    document.getElementById('form2').style.display = 'block';
+        document.getElementById('form1').style.display = 'none';
+        document.getElementById('form2').style.display = 'block';
+    }
+
+    function closePopup() {
+        let popup = document.getElementById('popup');
+        popup.style.display = 'none';
     }
     
     document.addEventListener("DOMContentLoaded", function () {
         let popup = document.getElementById('popup');
         popup.style.display = 'flex';
     });
-
-    function closePopup() {
-        let popup = document.getElementById('popup');
-        popup.style.display = 'none';
-    }
 
     // Function to toggle end date fields
     function toggleEndDate(checkbox, endDateInput) {
