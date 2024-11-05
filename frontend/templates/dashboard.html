@@ -16,12 +16,14 @@
 
 
     <div class="container">
-        <h1>Welcome to your dashboard, {{ user.username }}!</h1>
+        <h1>Welcome to your dashboard, {{ user.username }} with user id of {{ user_id }}!</h1>
         <p>Here is where your content will go...</p>
     </div>
 
     <!-- popup section-->
-     {% include 'partials/popup.html' %}
+    {% if show_popup %}
+        {% include 'partials/popup.html' %}
+    {% endif %}
      
 </body>
 </html>

@@ -42,6 +42,7 @@ try {
         $security_question_1 = $data[13];
         $security_question_2 = $data[14];
         $security_question_3 = $data[15];
+        $user_id = $data[16];
 
         // Confirmation message
         echo " [x] Recieved and Processing popup data...";
@@ -60,13 +61,19 @@ try {
             'school_name' => $school_name,
             'school_start_month' => $school_start_month,
             'school_end_month' => $school_end_month,
-            'school_current' => $school_current
+            'school_current' => $school_current,
+            'security_question_1' => $security_question_1,
+            'security_question_2' => $security_question_2,
+            'security_question_3' => $security_question_3,
+            'user_id' => $user_id
         ]);
 
         // Send processed data to RabbitMQ (mysql_popup_request_queue)
         $message = new AMQPMessage($processedMessage, ['delivery_mode' => 2]); // Make message persistent
         $channel->basic_publish($message, '', 'mysql_popup_request_queue');
         echo " [x] Sent popup data to RabbitMQ: mysql_popup_request_queue\n";
+
+        $msg->ack();
     };
 
     // Consume messages from the queue: popup_request_queue
