@@ -5,10 +5,14 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Linux (Ubuntu)
     activate_venv="source venv/bin/activate"
     python_cmd="python3"
+    # Start Gunicorn for Linux
+    server_cmd="gunicorn app:app --bind 0.0.0.0:7012"
 elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
     # Windows (Git Bash/WSL/Native Bash on Windows)
     activate_venv="venv\\Scripts\\activate"
     python_cmd="python"
+    # Start Waitress or Flask's built-in server for Windows
+    server_cmd="python app.py"  # This uses Waitress if defined in app.py
 else
     echo "Unsupported OS."
     exit 1
@@ -49,47 +53,9 @@ if ! command -v pip &> /dev/null; then
     exit 1
 fi
 
-# Install Flask if it is not installed
-if ! pip show flask &>/dev/null; then 
-    echo "Flask is not installed. Installing Flask..."
-    pip install flask
-else
-    echo "Flask is already installed."
-fi
+# Install necessary packages
+pip install flask requests pika Flask-Mail mysql-connector-python gunicorn waitress
 
-# Install other necessary packages
-pip install requests pika  # installs requests and pika packages
-
-# Install mail package
-pip install Flask-Mail
-pip install mysql-connector-python
-pip install mysql-connector-python pika
-pip install itsdangerous
-
-# Create app.py if it doesn't exist
-if [ ! -f "app.py" ]; then
-    echo "Creating app.py..."
-    cat <<EOF > app.py
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route('/')
-def hello():
-    return "Hello, World!"
-
-if __name__ == "__main__":
-    app.run(debug=True, port=7012)
-EOF
-    echo "app.py created successfully."
-else
-    echo "app.py already exists."
-fi
-
-# Set Flask app environment variables
-export FLASK_APP=app.py
-export FLASK_ENV=development
-
-# Run the Flask app on port 7012 using `python -m flask`
-echo "Starting the Flask app on port 7012..."
-$python_cmd -m flask run --host=0.0.0.0 --port=7012
+# Start the server
+echo "Starting the Flask app..."
+$server_cmd
