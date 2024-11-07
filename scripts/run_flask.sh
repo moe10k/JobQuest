@@ -5,14 +5,10 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Linux (Ubuntu)
     activate_venv="source venv/bin/activate"
     python_cmd="python3"
-    # Start Gunicorn for Linux
-    server_cmd="gunicorn app:app --bind 0.0.0.0:7012"
 elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
     # Windows (Git Bash/WSL/Native Bash on Windows)
     activate_venv="venv\\Scripts\\activate"
     python_cmd="python"
-    # Start Waitress or Flask's built-in server for Windows
-    server_cmd="python app.py"  # This uses Waitress if defined in app.py
 else
     echo "Unsupported OS."
     exit 1
@@ -53,9 +49,89 @@ if ! command -v pip &> /dev/null; then
     exit 1
 fi
 
-# Install necessary packages
-pip install flask requests pika Flask-Mail mysql-connector-python gunicorn waitress
+# Install Flask if it is not installed
+if ! pip show flask &>/dev/null; then 
+    echo "Flask is not installed. Installing Flask..."
+    pip install flask
+else
+    echo "Flask is already installed."
+fi
 
-# Start the server
-echo "Starting the Flask app..."
-$server_cmd
+# Install other necessary packages
+pip install requests pika  # installs requests and pika packages
+
+# Install mail package
+pip install Flask-Mail
+pip install mysql-connector-python
+pip install mysql-connector-python pika
+pip install itsdangerous
+pip install gunicorn
+
+# Install Nginx
+echo "Installing Nginx..."
+sudo apt update
+sudo apt install -y nginx
+
+# Create app.py if it doesn't exist
+if [ ! -f "app.py" ]; then
+    echo "Creating app.py..."
+    cat <<EOF > app.py
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return "Hello, World!"
+
+if __name__ == "__main__":
+    app.run(debug=True, port=7012)
+EOF
+    echo "app.py created successfully."
+else
+    echo "app.py already exists."
+fi
+
+# Set Flask app environment variables
+export FLASK_APP=app.py
+export FLASK_ENV=production
+
+# Start Gunicorn with the app running on 7012, with the specified IP and workers
+echo "Starting Gunicorn on 10.147.17.11:7012..."
+gunicorn app:app --bind 10.147.17.11:7012 --workers 4 &
+
+# Set up Nginx configuration
+echo "Setting up Nginx reverse proxy configuration..."
+cat <<EOF > /etc/nginx/sites-available/IT490
+server {
+    listen 80;
+    server_name 10.147.17.11;  
+
+    access_log /var/log/nginx/IT490.log;
+
+    location / {
+        proxy_pass http://10.147.17.11:7012;  
+        proxy_set_header Host \$host;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
+}
+EOF
+
+# Enable the site and restart Nginx to apply changes
+sudo ln -s /etc/nginx/sites-available/IT490 /etc/nginx/sites-enabled/
+echo "Restarting Nginx..."
+sudo systemctl restart nginx
+
+# Ensure Firewall is open for port 80 (HTTP) and 7012 (Gunicorn)
+echo "Configuring firewall rules..."
+sudo ufw default deny incoming
+
+# Allow HTTP (port 80) and Gunicorn (port 7012) traffic
+sudo ufw allow 80/tcp
+sudo ufw allow 7012/tcp
+
+# Reload UFW to apply the changes
+sudo ufw reload
+
+echo "Setup completed! Gunicorn is running on 10.147.17.11:7012, Nginx is proxying on port 80."
