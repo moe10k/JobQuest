@@ -97,8 +97,8 @@ export FLASK_APP=app.py
 export FLASK_ENV=production
 
 # Start Gunicorn with the app running on 7012, with the specified IP and workers
-echo "Starting Gunicorn on 10.147.17.11:7012..."
-gunicorn app:app --bind 10.147.17.11:7012 --workers 4 &
+echo "Starting Gunicorn on 10.147.17.11:8000..."
+gunicorn app:app --bind 10.147.17.11:8000 --workers 4 &
 
 # Set up Nginx configuration
 echo "Setting up Nginx reverse proxy configuration..."
@@ -121,7 +121,7 @@ server {
     access_log /var/log/nginx/IT490.log;
 
     location / {
-        proxy_pass http://10.147.17.11:7012;
+        proxy_pass http://10.147.17.11:8000;
         proxy_set_header Host \$host;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
@@ -144,4 +144,4 @@ sudo ufw allow 7012/tcp
 # Reload UFW to apply the changes
 sudo ufw reload
 
-echo "Setup completed! Gunicorn is running on 10.147.17.11:7012, Nginx is proxying on port 80."
+echo "Setup completed! Gunicorn is running on 10.147.17.11:8000, Nginx is proxying on port 80."
