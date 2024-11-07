@@ -101,27 +101,35 @@ echo "Starting Gunicorn on 10.147.17.11:7012..."
 gunicorn app:app --bind 10.147.17.11:7012 --workers 4 &
 
 # Set up Nginx configuration
-echo " server {
+echo "Setting up Nginx reverse proxy configuration..."
+
+# Check if symlink already exists and remove it
+if [ -L /etc/nginx/sites-enabled/IT490 ]; then
+    echo "Symbolic link for IT490 already exists, removing it..."
+    sudo rm /etc/nginx/sites-enabled/IT490
+fi
+
+# Create the symbolic link
+sudo ln -s /etc/nginx/sites-available/IT490 /etc/nginx/sites-enabled/
+
+# Write Nginx configuration
+cat <<EOF | sudo tee /etc/nginx/sites-available/IT490 > /dev/null
+server {
     listen 80;
-    server_name 10.147.17.11;  
+    server_name 10.147.17.11;
 
     access_log /var/log/nginx/IT490.log;
 
     location / {
-        proxy_pass http://10.147.17.11:7012;  
+        proxy_pass http://10.147.17.11:7012;
         proxy_set_header Host \$host;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
     }
-}" | sudo tee /etc/nginx/sites-available/IT490 > /dev/null
+}
+EOF
 
-# Enable the site and restart Nginx to apply changes
-echo "Enabling site configuration..."
-sudo ln -s /etc/nginx/sites-available/IT490 /etc/nginx/sites-enabled/
-
-
-# Enable the site and restart Nginx to apply changes
-sudo ln -s /etc/nginx/sites-available/IT490 /etc/nginx/sites-enabled/
+# Restart Nginx
 echo "Restarting Nginx..."
 sudo systemctl restart nginx
 
