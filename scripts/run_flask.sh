@@ -101,9 +101,7 @@ echo "Starting Gunicorn on 10.147.17.11:7012..."
 gunicorn app:app --bind 10.147.17.11:7012 --workers 4 &
 
 # Set up Nginx configuration
-echo "Setting up Nginx reverse proxy configuration..."
-cat <<EOF > /etc/nginx/sites-available/IT490
-server {
+echo " server {
     listen 80;
     server_name 10.147.17.11;  
 
@@ -115,8 +113,12 @@ server {
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
     }
-}
-EOF
+}" | sudo tee /etc/nginx/sites-available/IT490 > /dev/null
+
+# Enable the site and restart Nginx to apply changes
+echo "Enabling site configuration..."
+sudo ln -s /etc/nginx/sites-available/IT490 /etc/nginx/sites-enabled/
+
 
 # Enable the site and restart Nginx to apply changes
 sudo ln -s /etc/nginx/sites-available/IT490 /etc/nginx/sites-enabled/
