@@ -93,9 +93,9 @@ export FLASK_APP=app.py
 export FLASK_ENV=production
 
 # Stop any existing process on port 7012 or 81
-echo "Stopping any existing processes on ports 7012 and 81..."
+echo "Stopping any existing processes on ports 7012 and 80..."
 sudo fuser -k 7012/tcp || true
-sudo fuser -k 81/tcp || true
+sudo fuser -k 80/tcp || true
 
 # Start Gunicorn with the app running on 7012, with the specified IP and workers
 echo "Starting Gunicorn on 10.147.17.11:7012..."
@@ -113,7 +113,7 @@ fi
 # Write Nginx configuration
 cat <<EOF | sudo tee /etc/nginx/sites-available/IT490 > /dev/null
 server {
-    listen 81;
+    listen 80;
     server_name 10.147.17.11;
 
     access_log /var/log/nginx/IT490.log;
@@ -140,11 +140,11 @@ sudo nginx -t
 echo "Restarting Nginx..."
 sudo systemctl restart nginx
 
-# Ensure Firewall is open for port 81 (HTTP) and 7012 (Gunicorn)
-echo "Configuring firewall rules..."
-sudo ufw default deny incoming
-sudo ufw allow 81/tcp
-sudo ufw allow 7012/tcp
-sudo ufw reload # Reload UFW to apply the changes
+# # Ensure Firewall is open for port 81 (HTTP) and 7012 (Gunicorn)
+# echo "Configuring firewall rules..."
+# # sudo ufw default deny incoming
+# # sudo ufw allow 80/tcp
+# # sudo ufw allow 7012/tcp
+# sudo ufw reload # Reload UFW to apply the changes
 
 echo "Setup completed! Gunicorn is running on 10.147.17.11:7012, Nginx is proxying on port 81."
