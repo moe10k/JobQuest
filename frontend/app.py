@@ -1,4 +1,4 @@
-import pika, time, json, re
+import pika, time, json, re, requests
 import mysql.connector
 from flask import Flask, flash, render_template, request, redirect, url_for, session
 from flask_mail import Mail, Message
@@ -17,25 +17,8 @@ login_request_queue = 'login_request_queue'
 login_response_queue = 'login_response_queue'
 popup_request_queue = 'popup_request_queue'
 popup_response_queue = 'popup_response_queue'
-forgot_password_request_log_queue = 'forgot_password_request_queue'
-forgot_password_response_queue = 'forgot_password_response_queue'
 resetpassword_request_queue = 'resetpassword_request_queue'
 resetpassword_response_queue = 'resetpassword_response_queue'
-
-
-serializer = URLSafeTimedSerializer('secret_key') #Secret key for the URLSafeTimedSerializer
-
-
-# Mail settings
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'jobquest93@gmail.com' #Company email
-app.config['MAIL_PASSWORD'] = "]';5jN0xV>R$" #Company email password
-app.config['MAIL_DEFAULT_SENDER'] = 'jobquest93@gmail.com' #Company email
-
-
-mail = Mail(app)
 
 
 def is_logged_in():
@@ -43,76 +26,6 @@ def is_logged_in():
        return True
    else:
        return False  
-
-
-# Function to check if the email already exists in the database
-
-
-def check_email_exists(email):
-   #Database connection
-   config = {
-       'user': 'root',       # might need to change not sure yet
-       'password': 'your_password',   
-       'host': 'localhost',           
-       'database': 'it490_db'         
-   }
-
-
-   try:
-       db_connection = mysql.connector.connect(**config)
-       cursor = db_connection.cursor()
-
-
-       query = "SELECT * FROM users WHERE email = %s"
-       cursor.execute(query, (email,))
-
-
-       result = cursor.fetchone()[0]
-       return result > 0 # True if email exists, False if not
-  
-   except mysql.connector.Error as e:
-       print(f"Database error: {e}")
-       return False
-  
-   finally:
-       cursor.close()
-       db_connection.close()
-
-
-#Function to check if the username already exists in the database
-def check_username_exists(username):
-   #Database connection
-   config = {
-       'user': 'root',       # might need to change not sure yet
-       'password': 'your_password',   
-       'host': 'localhost',           
-       'database': 'it490_db'         
-   }
-
-
-   try:
-       db_connection = mysql.connector.connect(**config)
-       cursor = db_connection.cursor()
-
-
-       query = "SELECT * FROM users WHERE username = %s"
-       cursor.execute(query, (username,))
-
-
-       result = cursor.fetchone()[0]
-       return result > 0 # True if email exists, False if not
-  
-   except mysql.connector.Error as e:
-       print(f"Database error: {e}")
-       return False
-  
-   finally:
-       cursor.close()
-       db_connection.close()
-
-
-
-
 
 
 # Function to send registration data to RabbitMQ
@@ -252,67 +165,6 @@ def consume_popup_response():
        return popup_response
    else:
        return None
-  
-def send_forgot_password_rabbitmq(message):
-   connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
-   channel = connection.channel()
-  
-   # Declare the forgot password log request queue
-   channel.queue_declare(queue=forgot_password_request_log_queue, durable=True)
-
-
-   # Send the log to the queue
-   channel.basic_publish(
-       exchange='',
-       routing_key=forgot_password_request_log_queue,
-       body=message,
-   )
-
-
-   print(f" [x] Logged Password Reset Request to RabitMQ : {message}")
-   connection.close()
-
-
-def consume_forgot_password_response():
-   connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
-   channel = connection.channel()
-   channel.queue_declare(queue=forgot_password_response_queue, durable=True)
-
-
-   time.sleep(15)  # Delay to allow the response to be processed
-
-
-   method_frame, header_frame, body = channel.basic_get(queue=forgot_password_response_queue, auto_ack=True)
-
-
-   channel.close()
-   connection.close()
-
-
-   if body:
-       forgot_password_response = body.decode('utf-8')
-       print(f"Message received from forgot_password2.php: {forgot_password_response}")
-       return forgot_password_response
-   else:
-       return None             # No message received
-
-
-def send_password_reset_email(recipient_email, reset_link):
-   try:
-       msg = Message(
-           subject="Password Reset Request",
-           recipients=[recipient_email],
-           body=f"Hi,\n\nTo reset your password, please click on the following link:\n{reset_link}\n\nIf you did not request a password reset, please ignore this email.",
-           sender=app.config['MAIL_DEFAULT_SENDER']
-       )
-       mail.send(msg)
-       print("Password reset email sent successfully.")
-       return True
-   except Exception as e:
-       print(f"Failed to send email: {e}")
-       return False
-  
-
 
 
 
@@ -391,8 +243,6 @@ def register():
 
 
        #Validates Email using regex
-
-
        email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
        if not re.match(email_pattern, email):
            flash('Invalid email address. Please provide a valid email.', 'danger')
@@ -410,20 +260,6 @@ def register():
            flash('Passwords do not match.', 'danger')
            print("Passwords do not match, Submission to RabitMQ failed.")
            return render_template('register.html')
-      
-       # Check if the email already exists in the database
-       if check_email_exists(email):
-           flash('Email already exists. Please login instead.', 'danger')
-           print("Email already exists, Submission to RabitMQ failed.")
-           return render_template('register.html')
-      
-       # Check if the username already exists in the database
-       if check_username_exists(username):
-           flash('Username already exists. Please choose a different username.', 'danger')
-           print("Username already exists, Submission to RabitMQ failed.")
-           return render_template('register.html')
-      
-
 
        message = f"{username},{email},{password}" #message that data is sent to queue
       
@@ -553,56 +389,6 @@ def submit_popup():
    return redirect('/dashboard')
 
 
-@app.route('/forgot_password', methods=['POST'])
-def forgot_password():
-   email = request.form.get('forgotEmail')
-
-
-   #Validates Email using regex
-
-
-   email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-   if not re.match(email_pattern, email):
-       flash('Invalid email address. Please provide a valid email.', 'danger')
-       print("Invalid email address, Submission to RabitMQ failed.")
-       return render_template('forgot_password.html')
-  
-   # Check if email exists in the database
-   if not check_email_exists(email):
-       flash('Email not found', 'danger')
-       print("Email does not exist in database, Submission to RabitMQ failed.")
-       return render_template('forgot_password.html')
-  
-   # Generate password reset link
-   token = serializer.dumps(email, salt='password-reset-salt')
-   reset_link = url_for('reset_password', token=token, _external=True)
-
-
-   #log password reset request to RabitMQ
-   log_message = json.dumps({"email": email, "reset_link": reset_link})
-   send_forgot_password_rabbitmq(log_message)
-
-
-   # Send password reset email
-   if send_password_reset_email(email, reset_link):
-       flash('Password reset link sent to your email!', 'success')
-       print("Password reset link sent successfully.")
-   else:
-       flash('Error - Please Try again later', 'danger')
-       print("Failed to send password reset email.")
-
-
-   return redirect('/login')
-
-
-
-
-@app.route('/reset_password/<token>', methods=['GET', 'POST'])
-
-
-
-
-
 
 @app.route('/dashboard')
 def dashboard():
@@ -673,6 +459,64 @@ def resetpassword():
    # Render the reset password form if it's a GET request
    return render_template('resetpassword.html')
 
+
+@app.route('/search', methods=['GET', 'POST'])
+def search_jobs():
+    job_results = None  # Default to None to avoid showing results on the initial load
+    if request.method == 'POST':
+        # Extract form data for job search
+        job_title = request.form.get('job_title')
+        location = request.form.get('location')
+
+        # API info - hardcoded for now, need to create .env later
+        url = "https://api.apijobs.dev/v1/job/search"
+        headers = {
+            'apikey': '9765c07340ff178432353d35e4658525d3bedd8e74cce25f3d982f2e24ac669e',
+            'Content-Type': 'application/json'
+        }
+        payload = {
+            'q': job_title,
+            'country': location
+        }
+
+        # Send POST request
+        response = requests.post(url, json=payload, headers=headers)
+
+        # Print the status code and response content for debugging
+        print("Status Code:", response.status_code)
+
+        # Check the response status
+        if response.status_code == 200:
+            job_results = response.json().get('hits', [])
+            
+            if job_results:
+                # Print the first job for debugging
+                print("First Job Details:", job_results[0])
+
+                # Extract specific job details for display
+                formatted_jobs = []
+                for job in job_results:
+                    formatted_jobs.append({
+                        'title': job.get('title'),
+                        'job_url': job.get('url'),
+                        'company': job.get('hiringOrganizationName', 'N/A'),
+                        'location': job.get('region', 'N/A'),
+                        'description': job.get('description', 'N/A')
+                    })
+
+                return render_template('search.html', jobs=formatted_jobs)
+
+            else:
+                print("No job data found.")
+                flash('No job results found.', 'info')
+                return render_template('search.html')
+
+        else:
+            flash('Failed to fetch job data. Please try again later.', 'danger')
+            return render_template('search.html')
+
+    # Render the search page with job results (if any)
+    return render_template('search.html', jobs=job_results)
 
 
 
