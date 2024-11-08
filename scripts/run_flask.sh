@@ -115,7 +115,7 @@ sudo ln -s /etc/nginx/sites-available/IT490 /etc/nginx/sites-enabled/
 # Write Nginx configuration
 cat <<EOF | sudo tee /etc/nginx/sites-available/IT490 > /dev/null
 server {
-    listen 80;
+    listen 81;
     server_name 10.147.17.11;
 
     access_log /var/log/nginx/IT490.log;
@@ -133,12 +133,12 @@ EOF
 echo "Restarting Nginx..."
 sudo systemctl restart nginx
 
-# Ensure Firewall is open for port 80 (HTTP) and 7012 (Gunicorn)
+# Ensure Firewall is open for port 81 (HTTP) and 7012 (Gunicorn)
 echo "Configuring firewall rules..."
 sudo ufw default deny incoming
 
 # Allow HTTP (port 80) and Gunicorn (port 7012) traffic
-sudo ufw allow 80/tcp
+sudo ufw allow 81/tcp
 sudo ufw allow 7012/tcp
 
 # Reload UFW to apply the changes
