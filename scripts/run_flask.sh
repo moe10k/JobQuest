@@ -60,12 +60,8 @@ fi
 # Install other necessary packages
 pip install requests pika  # installs requests and pika packages
 
-# Install mail package
-pip install Flask-Mail
-pip install mysql-connector-python
-pip install mysql-connector-python pika
-pip install itsdangerous
-pip install gunicorn
+# Install necessary packages
+pip install requests pika Flask-Mail mysql-connector-python itsdangerous gunicorn
 
 # Install Nginx
 echo "Installing Nginx..."
@@ -96,9 +92,14 @@ fi
 export FLASK_APP=app.py
 export FLASK_ENV=production
 
+# Stop any existing process on port 7012 or 81
+echo "Stopping any existing processes on ports 7012 and 81..."
+sudo fuser -k 7012/tcp || true
+sudo fuser -k 81/tcp || true
+
 # Start Gunicorn with the app running on 7012, with the specified IP and workers
-echo "Starting Gunicorn on 10.147.17.11:8000..."
-gunicorn app:app --bind 10.147.17.11:8000 --workers 4 &
+echo "Starting Gunicorn on 10.147.17.11:7012..."
+gunicorn app:app --bind 10.147.17.11:7012 --workers 4 &
 
 # Set up Nginx configuration
 echo "Setting up Nginx reverse proxy configuration..."
@@ -109,9 +110,6 @@ if [ -L /etc/nginx/sites-enabled/IT490 ]; then
     sudo rm /etc/nginx/sites-enabled/IT490
 fi
 
-# Create the symbolic link
-sudo ln -s /etc/nginx/sites-available/IT490 /etc/nginx/sites-enabled/
-
 # Write Nginx configuration
 cat <<EOF | sudo tee /etc/nginx/sites-available/IT490 > /dev/null
 server {
@@ -121,13 +119,22 @@ server {
     access_log /var/log/nginx/IT490.log;
 
     location / {
-        proxy_pass http://10.147.17.11:8000;
+        proxy_pass http://10.147.17.11:7012;
         proxy_set_header Host \$host;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
     }
 }
 EOF
+
+# Create the symbolic link if it doesn't exist
+if [ ! -L /etc/nginx/sites-enabled/IT490 ]; then
+    sudo ln -s /etc/nginx/sites-available/IT490 /etc/nginx/sites-enabled/
+fi
+
+# Check Nginx configuration syntax before restarting
+echo "Checking Nginx configuration syntax..."
+sudo nginx -t
 
 # Restart Nginx
 echo "Restarting Nginx..."
@@ -136,12 +143,8 @@ sudo systemctl restart nginx
 # Ensure Firewall is open for port 81 (HTTP) and 7012 (Gunicorn)
 echo "Configuring firewall rules..."
 sudo ufw default deny incoming
-
-# Allow HTTP (port 80) and Gunicorn (port 7012) traffic
 sudo ufw allow 81/tcp
 sudo ufw allow 7012/tcp
+sudo ufw reload # Reload UFW to apply the changes
 
-# Reload UFW to apply the changes
-sudo ufw reload
-
-echo "Setup completed! Gunicorn is running on 10.147.17.11:8000, Nginx is proxying on port 80."
+echo "Setup completed! Gunicorn is running on 10.147.17.11:7012, Nginx is proxying on port 81."
