@@ -32,7 +32,7 @@ try {
        // Check the database for the user credentials
        try {
            $dbConnection = getDB(); // Get database connection
-           $stmt = $dbConnection->prepare("SELECT password, username, user_id FROM User WHERE email = ?");
+           $stmt = $dbConnection->prepare("SELECT password, username, user_id, popup_enabled FROM User WHERE email = ?");
            $stmt->bind_param("s", $email);
            $stmt->execute();
            $result = $stmt->get_result();
@@ -43,13 +43,15 @@ try {
                $hashedPassword = $user['password']; // Retrieve the hashed password from the database
                $username = $user['username']; // also retrieve the username from the database
                $user_id = $user['user_id']; //also the user_id
+               $popup_enabled = $user['popup_enabled']; //tracking popup persistance
 
                // Verify the password using password_verify() and send result to rabbitmq
                if (password_verify($password, $hashedPassword)) {
                    $responseMessage = json_encode([
                        'status' => 'success',
                        'username' => $username,
-                       'user_id' => $user_id
+                       'user_id' => $user_id,
+                       'popup_enabled' => $popup_enabled
                    ]);
                    echo " [x] Login successful for email: $email\n";
                } else {

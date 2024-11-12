@@ -38,41 +38,42 @@ try {
        echo " [DEBUG] Hashed password: $hashedpassword\n";
 
        try {
-           $dbConnection = getDB(); // Get database connection
+        $dbConnection = getDB(); // Get database connection
 
-           // Check if security questions and old password match
-           $query = "SELECT * FROM User WHERE user_id = ? AND security_question_1 = ? AND security_question_2 = ? AND security_question_3 = ?";
-           $stmt = $dbConnection->prepare($query);
-           $stmt->bind_param("ssss", $user_id, $question1, $question2, $question3);
-           $stmt->execute();
-           $result = $stmt->get_result();
+        // Check if security questions match in the Security_Questions table
+        $query = "SELECT * FROM Security_Questions WHERE user_id = ? AND security_question_1 = ? AND security_question_2 = ? AND security_question_3 = ?";
+        $stmt = $dbConnection->prepare($query);
+        $stmt->bind_param("isss", $user_id, $question1, $question2, $question3);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-           if ($result->num_rows === 1) {
-               echo " [DEBUG] Preparing to update password for user_id: $user_id with hashed password: $hashedpassword\n";
+        if ($result->num_rows === 1) {
+            echo " [DEBUG] Preparing to update password for user_id: $user_id with hashed password: $hashedpassword\n";
 
-               // If match found, update the password
-               $updateQuery = "UPDATE User SET password = ? WHERE user_id = ?";
-               $updateStmt = $dbConnection->prepare($updateQuery);
-               $updateStmt->bind_param("ss", $hashedpassword, $user_id);
+            // If match found, update the password in the User table
+            $updateQuery = "UPDATE User SET password = ? WHERE user_id = ?";
+            $updateStmt = $dbConnection->prepare($updateQuery);
+            $updateStmt->bind_param("si", $hashedpassword, $user_id);
 
-               if ($updateStmt->execute()) {
-                   echo " [x] Password updated successfully for user_id: {$user_id}\n";
-                   $responseMessage = 'success';
-               } else {
-                   echo " [x] Error updating password: " . $updateStmt->error . "\n";
-                   $responseMessage = 'failure';
-               }
-               $updateStmt->close();
-           } else {
-               echo " [x] Security answers or old password do not match for user_id: {$user_id}\n";
-               $responseMessage = 'failure';
-           }
-           $stmt->close();
+            if ($updateStmt->execute()) {
+                echo " [x] Password updated successfully for user_id: {$user_id}\n";
+                $responseMessage = 'success';
+            } else {
+                echo " [x] Error updating password: " . $updateStmt->error . "\n";
+                $responseMessage = 'failure';
+            }
+            $updateStmt->close();
+        } else {
+            echo " [x] Security answers do not match for user_id: {$user_id}\n";
+            $responseMessage = 'failure';
+        }
+        
+        $stmt->close();
 
-       } catch (Exception $e) {
-           echo " [x] Database Error: " . $e->getMessage() . "\n";
-           $responseMessage = 'failure'; // Handle database error
-       }
+        } catch (Exception $e) {
+            echo " [x] Database Error: " . $e->getMessage() . "\n";
+            $responseMessage = 'failure'; // Handle database error
+        }
 
        // Send the result back to the mysql_resetpassword_response_queue
        $message = new AMQPMessage($responseMessage, ['delivery_mode' => 2]); // Make message persistent
