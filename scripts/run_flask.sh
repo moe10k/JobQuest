@@ -110,3 +110,4 @@ log_output "Starting Gunicorn on 10.147.17.11:7012..."
 gunicorn --bind 10.147.17.11:7012 --workers 4 --access-logfile backend_log.log --error-logfile backend_log.log app:app &
 
 log_output "Setup completed! Gunicorn is running on 10.147.17.11:7012, and logging traffic to backend_log.log."
+
