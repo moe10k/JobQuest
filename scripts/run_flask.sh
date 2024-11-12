@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Set log file
+log_file="backend_log.log"
+
+# Function to log output to file
+log_output() {
+    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a $log_file
+}
+
 # Detect the operating system
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Linux (Ubuntu)
@@ -10,16 +18,16 @@ elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]];
     activate_venv="venv\\Scripts\\activate"
     python_cmd="python"
 else
-    echo "Unsupported OS."
+    log_output "Unsupported OS."
     exit 1
 fi
 
 # Navigate to the frontend directory
-cd ../frontend || { echo "Frontend directory not found"; exit 1; }
+cd ../frontend || { log_output "Frontend directory not found"; exit 1; }
 
 # Create virtual environment if it doesn't exist
 if [ ! -d "venv" ]; then 
-    echo "Virtual environment not found! Creating it..."
+    log_output "Virtual environment not found! Creating it..."
     $python_cmd -m venv venv
 fi
 
@@ -29,48 +37,39 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     if [ -f "venv/bin/activate" ]; then
         source venv/bin/activate
     else
-        echo "Error: Failed to create virtual environment on Linux."
+        log_output "Error: Failed to create virtual environment on Linux."
         exit 1
     fi
 else
-    # Call activate.bat for Windows
+    # Call activate for Windows
     if [ -f "venv\\Scripts\\activate" ]; then
-        # Windows-compatible activation
-        source venv\\Scripts\\activate || { echo "Error: Failed to activate virtual environment on Windows."; exit 1; }
+        source venv\\Scripts\\activate || { log_output "Error: Failed to activate virtual environment on Windows."; exit 1; }
     else
-        echo "Error: Failed to create virtual environment on Windows."
+        log_output "Error: Failed to create virtual environment on Windows."
         exit 1
     fi
 fi
 
 # Verify activation by checking if pip is available
 if ! command -v pip &> /dev/null; then
-    echo "Error: Virtual environment activation failed."
+    log_output "Error: Virtual environment activation failed."
     exit 1
 fi
 
-# Install Flask if it is not installed
-if ! pip show flask &>/dev/null; then 
-    echo "Flask is not installed. Installing Flask..."
-    pip install flask
-else
-    echo "Flask is already installed."
+# Install required Python packages
+log_output "Installing required Python packages..."
+pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn
+
+# Install Nginx (Linux only)
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    log_output "Installing Nginx..."
+    sudo apt update
+    sudo apt install -y nginx
 fi
-
-# Install other necessary packages
-pip install requests pika  # installs requests and pika packages
-
-# Install necessary packages
-pip install requests pika Flask-Mail mysql-connector-python itsdangerous gunicorn
-
-# Install Nginx
-echo "Installing Nginx..."
-sudo apt update
-sudo apt install -y nginx
 
 # Create app.py if it doesn't exist
 if [ ! -f "app.py" ]; then
-    echo "Creating app.py..."
+    log_output "Creating app.py..."
     cat <<EOF > app.py
 from flask import Flask
 
@@ -83,30 +82,30 @@ def hello():
 if __name__ == "__main__":
     app.run(debug=True, port=7012)
 EOF
-    echo "app.py created successfully."
+    log_output "app.py created successfully."
 else
-    echo "app.py already exists."
+    log_output "app.py already exists."
 fi
 
 # Set Flask app environment variables
 export FLASK_APP=app.py
 export FLASK_ENV=production
 
-# Stop any existing process on port 7012 or 81
-echo "Stopping any existing processes on ports 7012 and 80..."
+# Stop any existing processes on port 7012 or 80
+log_output "Stopping any existing processes on ports 7012 and 80..."
 sudo fuser -k 7012/tcp || true
 sudo fuser -k 80/tcp || true
 
 # Start Gunicorn with the app running on 7012, with the specified IP and workers
-echo "Starting Gunicorn on 10.147.17.11:7012..."
+log_output "Starting Gunicorn on 10.147.17.11:7012..."
 gunicorn app:app --bind 10.147.17.11:7012 --workers 4 &
 
 # Set up Nginx configuration
-echo "Setting up Nginx reverse proxy configuration..."
+log_output "Setting up Nginx reverse proxy configuration..."
 
-# Check if symlink already exists and remove it
+# Remove existing symlink for Nginx config if it exists
 if [ -L /etc/nginx/sites-enabled/IT490 ]; then
-    echo "Symbolic link for IT490 already exists, removing it..."
+    log_output "Removing existing symbolic link for IT490..."
     sudo rm /etc/nginx/sites-enabled/IT490
 fi
 
@@ -133,18 +132,11 @@ if [ ! -L /etc/nginx/sites-enabled/IT490 ]; then
 fi
 
 # Check Nginx configuration syntax before restarting
-echo "Checking Nginx configuration syntax..."
+log_output "Checking Nginx configuration syntax..."
 sudo nginx -t
 
 # Restart Nginx
-echo "Restarting Nginx..."
+log_output "Restarting Nginx..."
 sudo systemctl restart nginx
 
-# # Ensure Firewall is open for port 81 (HTTP) and 7012 (Gunicorn)
-# echo "Configuring firewall rules..."
-# # sudo ufw default deny incoming
-# # sudo ufw allow 80/tcp
-# # sudo ufw allow 7012/tcp
-# sudo ufw reload # Reload UFW to apply the changes
-
-echo "Setup completed! Gunicorn is running on 10.147.17.11:7012, Nginx is proxying on port 81."
+log_output "Setup completed! Gunicorn is running on 10.147.17.11:7012, and Nginx is proxying on port 80."
