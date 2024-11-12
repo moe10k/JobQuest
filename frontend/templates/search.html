@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">   <!-- Source: www.geeksforgeeks.org/flask-message-flashing/-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Search </title>
+</head>
+<body>
+
+    <!-- nav bar section -->
+    {% include 'partials/nav.html' %}
+
+    <!-- Flash message section -->
+    {% include 'partials/flash.html' %}
+
+        <!-- search.html -->
+    <form method="POST" action="/search">
+        <label for="job_title">Job Title:</label>
+        <input type="text" name="job_title" id="job_title" required>
+        <label for="location">Location (optional):</label>
+        <input type="text" name="location" id="location">
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
+
+    <!-- Section to display job results -->
+    {% if jobs %}
+        <h2>Job Results</h2>
+        <ul>
+        {% for job in jobs %}
+            <li>
+                <h3>{{ job.title }}</h3>
+                <p><strong>Company:</strong> {{ job.company }}</p>
+                <p><strong>Location:</strong> {{ job.location }}</p>
+                <p><a href="{{ job.job_url }}">View Job</a></p>
+                <p><strong>Description:</strong> {{ job.description }}</p>
+            </li>
+        {% endfor %}
+        </ul>
+    {% elif jobs is not none %}
+        <p>No jobs found.</p>
+    {% endif %}
+        
+     
+</body>
+</html>
