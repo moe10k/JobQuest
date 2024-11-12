@@ -42,7 +42,8 @@ try {
         $security_question_1 = $data[13];
         $security_question_2 = $data[14];
         $security_question_3 = $data[15];
-        $user_id = $data[16];
+        $popup_enabled = $data[16];
+        $user_id = $data[17];
 
         // Confirmation message
         echo " [x] Recieved and Processing popup data...";
@@ -65,6 +66,7 @@ try {
             'security_question_1' => $security_question_1,
             'security_question_2' => $security_question_2,
             'security_question_3' => $security_question_3,
+            'popup_enabled' => $popup_enabled,
             'user_id' => $user_id
         ]);
 

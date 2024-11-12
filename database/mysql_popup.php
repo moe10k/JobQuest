@@ -28,77 +28,96 @@ try {
 
    // Callback function to handle incoming RabbitMQ messages
    $callback = function($msg) use ($channel) {
-       echo " [x] Received popup data: ", $msg->body, "\n";
+        echo " [x] Received popup data: ", $msg->body, "\n";
 
 
-       // Decode the received message (assumed to be JSON format)
-       $data = json_decode($msg->body, true);
+        // Decode the received message (assumed to be JSON format)
+        $data = json_decode($msg->body, true);
 
 
-       // Extracts data fields with default values just in case
-       $first_name = $data['first_name'] ?? '';
-       $last_name = $data['last_name'] ?? '';
-       $country = $data['country'] ?? '';
-       $state = $data['state'] ?? '';
-       $zip_code = $data['zip_code'] ?? '';
-       $job_title = $data['job_title'] ?? '';
-       $job_start_month = $data['job_start_month'] ?? '';
-       $job_end_month = $data['job_end_month'] ?? '';
+        // Extracts data fields with default values just in case
+        $first_name = $data['first_name'] ?? '';
+        $last_name = $data['last_name'] ?? '';
+        $country = $data['country'] ?? '';
+        $state = $data['state'] ?? '';
+        $zip_code = $data['zip_code'] ?? '';
+        $job_title = $data['job_title'] ?? '';
+        $job_start_month = $data['job_start_month'] ?? '';
+        $job_end_month = $data['job_end_month'] ?? '';
 
 
-       // checks if its null and if it is then sets it to 0
-       $job_current = isset($data['job_current']) && $data['job_current'] ? 1 : 0;
-       $school_current = isset($data['school_current']) && $data['school_current'] ? 1 : 0;
+        // checks if its null and if it is then sets it to 0
+        $job_current = isset($data['job_current']) && $data['job_current'] ? 1 : 0;
+        $school_current = isset($data['school_current']) && $data['school_current'] ? 1 : 0;
 
 
+        $school_name = $data['school_name'] ?? '';
+        $school_start_month = $data['school_start_month'] ?? '';
+        $school_end_month = $data['school_end_month'] ?? '';
+        $security_question_1 = $data['security_question_1'] ?? '';
+        $security_question_2 = $data['security_question_2'] ?? '';
+        $security_question_3 = $data['security_question_3'] ?? '';
+        $popup_enabled = $data['popup_enabled'] ?? 0; // Retrieves the popup_enabled status
+        $user_id = $data['user_id'] ?? ''; //retireives the user ID
 
-
-       $school_name = $data['school_name'] ?? '';
-       $school_start_month = $data['school_start_month'] ?? '';
-       $school_end_month = $data['school_end_month'] ?? '';
-       $security_question_1 = $data['security_question_1'] ?? '';
-       $security_question_2 = $data['security_question_2'] ?? '';
-       $security_question_3 = $data['security_question_3'] ?? '';
-
-
-      
-       $user_id = $data['user_id'] ?? ''; //retireives the user ID
        try {
-           $dbConnection = getDB(); // Get database connection
+            $dbConnection = getDB(); // Get database connection
 
+            // Insert into User_info table
+            $userInfoStmt = $dbConnection->prepare(
+                "INSERT INTO User_info (user_id, first_name, last_name, country, state, zip_code, school_name, school_start_month, school_end_month, school_current)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            );
+            $userInfoStmt->bind_param(
+                "issssssssi",
+                $user_id, $first_name, $last_name, $country, $state, $zip_code, $school_name, $school_start_month, $school_end_month, $school_current
+            );
+            $userInfoStmt->execute();
+            $userInfoStmt->close();
 
-           // Update new user data into the User table
-           $updateStmt = $dbConnection->prepare(
-               "UPDATE User SET
-                   first_name = ?, last_name = ?, country = ?, state = ?, zip_code = ?,
-                   job_title = ?, job_start_month = ?, job_end_month = ?, job_current = ?,
-                   school_name = ?, school_start_month = ?, school_end_month = ?,
-                   school_current = ?, security_question_1 = ?, security_question_2 = ?, security_question_3 = ?
-               WHERE user_id = ?"
-           );
-      
-           $updateStmt->bind_param(
-               "sssssssssssssssss",
-               $first_name, $last_name, $country, $state, $zip_code,
-               $job_title, $job_start_month, $job_end_month, $job_current,
-               $school_name, $school_start_month, $school_end_month, $school_current,
-               $security_question_1, $security_question_2, $security_question_3, $user_id
-           );
-      
-           if ($updateStmt->execute()) {
-               echo " [x] User data updated successfully in MySQL\n";
-               $responseMessage = 'success';
-           } else {
-               echo " [x] Error updating data: " . $updateStmt->error . "\n";
-               $responseMessage = 'failure';
-           }
-           $updateStmt->close();
+            // Insert into Experience table
+            $experienceStmt = $dbConnection->prepare(
+                "INSERT INTO Experience (user_id, job_title, job_start_month, job_end_month, job_current, bullet_points)
+                VALUES (?, ?, ?, ?, ?, ?)"
+            );
+            $bullet_points = '';
+            $experienceStmt->bind_param(
+                "isssis",
+                $user_id, $job_title, $job_start_month, $job_end_month, $job_current, $bullet_points
+            );
+            $experienceStmt->execute();
+            $experienceStmt->close();
 
+            // Insert into Security_Questions table
+            $securityStmt = $dbConnection->prepare(
+                "INSERT INTO Security_Questions (user_id, security_question_1, security_question_2, security_question_3)
+                VALUES (?, ?, ?, ?)"
+            );
+            $securityStmt->bind_param(
+                "isss",
+                $user_id, $security_question_1, $security_question_2, $security_question_3
+            );
+            $securityStmt->execute();
+            $securityStmt->close();
 
-       } catch (Exception $e) {
-           echo " [x] Database Error: " . $e->getMessage() . "\n";
-           $responseMessage = 'failure'; // Handle database error
-       }
+            // Update popup_enabled in User table
+            $updatePopupStmt = $dbConnection->prepare(
+                "UPDATE User SET popup_enabled = ? WHERE user_id = ?"
+            );
+            $updatePopupStmt->bind_param(
+                "ii",
+                $popup_enabled, $user_id
+            );
+            $updatePopupStmt->execute();
+            $updatePopupStmt->close();
+
+            echo " [x] Data inserted successfully in MySQL\n";
+            $responseMessage = 'success';
+
+        } catch (Exception $e) {
+            echo " [x] Database Error: " . $e->getMessage() . "\n";
+            $responseMessage = 'failure'; // Handle database error
+        }
 
 
        // Send the result back to the mysql_popup_response_queue
@@ -127,6 +146,3 @@ try {
    echo " [x] RabbitMQ Error: " . $e->getMessage() . "\n";
 }
 ?>
-
-
-
