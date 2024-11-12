@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Set log file
+# Set log file for traffic
 log_file="backend_log.log"
 
 # Function to log output to file
@@ -65,8 +65,25 @@ if [ ! -f "app.py" ]; then
     log_output "Creating app.py..."
     cat <<EOF > app.py
 from flask import Flask
+import logging
+
+# Set up logging to file for Flask traffic
+logging.basicConfig(
+    filename='backend_log.log',  # Log file where server traffic will be stored
+    level=logging.INFO,  # Log level (INFO to capture general traffic, DEBUG for more detailed logs)
+    format='%(asctime)s - %(levelname)s - %(message)s',  # Log format with timestamp, log level, and message
+)
 
 app = Flask(__name__)
+
+@app.before_request
+def log_request_info():
+    app.logger.info('Request: %s %s', request.method, request.url)
+
+@app.after_request
+def log_response_info(response):
+    app.logger.info('Response: %s %s', response.status, request.url)
+    return response
 
 @app.route('/')
 def hello():
@@ -90,6 +107,6 @@ sudo fuser -k 7012/tcp || true
 
 # Start Gunicorn with the app running on 7012, with the specified IP and workers
 log_output "Starting Gunicorn on 10.147.17.11:7012..."
-gunicorn app:app --bind 10.147.17.11:7012 --workers 4 &
+gunicorn --bind 10.147.17.11:7012 --workers 4 --access-logfile backend_log.log --error-logfile backend_log.log app:app &
 
-log_output "Setup completed! Gunicorn is running on 10.147.17.11:7012."
+log_output "Setup completed! Gunicorn is running on 10.147.17.11:7012, and logging traffic to backend_log.log."
