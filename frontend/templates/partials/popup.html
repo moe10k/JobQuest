@@ -11,6 +11,8 @@
         align-items: center;
         z-index: 1000;
     }
+ 
+ 
     .popup-content {
         background-color: #ffffff;
         padding: 30px;
@@ -19,20 +21,28 @@
         max-width: 600px;
         width: 90%;
     }
+ 
+ 
     .popup-content h2 {
         font-weight: 500;
         color: #333;
         margin-bottom: 20px;
     }
+ 
+ 
     .form-group {
         margin-bottom: 20px;
     }
+ 
+ 
     label {
         display: block;
         margin-bottom: 8px;
         font-weight: 500;
         color: #555;
     }
+ 
+ 
     input {
         width: 100%;
         padding: 10px;
@@ -42,10 +52,14 @@
         transition: border-color 0.3s;
         text-transform: uppercase;
     }
+ 
+ 
     input:focus {
         border-color: #6f42c1;
         outline: none;
     }
+ 
+ 
     button {
         background-color: #6f42c1;
         color: white;
@@ -56,9 +70,13 @@
         font-size: 16px;
         transition: background-color 0.3s;
     }
+ 
+ 
     button:hover {
         background-color: #6f42c1;
     }
+ 
+ 
     .close-btn {
         background-color: transparent;
         border: none;
@@ -70,22 +88,30 @@
         cursor: pointer;
         transition: color 0.3s;
     }
+ 
+ 
     .close-btn:hover {
         color: #333;
     }
+ 
+ 
     .form-inline {
         display: flex;
         gap: 20px;
     }
+ 
+ 
     .form-inline .form-group {
         flex: 1;
     }
+ 
+ 
     .form-inline .checkbox-inline {
         display: flex;
         align-items: center;
         gap: 5px;
     }
- 
+
     select {
     width: 100%;
     padding: 10px;
@@ -93,26 +119,28 @@
     border-radius: 5px;
     box-sizing: border-box;
     }
- 
+
     @media (max-width: 768px) {
     .form-inline {
         flex-direction: column;
     }
- 
+
     .form-inline .form-group {
         width: 100%;
         margin-right: 0;
     }
-    }  
+    }   
  </style>
+ 
+ 
  <div id="popup" class="popup">
     <div class="popup-content">
- 
+
         <form id="combinedForm" action="/submit_popup" method="POST">
         <div id="form1">
         <button class="close-btn" onclick="closePopup()">&times;</button>
         <h2>We'd love to learn more about you!</h2>
- 
+
             <!-- First Name and Last Name -->
             <div class="form-inline">
                 <div class="form-group">
@@ -124,6 +152,8 @@
                     <input type="text" id="lastName" name="lastName" placeholder="Last Name">
                 </div>
             </div>
+ 
+ 
             <!-- Country, State, and Zip -->
             <div class="form-inline">
                 <div class="form-group">
@@ -146,6 +176,8 @@
                     <input type="text" id="zip" name="zip" placeholder="e.g., 10001" pattern="\d{5}" maxlength="5" title="Please enter a 5-digit ZIP code" required>
                 </div>
             </div>
+ 
+ 
             <!-- Job Title, Start Month/Year, End Month/Year with Current Checkbox -->
             <div class="form-inline">
                 <div class="form-group">
@@ -165,6 +197,8 @@
                     <label for="jobCurrent">Current</label>
                 </div>
             </div>
+ 
+ 
             <!-- School Name, Start Month/Year, End Month/Year with Current Checkbox -->
             <div class="form-inline">
                 <div class="form-group">
@@ -185,10 +219,10 @@
                 </div>
             </div>
             <button type="button" onclick="showSecondForm()">Next</button>
-       
+        
         </div>
- 
- 
+
+
         <!-- once the user clicks Next, the second page with security questions will show up-->
         <div id="form2" style="display: none;">
             <h2>Security Questions</h2>
@@ -209,22 +243,24 @@
     </form>
     </div>
  </div>
+ 
+ 
  <script>
     function showSecondForm() {
         document.getElementById('form1').style.display = 'none';
         document.getElementById('form2').style.display = 'block';
     }
- 
+
     function closePopup() {
         let popup = document.getElementById('popup');
         popup.style.display = 'none';
     }
-   
+    
     document.addEventListener("DOMContentLoaded", function () {
         let popup = document.getElementById('popup');
         popup.style.display = 'flex';
     });
- 
+
     // Function to toggle end date fields
     function toggleEndDate(checkbox, endDateInput) {
             if (checkbox.checked) {
@@ -235,21 +271,18 @@
                 endDateInput.style.backgroundColor = '';
             }
         }
- 
+
         // Job "Current" checkbox toggle
         const jobCurrentCheckbox = document.getElementById('jobCurrent');
         const jobEndDate = document.getElementById('jobEndMonth');
         jobCurrentCheckbox.addEventListener('change', function () {
             toggleEndDate(jobCurrentCheckbox, jobEndDate);
         });
- 
+
         // School "Current" checkbox toggle
         const schoolCurrentCheckbox = document.getElementById('schoolCurrent');
         const schoolEndDate = document.getElementById('schoolEndMonth');
         schoolCurrentCheckbox.addEventListener('change', function () {
             toggleEndDate(schoolCurrentCheckbox, schoolEndDate);
         });
- </script>
- 
- 
- 
+</script>
