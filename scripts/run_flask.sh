@@ -60,13 +60,6 @@ fi
 log_output "Installing required Python packages..."
 pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn
 
-# Install Nginx (Linux only)
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    log_output "Installing Nginx..."
-    sudo apt update
-    sudo apt install -y nginx
-fi
-
 # Create app.py if it doesn't exist
 if [ ! -f "app.py" ]; then
     log_output "Creating app.py..."
@@ -91,52 +84,12 @@ fi
 export FLASK_APP=app.py
 export FLASK_ENV=production
 
-# Stop any existing processes on port 7012 or 8080
-log_output "Stopping any existing processes on ports 7012 and 8080..."
+# Stop any existing processes on port 7012
+log_output "Stopping any existing processes on port 7012..."
 sudo fuser -k 7012/tcp || true
-sudo fuser -k 8080/tcp || true
 
 # Start Gunicorn with the app running on 7012, with the specified IP and workers
 log_output "Starting Gunicorn on 10.147.17.11:7012..."
 gunicorn app:app --bind 10.147.17.11:7012 --workers 4 &
 
-# Set up Nginx configuration
-log_output "Setting up Nginx reverse proxy configuration..."
-
-# Remove existing symlink for Nginx config if it exists
-if [ -L /etc/nginx/sites-enabled/IT490 ]; then
-    log_output "Removing existing symbolic link for IT490..."
-    sudo rm /etc/nginx/sites-enabled/IT490
-fi
-
-# Write Nginx configuration to use port 8080
-cat <<EOF | sudo tee /etc/nginx/sites-available/IT490 > /dev/null
-server {
-    listen 8080;
-    server_name 10.147.17.11;
-
-    access_log /var/log/nginx/IT490.log;
-
-    location / {
-        proxy_pass http://10.147.17.11:7012;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-    }
-}
-EOF
-
-# Create the symbolic link if it doesn't exist
-if [ ! -L /etc/nginx/sites-enabled/IT490 ]; then
-    sudo ln -s /etc/nginx/sites-available/IT490 /etc/nginx/sites-enabled/
-fi
-
-# Check Nginx configuration syntax before restarting
-log_output "Checking Nginx configuration syntax..."
-sudo nginx -t
-
-# Restart Nginx
-log_output "Restarting Nginx..."
-sudo systemctl restart nginx
-
-log_output "Setup completed! Gunicorn is running on 10.147.17.11:7012, and Nginx is proxying on port 8080."
+log_output "Setup completed! Gunicorn is running on 10.147.17.11:7012."
