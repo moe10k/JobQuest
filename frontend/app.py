@@ -328,7 +328,8 @@ def login():
            session['user'] = {
                'email': email,
                'username': response['username'],  # Store username in the session
-               'user_id' : response['user_id']
+               'user_id' : response['user_id'],
+               'popup_enabled': response['popup_enabled']
            }
            flash('Login successful!', 'success')
            print("Login Successful!")
@@ -366,11 +367,12 @@ def submit_popup():
    security_question_1 = request.form.get('securityQuestion1')
    security_question_2 = request.form.get('securityQuestion2')
    security_question_3 = request.form.get('securityQuestion3')
+   popup_enabled = 1
    user_id = session.get('user', {}).get('user_id')#will be used to update the correct row in table
 
 
    # Create the message in the same format as register
-   message = f"{first_name},{last_name},{country},{state},{zip_code},{job_title},{job_start_month},{job_end_month},{job_current},{school_name},{school_start_month},{school_end_month},{school_current},{security_question_1},{security_question_2},{security_question_3},{user_id}"
+   message = f"{first_name},{last_name},{country},{state},{zip_code},{job_title},{job_start_month},{job_end_month},{job_current},{school_name},{school_start_month},{school_end_month},{school_current},{security_question_1},{security_question_2},{security_question_3},{popup_enabled},{user_id}"
 
 
    send_popup_rabbitmq(message)
@@ -381,6 +383,7 @@ def submit_popup():
 
    if response == 'success':
        session['show_popup'] = False  # thisll make sure that the popup doesn't show up again
+       session['user']['popup_enabled'] = 1
        flash('Additional information submitted successfully!', 'success')
    else:
        flash('Error - Please Try again later', 'danger')
@@ -392,20 +395,17 @@ def submit_popup():
 
 @app.route('/dashboard')
 def dashboard():
-   if is_logged_in():
-       user = session['user']
-       user_id = user.get('user_id')  # Retrieve the user_id from the session for debugging purposes
+    if is_logged_in():
+        user = session['user']
+        user_id = user.get('user_id')  # Retrieve the user_id from the session for debugging purposes
 
+        # Check if we need to show the popup based on the popup_enabled status from the session
+        show_popup = True if user.get('popup_enabled') == 0 else False
 
-       # Check if we need to show the popup
-       if 'show_popup' not in session:
-           session['show_popup'] = True  # Set to True the first time
-
-
-       return render_template('dashboard.html', user=user, user_id=user_id, show_popup=session['show_popup'])
-   else:
-       flash('You must login first', 'danger')
-       return redirect('/login')
+        return render_template('dashboard.html', user=user, user_id=user_id, show_popup=show_popup)
+    else:
+        flash('You must login first', 'danger')
+        return redirect('/login')
   
 
 
@@ -531,6 +531,3 @@ def inject_is_logged_in():
 
 if __name__ == "__main__":
    app.run(debug=True, port=7012)
-
-
-
