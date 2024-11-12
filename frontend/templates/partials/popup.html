@@ -50,6 +50,7 @@
         border-radius: 5px;
         box-sizing: border-box;
         transition: border-color 0.3s;
+        text-transform: uppercase;
     }
  
  
@@ -110,6 +111,25 @@
         align-items: center;
         gap: 5px;
     }
+
+    select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    }
+
+    @media (max-width: 768px) {
+    .form-inline {
+        flex-direction: column;
+    }
+
+    .form-inline .form-group {
+        width: 100%;
+        margin-right: 0;
+    }
+    }   
  </style>
  
  
@@ -138,15 +158,22 @@
             <div class="form-inline">
                 <div class="form-group">
                     <label for="country">Country</label>
-                    <input type="text" id="country" name="country" placeholder="e.g., United States">
+                    <select id="country" name="country">
+                        <option value="" disabled selected>Select your country</option>
+                        <option value="United States">United States</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="state">State</label>
-                    <input type="text" id="state" name="state" placeholder="e.g., New York">
+                    <select id="state" name="state">
+                        <option value="" disabled selected>Select your state</option>
+                        <option value="New York">New Jersey</option>
+                        <option value="California">New York</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="zip">Zip Code</label>
-                    <input type="text" id="zip" name="zip" placeholder="e.g., 10001">
+                    <input type="text" id="zip" name="zip" placeholder="e.g., 10001" pattern="\d{5}" maxlength="5" title="Please enter a 5-digit ZIP code" required>
                 </div>
             </div>
  
@@ -159,11 +186,11 @@
                 </div>
                 <div class="form-group">
                     <label for="jobStartMonth">Start Month/Year</label>
-                    <input type="text" id="jobStartMonth" name="jobStartMonth" placeholder="MM/YYYY">
+                    <input type="date" id="jobStartMonth" name="jobStartMonth" placeholder="MM/DD/YYYY">
                 </div>
                 <div class="form-group">
                     <label for="jobEndMonth">End Month/Year</label>
-                    <input type="text" id="jobEndMonth" name="jobEndMonth" placeholder="MM/YYYY">
+                    <input type="date" id="jobEndMonth" name="jobEndMonth" placeholder="MM/DD/YYYY">
                 </div>
                 <div class="form-group checkbox-inline">
                     <input type="checkbox" id="jobCurrent" name="jobCurrent">
@@ -180,11 +207,11 @@
                 </div>
                 <div class="form-group">
                     <label for="schoolStartMonth">Start Month/Year</label>
-                    <input type="text" id="schoolStartMonth" name="schoolStartMonth" placeholder="MM/YYYY">
+                    <input type="date" id="schoolStartMonth" name="schoolStartMonth" placeholder="MM/DD/YYYY">
                 </div>
                 <div class="form-group">
                     <label for="schoolEndMonth">End Month/Year</label>
-                    <input type="text" id="schoolEndMonth" name="schoolEndMonth" placeholder="MM/YYYY">
+                    <input type="date" id="schoolEndMonth" name="schoolEndMonth" placeholder="MM/DD/YYYY">
                 </div>
                 <div class="form-group checkbox-inline">
                     <input type="checkbox" id="schoolCurrent" name="schoolCurrent">
