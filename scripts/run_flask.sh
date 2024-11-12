@@ -91,10 +91,10 @@ fi
 export FLASK_APP=app.py
 export FLASK_ENV=production
 
-# Stop any existing processes on port 7012 or 80
-log_output "Stopping any existing processes on ports 7012 and 80..."
+# Stop any existing processes on port 7012 or 8080
+log_output "Stopping any existing processes on ports 7012 and 8080..."
 sudo fuser -k 7012/tcp || true
-sudo fuser -k 80/tcp || true
+sudo fuser -k 8080/tcp || true
 
 # Start Gunicorn with the app running on 7012, with the specified IP and workers
 log_output "Starting Gunicorn on 10.147.17.11:7012..."
@@ -109,10 +109,10 @@ if [ -L /etc/nginx/sites-enabled/IT490 ]; then
     sudo rm /etc/nginx/sites-enabled/IT490
 fi
 
-# Write Nginx configuration
+# Write Nginx configuration to use port 8080
 cat <<EOF | sudo tee /etc/nginx/sites-available/IT490 > /dev/null
 server {
-    listen 80;
+    listen 8080;
     server_name 10.147.17.11;
 
     access_log /var/log/nginx/IT490.log;
@@ -139,4 +139,4 @@ sudo nginx -t
 log_output "Restarting Nginx..."
 sudo systemctl restart nginx
 
-log_output "Setup completed! Gunicorn is running on 10.147.17.11:7012, and Nginx is proxying on port 80."
+log_output "Setup completed! Gunicorn is running on 10.147.17.11:7012, and Nginx is proxying on port 8080."
