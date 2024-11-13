@@ -163,6 +163,9 @@ sudo systemctl restart nginx
 log_output "Configuring firewall rules..."
 sudo ufw allow 7012/tcp
 sudo ufw allow 8000/tcp
+sudo ufw allow RabbitMQ
+sudo ufw allow 4369/tcp  # RabbitMQ port for clustering
+sudo ufw allow 25672/tcp # RabbitMQ port for clustering
 sudo ufw reload
 
 log_output "Setup completed! Gunicorn backend is running on ${vm_ip}:7012, and Nginx frontend failover is set up on port 8000."
