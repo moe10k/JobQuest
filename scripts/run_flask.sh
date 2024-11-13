@@ -85,7 +85,7 @@ def hello():
     return "Hello from the backend server!"
 
 if __name__ == "__main__":
-    app.run(debug=True, port=7012)
+    app.run(debug=True, port=7012)  # Change port to 7012 for Gunicorn
 EOF
     log_output "app.py created successfully."
 else
@@ -103,22 +103,22 @@ sudo fuser -k 7012/tcp || true
 # Configure this VM's IP
 vm_ip="10.147.17.11"  # Replace with actual IP
 
-# Start Gunicorn for backend with access and error logging
+# Start Gunicorn for backend with access and error logging on port 7012
 log_output "Starting Gunicorn on ${vm_ip}:7012 for backend..."
 gunicorn --bind ${vm_ip}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &
 
 # Install and set up Nginx for frontend failover
 log_output "Setting up Nginx for frontend failover configuration..."
 
-# Write the Nginx config to handle frontend failover with both nodes
+# Write the Nginx config to handle frontend failover with both nodes, on port 8000
 sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/frontend_failover
 upstream frontend_cluster {
-    server 10.147.17.11:7012 max_fails=3 fail_timeout=30s;  # Primary frontend node
-    server 10.147.17.65:7012 backup;                       # Secondary frontend node
+    server 10.147.17.11:7012 max_fails=3 fail_timeout=30s;  # Primary frontend node (Gunicorn on port 7012)
+    server 10.147.17.65:7012 backup;                       # Secondary frontend node (Gunicorn on port 7012)
 }
 
 server {
-    listen 80;
+    listen 8000;  # Nginx listens on port 8000
     server_name frontend_cluster;
 
     location / {
@@ -146,12 +146,11 @@ sudo nginx -t
 log_output "Restarting Nginx..."
 sudo systemctl restart nginx
 
-# Configure UFW firewall rules for ports 80 (Nginx) and 7012 (Gunicorn)
+# Configure firewall rules for port 7012 (Gunicorn) and 8000 (Nginx)
 log_output "Configuring firewall rules..."
-sudo ufw allow 80/tcp  # Allow HTTP traffic for Nginx on port 80
-sudo ufw allow 7012/tcp  # Allow traffic to Gunicorn on port 7012
-sudo ufw enable
-sudo ufw reload  # Reload UFW to apply the changes
+sudo ufw allow 7012/tcp
+sudo ufw allow 8000/tcp
+sudo ufw reload
 
-log_output "Setup completed! Gunicorn backend is running on ${vm_ip}:7012, and Nginx frontend failover is set up on port 80."
+log_output "Setup completed! Gunicorn backend is running on ${vm_ip}:7012, and Nginx frontend failover is set up on port 8000."
 log_output "Check the logs in $log_file for more details."
