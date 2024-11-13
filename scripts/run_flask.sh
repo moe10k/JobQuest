@@ -166,3 +166,4 @@ sudo ufw allow 8000/tcp
 sudo ufw reload
 
 log_output "Setup completed! Gunicorn backend is running on ${vm_ip}:7012, and Nginx frontend failover is set up on port 8000."
+log_output "Logs are available in $log_file."
