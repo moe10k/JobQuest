@@ -163,7 +163,7 @@ sudo systemctl restart nginx
 log_output "Configuring firewall rules..."
 sudo ufw allow 7012/tcp
 sudo ufw allow 8000/tcp
-sudo ufw allow RabbitMQ
+sudo ufw allow 5672/tcp   # RabbitMQ port
 sudo ufw allow 4369/tcp  # RabbitMQ port for clustering
 sudo ufw allow 25672/tcp # RabbitMQ port for clustering
 sudo ufw reload
