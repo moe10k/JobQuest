@@ -85,7 +85,7 @@ def hello():
     return "Hello from the backend server!"
 
 if __name__ == "__main__":
-    app.run(debug=True, port=7012)  # Change port to 7012 for Gunicorn
+    app.run(debug=True, port=7012)  # Default port for Gunicorn
 EOF
     log_output "app.py created successfully."
 else
@@ -103,18 +103,31 @@ sudo fuser -k 7012/tcp || true
 # Configure this VM's IP
 vm_ip="10.147.17.11"  # Replace with actual IP
 
-# Start Gunicorn for backend with access and error logging on port 7012
-log_output "Starting Gunicorn on ${vm_ip}:7012 for backend..."
-gunicorn --bind ${vm_ip}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &
+# Check if the ROLE variable is set
+if [ -z "$ROLE" ]; then
+    log_output "Error: ROLE is not set. Please set ROLE=primary or ROLE=backup."
+    exit 1
+fi
+
+# If the role is primary, start Gunicorn
+if [ "$ROLE" == "primary" ]; then
+    log_output "This is the primary node. Starting Gunicorn on ${vm_ip}:7012..."
+    gunicorn --bind ${vm_ip}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &
+elif [ "$ROLE" == "backup" ]; then
+    log_output "This is the backup node. Skipping Gunicorn start..."
+else
+    log_output "Error: Invalid ROLE. Set ROLE to 'primary' or 'backup'."
+    exit 1
+fi
 
 # Install and set up Nginx for frontend failover
 log_output "Setting up Nginx for frontend failover configuration..."
 
-# Write the Nginx config to handle frontend failover with both nodes, on port 8000
+# Write the Nginx config to handle frontend failover
 sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/frontend_failover
 upstream frontend_cluster {
     server 10.147.17.11:7012 max_fails=3 fail_timeout=30s;  # Primary frontend node (Gunicorn on port 7012)
-    server 10.147.17.65:7012 backup;                       # Secondary frontend node (Gunicorn on port 7012)
+    server 10.147.17.65:7012 backup;                       # Backup frontend node (Gunicorn on port 7012)
 }
 
 server {
@@ -153,4 +166,3 @@ sudo ufw allow 8000/tcp
 sudo ufw reload
 
 log_output "Setup completed! Gunicorn backend is running on ${vm_ip}:7012, and Nginx frontend failover is set up on port 8000."
-log_output "Check the logs in $log_file for more details."
