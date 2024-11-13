@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set log file for traffic
-log_file="backend_log.log"
+log_file="frontend_backend_log.log"
 
 # Function to log output to file
 log_output() {
@@ -10,11 +10,9 @@ log_output() {
 
 # Detect the operating system
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    # Linux (Ubuntu)
     activate_venv="source venv/bin/activate"
     python_cmd="python3"
 elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
-    # Windows (Git Bash/WSL/Native Bash on Windows)
     activate_venv="venv\\Scripts\\activate"
     python_cmd="python"
 else
@@ -22,7 +20,7 @@ else
     exit 1
 fi
 
-# Navigate to the frontend directory
+# Navigate to the project directory
 cd ../frontend || { log_output "Frontend directory not found"; exit 1; }
 
 # Create virtual environment if it doesn't exist
@@ -33,19 +31,17 @@ fi
 
 # Activate the virtual environment
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    # Source for Linux (Ubuntu)
     if [ -f "venv/bin/activate" ]; then
         source venv/bin/activate
     else
-        log_output "Error: Failed to create virtual environment on Linux."
+        log_output "Error: Failed to activate virtual environment on Linux."
         exit 1
     fi
 else
-    # Call activate for Windows
     if [ -f "venv\\Scripts\\activate" ]; then
         source venv\\Scripts\\activate || { log_output "Error: Failed to activate virtual environment on Windows."; exit 1; }
     else
-        log_output "Error: Failed to create virtual environment on Windows."
+        log_output "Error: Failed to activate virtual environment on Windows."
         exit 1
     fi
 fi
@@ -60,18 +56,17 @@ fi
 log_output "Installing required Python packages..."
 pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn
 
-# Create app.py if it doesn't exist
+# Create app.py if it doesn't exist for backend
 if [ ! -f "app.py" ]; then
-    log_output "Creating app.py..."
+    log_output "Creating app.py for backend..."
     cat <<EOF > app.py
-from flask import Flask
+from flask import Flask, request
 import logging
 
-# Set up logging to file for Flask traffic
 logging.basicConfig(
-    filename='backend_log.log',  # Log file where server traffic will be stored
-    level=logging.INFO,  # Log level (INFO to capture general traffic, DEBUG for more detailed logs)
-    format='%(asctime)s - %(levelname)s - %(message)s',  # Log format with timestamp, log level, and message
+    filename='$log_file',  
+    level=logging.INFO,  
+    format='%(asctime)s - %(levelname)s - %(message)s',  
 )
 
 app = Flask(__name__)
@@ -87,7 +82,7 @@ def log_response_info(response):
 
 @app.route('/')
 def hello():
-    return "Hello, World!"
+    return "Hello from the backend server!"
 
 if __name__ == "__main__":
     app.run(debug=True, port=7012)
@@ -101,12 +96,54 @@ fi
 export FLASK_APP=app.py
 export FLASK_ENV=production
 
-# Stop any existing processes on port 7012
+# Stop any existing backend processes on port 7012
 log_output "Stopping any existing processes on port 7012..."
 sudo fuser -k 7012/tcp || true
 
-# Start Gunicorn with the app running on 7012, with the specified IP and workers
-log_output "Starting Gunicorn on 10.147.17.11:7012..."
-gunicorn --bind 10.147.17.11:7012 --workers 4 --access-logfile backend_log.log --error-logfile backend_log.log app:app &
+# Configure this VM's IP
+vm_ip="10.147.17.11"  # Replace with actual IP
 
-log_output "Setup completed! Gunicorn is running on 10.147.17.11:7012, and logging traffic to backend_log.log."
+# Start Gunicorn for backend with access and error logging
+log_output "Starting Gunicorn on ${vm_ip}:7012 for backend..."
+gunicorn --bind ${vm_ip}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &
+
+# Install and set up Nginx for frontend failover
+log_output "Setting up Nginx for frontend failover configuration..."
+
+# Write the Nginx config to handle frontend failover with both nodes
+sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/frontend_failover
+upstream frontend_cluster {
+    server 10.147.17.11:81 max_fails=3 fail_timeout=30s;  # Primary frontend node
+    server 10.147.17.65:81 backup;                     # Secondary frontend node
+}
+
+server {
+    listen 81;
+    server_name frontend_cluster;
+
+    location / {
+        proxy_pass http://frontend_cluster;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
+
+    access_log /var/log/nginx/frontend_failover.log;
+    error_log /var/log/nginx/frontend_failover_error.log;
+}
+EOF'
+
+# Create symbolic link to enable the configuration
+if [ ! -L /etc/nginx/sites-enabled/frontend_failover ]; then
+    sudo ln -s /etc/nginx/sites-available/frontend_failover /etc/nginx/sites-enabled/
+fi
+
+# Check Nginx configuration syntax before restarting
+log_output "Checking Nginx configuration syntax..."
+sudo nginx -t
+
+# Restart Nginx
+log_output "Restarting Nginx..."
+sudo systemctl restart nginx
+
+log_output "Setup completed! Gunicorn backend is running on ${vm_ip}:7012, and Nginx frontend failover is set up on port 81."
