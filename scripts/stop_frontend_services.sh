@@ -54,3 +54,6 @@ else
     kill $NGINX_PID
     log_output "Nginx process stopped."
 fi
+
+# Print a simple message to the terminal
+echo "Processes stopped."
