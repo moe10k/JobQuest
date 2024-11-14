@@ -1,0 +1,34 @@
+2024-11-14 21:28:50 - VM IP (ZeroTier): 10.147.17.11
+2024-11-14 21:28:51 - Role set to: primary
+2024-11-14 21:28:51 - Stopping Gunicorn process with PID: 55314
+55335
+55337
+55338
+55342
+2024-11-14 21:28:51 - Gunicorn process stopped.
+2024-11-14 21:28:51 - Stopping Nginx process with PID: 55347
+55951
+2024-11-14 21:28:51 - Nginx process stopped.
+2024-11-14 21:28:51 - Stopping Nginx service using systemctl.
+2024-11-14 21:28:51 - Nginx service stopped.
+2024-11-14 21:36:56
+2024-11-14 21:36:56
+2024-11-14 21:36:56
+2024-11-14 21:36:56
+2024-11-14 21:36:57
+2024-11-14 21:36:57
+2024-11-14 21:36:57
+2024-11-14 21:36:58
+2024-11-14 16:40:26 - VM IP (ZeroTier): 10.147.17.11
+2024-11-14 16:40:26 - Role set to: primary
+2024-11-14 16:40:26 - Stopping Gunicorn process with PID: 57872
+57896
+57898
+57904
+57909
+2024-11-14 16:40:26 - Gunicorn process stopped.
+2024-11-14 16:40:27 - Stopping Nginx process with PID: 57902
+58495
+2024-11-14 16:40:27 - Nginx process stopped.
+2024-11-14 16:40:27 - Stopping Nginx service using systemctl.
+2024-11-14 16:40:27 - Nginx service stopped.
