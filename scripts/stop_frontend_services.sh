@@ -2,7 +2,7 @@
 
 # Function to log output to file
 log_output() {
-    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a stop_services_log.log
+    TZ="America/New_York" date '+%Y-%m-%d %H:%M:%S' -u | tee -a stop_services_log.log | sed "s/^/$(date '+%Y-%m-%d %H:%M:%S') - /"
 }
 
 # Check and set VM's VPN IP dynamically (ZeroTier IP)
