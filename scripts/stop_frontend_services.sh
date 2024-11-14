@@ -2,7 +2,7 @@
 
 # Function to log output to file
 log_output() {
-    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a frontend_backend_log.log
+    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a stop_services_log.log
 }
 
 # Check and set VM's VPN IP dynamically (ZeroTier IP)
