@@ -10,10 +10,8 @@ log_output() {
 
 # Detect the operating system
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    activate_venv="source venv/bin/activate"
     python_cmd="python3"
 elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
-    activate_venv="venv\\Scripts\\activate"
     python_cmd="python"
 else
     log_output "Unsupported OS."
@@ -27,6 +25,10 @@ cd ../frontend || { log_output "Frontend directory not found"; exit 1; }
 if [ ! -d "venv" ]; then 
     log_output "Virtual environment not found! Creating it..."
     $python_cmd -m venv venv
+    if [ $? -ne 0 ]; then
+        log_output "Error: Failed to create virtual environment."
+        exit 1
+    fi
 fi
 
 # Activate the virtual environment
