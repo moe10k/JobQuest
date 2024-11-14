@@ -111,7 +111,7 @@ log_output "Stopping any existing processes on port 7012..."
 sudo fuser -k 7012/tcp || true
 
 # Check and set VM's VPN IP dynamically (ZeroTier IP)
-VPN_INTERFACE="ztxxxxxxx"  # Replace with your ZeroTier interface name
+VPN_INTERFACE="ztbtoss2h4"  
 VM_IP=$(ifconfig "$VPN_INTERFACE" | grep 'inet ' | awk '{print $2}')  # Get VPN IP
 
 if [ -z "$VM_IP" ]; then
