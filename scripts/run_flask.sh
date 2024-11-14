@@ -150,10 +150,10 @@ fi
 if [ "$ROLE" == "backup" ]; then
     log_output "Backup node detected. Monitoring primary server at ${primary_ip}..."
 
-    # Monitoring loop
+    # Monitoring loop with timeout (30 seconds per check)
     while true; do
-        # Check if primary server is reachable
-        if curl -s --head "http://${primary_ip}:7012" | grep "200 OK" > /dev/null; then
+        # Check if primary server is reachable with a timeout of 5 seconds
+        if curl -s --max-time 5 --head "http://${primary_ip}:7012" | grep "200 OK" > /dev/null; then
             log_output "Primary server is online."
             stop_gunicorn  # Stop Gunicorn on backup if primary is online
         else
