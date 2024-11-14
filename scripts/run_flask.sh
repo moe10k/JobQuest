@@ -122,6 +122,11 @@ if [ -z "$VM_IP" ]; then
 fi
 log_output "VM IP (ZeroTier): $VM_IP"
 
+# Set primary and secondary IPs
+PRIMARY_IP="10.147.17.11"
+SECONDARY_IP="10.147.17.65"
+
+
 # Check if VM's IP matches primary or secondary IP
 if [ "$VM_IP" == "$PRIMARY_IP" ]; then
     ROLE="primary"
