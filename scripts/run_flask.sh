@@ -122,13 +122,15 @@ if [ -z "$VM_IP" ]; then
 fi
 log_output "VM IP (ZeroTier): $VM_IP"
 
-# Set primary and secondary IPs
-PRIMARY_IP="10.147.17.11"
-SECONDARY_IP="10.147.17.65"
-
-# Check if the ROLE variable is set
-if [ -z "$ROLE" ]; then
-    log_output "Error: ROLE is not set. Please set ROLE=primary or ROLE=backup."
+# Check if VM's IP matches primary or secondary IP
+if [ "$VM_IP" == "$PRIMARY_IP" ]; then
+    ROLE="primary"
+    log_output "Role set to: primary"
+elif [ "$VM_IP" == "$SECONDARY_IP" ]; then
+    ROLE="backup"
+    log_output "Role set to: backup"
+else
+    log_output "Error: This VM's IP does not match primary or secondary IP."
     exit 1
 fi
 
