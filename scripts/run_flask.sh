@@ -119,15 +119,53 @@ if [ -z "$ROLE" ]; then
     exit 1
 fi
 
+# Function to start Gunicorn
+start_gunicorn() {
+    log_output "Starting Gunicorn on ${vm_ip}:7012..."
+    gunicorn --bind ${vm_ip}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &
+    export GUNICORN_PID=$!
+}
+
+# Function to stop Gunicorn if running
+stop_gunicorn() {
+    if [ -n "$GUNICORN_PID" ] && kill -0 "$GUNICORN_PID" 2>/dev/null; then
+        log_output "Stopping Gunicorn..."
+        kill "$GUNICORN_PID"
+        unset GUNICORN_PID
+    fi
+}
+
 # If the role is primary, start Gunicorn
 if [ "$ROLE" == "primary" ]; then
     log_output "This is the primary node. Starting Gunicorn on ${vm_ip}:7012..."
-    gunicorn --bind ${vm_ip}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &
+    start_gunicorn
 elif [ "$ROLE" == "backup" ]; then
     log_output "This is the backup node. Skipping Gunicorn start..."
 else
     log_output "Error: Invalid ROLE. Set ROLE to 'primary' or 'backup'."
     exit 1
+fi
+
+# Failover monitoring for backup server
+if [ "$ROLE" == "backup" ]; then
+    log_output "Backup node detected. Monitoring primary server at ${primary_ip}..."
+
+    # Monitoring loop
+    while true; do
+        # Check if primary server is reachable
+        if curl -s --head "http://${primary_ip}:7012" | grep "200 OK" > /dev/null; then
+            log_output "Primary server is online."
+            stop_gunicorn  # Stop Gunicorn on backup if primary is online
+        else
+            log_output "Primary server is down! Activating backup server..."
+            if [ -z "$GUNICORN_PID" ]; then
+                start_gunicorn
+            fi
+        fi
+
+        # Check every 15 seconds
+        sleep 15
+    done
 fi
 
 # Install and set up Nginx for frontend failover
