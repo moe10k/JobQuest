@@ -151,21 +151,36 @@ if [ "$ROLE" == "backup" ]; then
     log_output "Backup node detected. Monitoring primary server at ${primary_ip}..."
 
     # Monitoring loop with timeout (30 seconds per check)
-    while true; do
-        # Check if primary server is reachable with a timeout of 5 seconds
-        if curl -s --max-time 5 --head "http://${primary_ip}:7012" | grep "200 OK" > /dev/null; then
-            log_output "Primary server is online."
-            stop_gunicorn  # Stop Gunicorn on backup if primary is online
+    attempts=0
+    max_attempts=5
+    while [ $attempts -lt $max_attempts ]; do
+        log_output "Checking if the primary server (${vm_ip}:7012) is up... Attempt $((attempts+1))"
+
+        # Try to connect to the primary server's Gunicorn service
+        curl --silent --fail ${vm_ip}:7012 > /dev/null
+        
+        if [ $? -ne 0 ]; then
+            log_output "Primary server is down or unreachable. Attempting to start Gunicorn on the backup server..."
+            
+            # Stop any existing processes on port 7012
+            sudo fuser -k 7012/tcp || true
+
+            # Start Gunicorn for the backup server
+            start_gunicorn
+            log_output "Gunicorn started on backup server."
+            break  # Exit the loop after starting the backup server
         else
-            log_output "Primary server is down! Activating backup server..."
-            if [ -z "$GUNICORN_PID" ]; then
-                start_gunicorn
-            fi
+            log_output "Primary server is up. Waiting..."
         fi
 
-        # Check every 15 seconds
-        sleep 15
+        # Increment attempt counter and wait before retrying
+        attempts=$((attempts+1))
+        sleep 10
     done
+
+    if [ $attempts -eq $max_attempts ]; then
+        log_output "Max attempts reached. The primary server may still be down, but the backup is running."
+    fi
 fi
 
 # Install and set up Nginx for frontend failover
