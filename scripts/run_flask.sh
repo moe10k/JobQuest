@@ -34,12 +34,16 @@ if [ ! -d "venv" ]; then
 fi
 
 # Verify the activate script exists and is executable on Linux, or present on Windows
-if [[ "$OSTYPE" == "linux-gnu"* && ! -x "venv/bin/activate" ]]; then
-    log_output "Error: 'venv/bin/activate' is missing or not executable."
-    exit 1
-elif [[ "$OSTYPE" == "win32" && ! -f "venv\\Scripts\\activate" ]]; then
-    log_output "Error: 'venv\\Scripts\\activate' is missing on Windows."
-    exit 1
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    if [ ! -f "venv/bin/activate" ] || [ ! -x "venv/bin/activate" ]; then
+        log_output "Error: 'venv/bin/activate' is missing or not executable."
+        exit 1
+    fi
+elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
+    if [ ! -f "venv\\Scripts\\activate" ]; then
+        log_output "Error: 'venv\\Scripts\\activate' is missing on Windows."
+        exit 1
+    fi
 fi
 
 # Attempt to activate the virtual environment
