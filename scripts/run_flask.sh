@@ -8,10 +8,12 @@ log_output() {
     echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a $log_file
 }
 
-# Detect the operating system
+# Detect the operating system and set appropriate variables
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    activate_venv="source venv/bin/activate"
     python_cmd="python3"
 elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
+    activate_venv="venv\\Scripts\\activate"
     python_cmd="python"
 else
     log_output "Unsupported OS."
@@ -31,27 +33,29 @@ if [ ! -d "venv" ]; then
     fi
 fi
 
-# Activate the virtual environment
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    if [ -f "venv/bin/activate" ]; then
-        source venv/bin/activate
-    else
-        log_output "Error: Failed to activate virtual environment on Linux."
-        exit 1
-    fi
-else
-    if [ -f "venv\\Scripts\\activate" ]; then
-        source venv\\Scripts\\activate || { log_output "Error: Failed to activate virtual environment on Windows."; exit 1; }
-    else
-        log_output "Error: Failed to activate virtual environment on Windows."
-        exit 1
-    fi
+# Verify the activate script exists and is executable on Linux, or present on Windows
+if [[ "$OSTYPE" == "linux-gnu"* && ! -x "venv/bin/activate" ]]; then
+    log_output "Error: 'venv/bin/activate' is missing or not executable."
+    exit 1
+elif [[ "$OSTYPE" == "win32" && ! -f "venv\\Scripts\\activate" ]]; then
+    log_output "Error: 'venv\\Scripts\\activate' is missing on Windows."
+    exit 1
 fi
 
-# Verify activation by checking if pip is available
+# Attempt to activate the virtual environment
+log_output "Attempting to activate the virtual environment..."
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    source venv/bin/activate
+else
+    source venv\\Scripts\\activate
+fi
+
+# Check if activation was successful by verifying pip is available
 if ! command -v pip &> /dev/null; then
-    log_output "Error: Virtual environment activation failed."
+    log_output "Error: Virtual environment activation failed; pip is not available."
     exit 1
+else
+    log_output "Virtual environment activated successfully."
 fi
 
 # Install required Python packages
