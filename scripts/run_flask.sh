@@ -5,7 +5,9 @@ log_file="frontend_backend_log.log"
 
 # Function to log output to file
 log_output() {
+    export TZ="America/New_York"
     echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a $log_file
+    unset TZ
 }
 
 # Detect the operating system and set appropriate variables
