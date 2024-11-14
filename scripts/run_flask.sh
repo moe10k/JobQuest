@@ -8,6 +8,34 @@ log_output() {
     echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a $log_file
 }
 
+# Define primary and secondary IPs
+PRIMARY_IP="10.147.17.11"
+SECONDARY_IP="10.147.17.65"
+
+# Get the VM's IP address
+VM_IP=$(hostname -I | awk '{print $1}')
+
+# Determine the role based on the VM's IP address
+if [ "$VM_IP" == "$PRIMARY_IP" ]; then
+    ROLE="primary"
+elif [ "$VM_IP" == "$SECONDARY_IP" ]; then
+    ROLE="backup"
+else
+    log_output "Error: VM IP $VM_IP does not match primary or secondary IP. Exiting."
+    exit 1
+fi
+
+# Log the IPs and role for confirmation
+log_output "Primary IP: $PRIMARY_IP"
+log_output "Secondary IP: $SECONDARY_IP"
+log_output "This VM IP: $VM_IP"
+log_output "Assigned Role: $ROLE"
+
+# Export the variables for use in the script
+export PRIMARY_IP
+export SECONDARY_IP
+export ROLE
+
 # Detect the operating system and set appropriate variables
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     activate_venv="source venv/bin/activate"
@@ -33,7 +61,7 @@ if [ ! -d "venv" ]; then
     fi
 fi
 
-# Verify the activate script exists and is executable on Linux, or present on Windows
+# Verify the activate script exists and is executable
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     if [ ! -f "venv/bin/activate" ] || [ ! -x "venv/bin/activate" ]; then
         log_output "Error: 'venv/bin/activate' is missing or not executable."
@@ -54,7 +82,7 @@ else
     source venv\\Scripts\\activate
 fi
 
-# Check if activation was successful by verifying pip is available
+# Check if activation was successful
 if ! command -v pip &> /dev/null; then
     log_output "Error: Virtual environment activation failed; pip is not available."
     exit 1
@@ -74,9 +102,9 @@ from flask import Flask, request
 import logging
 
 logging.basicConfig(
-    filename='$log_file',  
-    level=logging.INFO,  
-    format='%(asctime)s - %(levelname)s - %(message)s',  
+    filename='$log_file',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
 )
 
 app = Flask(__name__)
@@ -95,7 +123,7 @@ def hello():
     return "Hello from the backend server!"
 
 if __name__ == "__main__":
-    app.run(debug=True, port=7012)  # Default port for Gunicorn
+    app.run(debug=True, port=7012)
 EOF
     log_output "app.py created successfully."
 else
@@ -110,19 +138,10 @@ export FLASK_ENV=production
 log_output "Stopping any existing processes on port 7012..."
 sudo fuser -k 7012/tcp || true
 
-# Configure this VM's IP
-vm_ip="10.147.17.11"  # Replace with actual IP
-
-# Check if the ROLE variable is set
-if [ -z "$ROLE" ]; then
-    log_output "Error: ROLE is not set. Please set ROLE=primary or ROLE=backup."
-    exit 1
-fi
-
 # Function to start Gunicorn
 start_gunicorn() {
-    log_output "Starting Gunicorn on ${vm_ip}:7012..."
-    gunicorn --bind ${vm_ip}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &
+    log_output "Starting Gunicorn on ${VM_IP}:7012..."
+    gunicorn --bind ${VM_IP}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &
     export GUNICORN_PID=$!
 }
 
@@ -135,66 +154,45 @@ stop_gunicorn() {
     fi
 }
 
-# If the role is primary, start Gunicorn
+# Start Gunicorn if this VM is the primary node
 if [ "$ROLE" == "primary" ]; then
-    log_output "This is the primary node. Starting Gunicorn on ${vm_ip}:7012..."
+    log_output "This is the primary node. Starting Gunicorn on ${VM_IP}:7012..."
     start_gunicorn
 elif [ "$ROLE" == "backup" ]; then
     log_output "This is the backup node. Skipping Gunicorn start..."
-else
-    log_output "Error: Invalid ROLE. Set ROLE to 'primary' or 'backup'."
-    exit 1
 fi
 
 # Failover monitoring for backup server
 if [ "$ROLE" == "backup" ]; then
-    log_output "Backup node detected. Monitoring primary server at ${primary_ip}..."
+    log_output "Backup node detected. Monitoring primary server at ${PRIMARY_IP}..."
 
-    # Monitoring loop with timeout (30 seconds per check)
-    attempts=0
-    max_attempts=5
-    while [ $attempts -lt $max_attempts ]; do
-        log_output "Checking if the primary server (${vm_ip}:7012) is up... Attempt $((attempts+1))"
-
-        # Try to connect to the primary server's Gunicorn service
-        curl --silent --fail ${vm_ip}:7012 > /dev/null
-        
-        if [ $? -ne 0 ]; then
-            log_output "Primary server is down or unreachable. Attempting to start Gunicorn on the backup server..."
-            
-            # Stop any existing processes on port 7012
-            sudo fuser -k 7012/tcp || true
-
-            # Start Gunicorn for the backup server
-            start_gunicorn
-            log_output "Gunicorn started on backup server."
-            break  # Exit the loop after starting the backup server
+    # Monitoring loop
+    while true; do
+        if curl -s --max-time 5 --head "http://${PRIMARY_IP}:7012" | grep "200 OK" > /dev/null; then
+            log_output "Primary server is online."
+            stop_gunicorn
         else
-            log_output "Primary server is up. Waiting..."
+            log_output "Primary server is down! Activating backup server..."
+            if [ -z "$GUNICORN_PID" ]; then
+                start_gunicorn
+            fi
         fi
-
-        # Increment attempt counter and wait before retrying
-        attempts=$((attempts+1))
-        sleep 10
+        sleep 15
     done
-
-    if [ $attempts -eq $max_attempts ]; then
-        log_output "Max attempts reached. The primary server may still be down, but the backup is running."
-    fi
 fi
 
 # Install and set up Nginx for frontend failover
 log_output "Setting up Nginx for frontend failover configuration..."
 
-# Write the Nginx config to handle frontend failover
+# Write Nginx config
 sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/frontend_failover
 upstream frontend_cluster {
-    server 10.147.17.11:7012 max_fails=3 fail_timeout=30s;  # Primary frontend node (Gunicorn on port 7012)
-    server 10.147.17.65:7012 backup;                       # Backup frontend node (Gunicorn on port 7012)
+    server 10.147.17.11:7012 max_fails=3 fail_timeout=30s;
+    server 10.147.17.65:7012 backup;
 }
 
 server {
-    listen 8000;  # Nginx listens on port 8000
+    listen 8000;
     server_name frontend_cluster;
 
     location / {
@@ -209,27 +207,23 @@ server {
 }
 EOF'
 
-# Create symbolic link to enable the configuration
+# Enable config, check Nginx, restart it
 if [ ! -L /etc/nginx/sites-enabled/frontend_failover ]; then
     sudo ln -s /etc/nginx/sites-available/frontend_failover /etc/nginx/sites-enabled/
 fi
-
-# Check Nginx configuration syntax before restarting
 log_output "Checking Nginx configuration syntax..."
 sudo nginx -t
-
-# Restart Nginx
 log_output "Restarting Nginx..."
 sudo systemctl restart nginx
 
-# Configure firewall rules for port 7012 (Gunicorn) and 8000 (Nginx)
+# Configure firewall rules
 log_output "Configuring firewall rules..."
 sudo ufw allow 7012/tcp
 sudo ufw allow 8000/tcp
-sudo ufw allow 5672/tcp   # RabbitMQ port
-sudo ufw allow 4369/tcp  # RabbitMQ port for clustering
-sudo ufw allow 25672/tcp # RabbitMQ port for clustering
+sudo ufw allow 5672/tcp
+sudo ufw allow 4369/tcp
+sudo ufw allow 25672/tcp
 sudo ufw reload
 
-log_output "Setup completed! Gunicorn backend is running on ${vm_ip}:7012, and Nginx frontend failover is set up on port 8000."
+log_output "Setup completed! Gunicorn backend is running on ${VM_IP}:7012, and Nginx frontend failover is set up on port 8000."
 log_output "Logs are available in $log_file."
