@@ -55,5 +55,10 @@ else
     log_output "Nginx process stopped."
 fi
 
+# Stop the Nginx service using systemctl
+log_output "Stopping Nginx service using systemctl."
+sudo systemctl stop nginx
+log_output "Nginx service stopped."
+
 # Print a simple message to the terminal
 echo "Processes stopped."
