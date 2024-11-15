@@ -191,19 +191,25 @@ log_output "Setting up Nginx for frontend failover configuration..."
 # Write the Nginx config to handle frontend failover
 sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/frontend_failover
 upstream frontend_cluster {
-    server 10.147.17.11:7012 max_fails=3 fail_timeout=30s;  # Primary frontend node (Gunicorn on port 7012)
-    server 10.147.17.65:7012 backup;                       # Backup frontend node (Gunicorn on port 7012)
+    server ${PRIMARY_IP}:7012 max_fails=3 fail_timeout=10s;  # Primary frontend node (Gunicorn)
+    server ${SECONDARY_IP}:7012 backup;                       # Backup frontend node (Gunicorn)
 }
 
 server {
-    listen 80;  # Nginx listens on port 80
+    listen 80;
     server_name frontend_cluster;
 
     location / {
         proxy_pass http://frontend_cluster;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Retry the next server in case of failure
+        proxy_next_upstream error timeout http_502 http_503 http_504;
+        proxy_connect_timeout 3s;
+        proxy_read_timeout 10s;
+        proxy_send_timeout 10s;
     }
 
     access_log /var/log/nginx/frontend_failover.log;
