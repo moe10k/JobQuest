@@ -217,7 +217,6 @@ server {
 }
 EOF"
 
-
 # Create symbolic link to enable the configuration
 if [ ! -L /etc/nginx/sites-enabled/frontend_failover ]; then
     sudo ln -s /etc/nginx/sites-available/frontend_failover /etc/nginx/sites-enabled/
