@@ -129,15 +129,18 @@ else
     exit 1
 fi
 
-# Function to start Gunicorn
 start_gunicorn() {
     log_output "Starting Gunicorn on ${VM_IP}:7012..."
-    # Use full path to gunicorn if necessary
     GUNICORN_PATH=$(which gunicorn)
     if [ -z "$GUNICORN_PATH" ]; then
         log_output "Error: Gunicorn not found in virtual environment!"
         exit 1
     fi
+    
+    # Set the environment variable if necessary
+    export GUNICORN_FD=""  # Add this line to avoid the issue
+
+    # Use Gunicorn without relying on GUNICORN_FD
     $GUNICORN_PATH --bind ${VM_IP}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &  # Run Gunicorn in the background
     export GUNICORN_PID=$!
 }
