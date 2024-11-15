@@ -191,8 +191,8 @@ log_output "Setting up Nginx for frontend failover configuration..."
 # Write the Nginx config to handle frontend failover
 sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/frontend_failover
 upstream frontend_cluster {
-    server ${PRIMARY_IP}:7012 max_fails=3 fail_timeout=10s;  # Primary frontend node (Gunicorn)
-    server ${SECONDARY_IP}:7012 backup;                       # Backup frontend node (Gunicorn)
+    server 10.147.17.11:7012 max_fails=3 fail_timeout=10s;  # Replace with actual primary IP
+    server 10.147.17.65:7012 backup;                         # Replace with actual backup IP
 }
 
 server {
