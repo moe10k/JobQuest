@@ -2,7 +2,7 @@
 // PHP libraries for RabbitMQ and database connection
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/db.php';
-
+$config = require DIR . '/config.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -10,7 +10,12 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 try {
    // Establishing RabbitMQ connection
-   $rabbitMQConnection = new AMQPStreamConnection('10.147.17.228', 5672, 'guest', 'guest');
+   $rabbitMQConnection = new AMQPStreamConnection(
+    $config['rabbitmq']['host'],
+    $config['rabbitmq']['port'],
+    $config['rabbitmq']['username'],
+    $config['rabbitmq']['password']
+);
    $channel = $rabbitMQConnection->channel();
 
 

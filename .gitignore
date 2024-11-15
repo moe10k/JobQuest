@@ -1,4 +1,7 @@
-__pycache__/
+frontend/pycache/
 .venv/
-venv/
-backend/vendor/
+frontend/venv/
+backend1/vendor/
+backend1/db.php
+backend1/config.php
+.env
