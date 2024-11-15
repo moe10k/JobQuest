@@ -166,23 +166,29 @@ fi
 if [ "$ROLE" == "backup" ]; then
     log_output "Backup node detected. Monitoring primary server at ${PRIMARY_IP}..."
 
-    # Monitoring loop with timeout (30 seconds per check)
+    primary_up_logged=false  # Track if the primary being online was logged
+
     while true; do
-        # Check if primary server is reachable with a timeout of 5 seconds
+        # Check primary server status
         if curl -s --max-time 5 --head "http://${PRIMARY_IP}:7012" | grep "200 OK" > /dev/null; then
-            log_output "Primary server is online."
-            stop_gunicorn  # Stop Gunicorn on backup if primary is online
+            if [ "$primary_up_logged" = false ]; then
+                log_output "Primary server is online."
+                primary_up_logged=true  # Prevent duplicate "online" logs
+            fi
+            stop_gunicorn  # Stop backup server if primary is online
         else
             log_output "Primary server is down! Activating backup server..."
             if [ -z "$GUNICORN_PID" ]; then
-                start_gunicorn
+                start_gunicorn  # Start Gunicorn on backup
+                log_output "Backup server activated."
             fi
+            primary_up_logged=false  # Reset logging for the next recovery
         fi
-
-        # Check every 15 seconds
-        sleep 15
+        sleep 15  # Monitor every 15 seconds
     done
 fi
+
+
 
 # Install and set up Nginx for frontend failover
 log_output "Setting up Nginx for frontend failover configuration..."
