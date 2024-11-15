@@ -35,34 +35,10 @@ if [ ! -d "venv" ]; then
     fi
 fi
 
-# Verify the activate script exists and is executable on Linux, or present on Windows
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    if [ ! -f "venv/bin/activate" ] || [ ! -x "venv/bin/activate" ]; then
-        log_output "Error: 'venv/bin/activate' is missing or not executable."
-        exit 1
-    fi
-elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
-    if [ ! -f "venv\\Scripts\\activate" ]; then
-        log_output "Error: 'venv\\Scripts\\activate' is missing on Windows."
-        exit 1
-    fi
-fi
-
-# Attempt to activate the virtual environment
+# Activate virtual environment
 log_output "Attempting to activate the virtual environment..."
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    source venv/bin/activate
-else
-    source venv\\Scripts\\activate
-fi
-
-# Check if activation was successful by verifying pip is available
-if ! command -v pip &> /dev/null; then
-    log_output "Error: Virtual environment activation failed; pip is not available."
-    exit 1
-else
-    log_output "Virtual environment activated successfully."
-fi
+source "$activate_venv"
+log_output "Virtual environment activated successfully."
 
 # Install required Python packages
 log_output "Installing required Python packages..."
@@ -198,7 +174,7 @@ upstream frontend_cluster {
 }
 
 server {
-    listen 8000;  # Nginx listens on port 8000
+    listen 80;  # Nginx listens on port 80
     server_name frontend_cluster;
 
     location / {
@@ -226,15 +202,14 @@ sudo nginx -t
 log_output "Restarting Nginx..."
 sudo systemctl restart nginx
 
-# Configure firewall rules for port 7012 (Gunicorn) and 8000 (Nginx)
+# Configure firewall rules for port 7012 (Gunicorn) and 80 (Nginx)
 log_output "Configuring firewall rules..."
 sudo ufw allow 7012/tcp
-sudo ufw allow 8000/tcp
+sudo ufw allow 80/tcp
 sudo ufw allow 5672/tcp   # RabbitMQ port
 sudo ufw allow 4369/tcp  # RabbitMQ port for clustering
 sudo ufw allow 25672/tcp # RabbitMQ port for clustering
 sudo ufw reload
 
-log_output "Setup completed! Gunicorn backend is running on ${VM_IP}:7012, and Nginx frontend failover is set up on port 8000."
+log_output "Setup completed! Gunicorn backend is running on ${VM_IP}:7012, and Nginx frontend failover is set up on port 80."
 log_output "View logs in $log_file for more details."
-echo "Setup completed! View logs in $log_file for more details."
