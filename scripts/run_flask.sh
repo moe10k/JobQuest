@@ -47,7 +47,6 @@ log_output "Virtual environment activated successfully."
 log_output "Installing required Python packages..."
 $python_cmd -m pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn
 
-
 # Check if Gunicorn is installed and install it if necessary
 if ! command -v gunicorn &> /dev/null; then
     log_output "Gunicorn not found. Installing Gunicorn..."
@@ -226,18 +225,11 @@ fi
 log_output "Checking Nginx configuration syntax..."
 sudo nginx -t
 
-# Restart Nginx
-log_output "Restarting Nginx..."
-sudo systemctl restart nginx
+# Restart Nginx if it is the backup node
+if [ "$ROLE" == "backup" ]; then
+    log_output "Restarting Nginx to apply failover configuration..."
+    sudo systemctl restart nginx
+fi
 
-# Configure firewall rules for port 7012 (Gunicorn) and 80 (Nginx)
-log_output "Configuring firewall rules..."
-sudo ufw allow 7012/tcp
-sudo ufw allow 80/tcp
-sudo ufw allow 5672/tcp   # RabbitMQ port
-sudo ufw allow 4369/tcp  # RabbitMQ port for clustering
-sudo ufw allow 25672/tcp # RabbitMQ port for clustering
-sudo ufw reload
-
-log_output "Setup completed! Gunicorn backend is running on ${VM_IP}:7012, and Nginx frontend failover is set up on port 80."
-log_output "View logs in $log_file for more details."
+# Log the final status
+log_output "Frontend services started successfully."
