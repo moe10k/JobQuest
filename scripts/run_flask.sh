@@ -131,20 +131,19 @@ fi
 
 start_gunicorn() {
     log_output "Starting Gunicorn on ${VM_IP}:7012..."
-    export GUNICORN_FD  # Just to see if it's being set
-    env  # Log environment variables to check GUNICORN_FD
-
+    
+    # Unset GUNICORN_FD to avoid issues
+    unset GUNICORN_FD
+    
     GUNICORN_PATH=$(which gunicorn)
     if [ -z "$GUNICORN_PATH" ]; then
         log_output "Error: Gunicorn not found in virtual environment!"
         exit 1
     fi
 
-    unset GUNICORN_FD  # Unset to avoid issues
-
-    # Start Gunicorn with explicit binding to TCP
+    # Start Gunicorn with explicit binding to TCP (no Unix socket)
     $GUNICORN_PATH --bind ${VM_IP}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &  # Run Gunicorn in the background
-    export GUNICORN_PID=$!  # Save the Gunicorn process ID
+    export GUNICORN_PID=$!
 }
 
 
