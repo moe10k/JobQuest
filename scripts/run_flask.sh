@@ -12,10 +12,10 @@ log_output() {
 
 # Detect the operating system and set appropriate variables
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    activate_venv="source venv/bin/activate"
+    activate_venv="../frontend/venv/bin/activate"  # Correct path for Linux/MacOS
     python_cmd="python3"
 elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
-    activate_venv="venv\\Scripts\\activate"
+    activate_venv="../frontend/venv/Scripts/activate"  # Correct path for Windows
     python_cmd="python"
 else
     log_output "Unsupported OS."
@@ -35,20 +35,18 @@ if [ ! -d "venv" ]; then
     fi
 fi
 
-# Activate virtual environment
+# Activate virtual environment with the correct path
 log_output "Attempting to activate the virtual environment..."
-source "$activate_venv"
+if ! source "$activate_venv"; then
+    log_output "Error: Failed to activate virtual environment."
+    exit 1
+fi
 log_output "Virtual environment activated successfully."
 
-# Ensure pip is available
-if ! command -v pip &> /dev/null; then
-    log_output "pip not found! Installing pip..."
-    python -m ensurepip --upgrade
-fi
-
-# Install required Python packages if not already installed
+# Install required Python packages
 log_output "Installing required Python packages..."
-pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn
+$python_cmd -m pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn
+
 
 # Check if Gunicorn is installed and install it if necessary
 if ! command -v gunicorn &> /dev/null; then
