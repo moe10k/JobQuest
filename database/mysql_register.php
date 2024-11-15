@@ -2,7 +2,7 @@
 // PHP libraries for RabbitMQ and database connection
 require_once __DIR__ . '/../backend1/vendor/autoload.php';
 require_once __DIR__ . '/../backend1/db.php';
-$config = require DIR . '/../backend1/config.php';
+$config = require __DIR__ . '/../backend1/config.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
