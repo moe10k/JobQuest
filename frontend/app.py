@@ -7,10 +7,10 @@ from flask_cors import CORS
 
 
 app =  Flask (__name__)
+CORS(app)
+
 app.secret_key = "secret_key" #Secret key for flashing messages
 
-# Enable CORS for all routes
-CORS(app)  # This will allow all domains by default, which is not secure for production
 
 # RabbitMQ connection details
 rabbitmq_host = '10.147.17.228'  # I used my VM IP but Change this to your RabbitMQ server's address if needed
