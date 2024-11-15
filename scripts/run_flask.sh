@@ -126,7 +126,6 @@ log_output "VM IP (ZeroTier): $VM_IP"
 PRIMARY_IP="10.147.17.11"
 SECONDARY_IP="10.147.17.65"
 
-
 # Check if VM's IP matches primary or secondary IP
 if [ "$VM_IP" == "$PRIMARY_IP" ]; then
     ROLE="primary"
@@ -237,4 +236,5 @@ sudo ufw allow 25672/tcp # RabbitMQ port for clustering
 sudo ufw reload
 
 log_output "Setup completed! Gunicorn backend is running on ${VM_IP}:7012, and Nginx frontend failover is set up on port 8000."
-log_output "Logs are available in $log_file."
+log_output "View logs in $log_file for more details."
+echo "Setup completed! View logs in $log_file for more details."
