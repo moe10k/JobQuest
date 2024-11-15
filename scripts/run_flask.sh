@@ -40,9 +40,21 @@ log_output "Attempting to activate the virtual environment..."
 source "$activate_venv"
 log_output "Virtual environment activated successfully."
 
-# Install required Python packages
+# Install required Python packages if not already installed
 log_output "Installing required Python packages..."
 pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn
+
+# Check if Gunicorn is installed and install it if necessary
+if ! command -v gunicorn &> /dev/null; then
+    log_output "Gunicorn not found. Installing Gunicorn..."
+    pip install gunicorn
+    if [ $? -ne 0 ]; then
+        log_output "Error: Failed to install Gunicorn."
+        exit 1
+    fi
+else
+    log_output "Gunicorn is already installed."
+fi
 
 # Create app.py if it doesn't exist for backend
 if [ ! -f "app.py" ]; then
@@ -117,7 +129,13 @@ fi
 # Function to start Gunicorn
 start_gunicorn() {
     log_output "Starting Gunicorn on ${VM_IP}:7012..."
-    gunicorn --bind ${VM_IP}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &  # Run Gunicorn in the background
+    # Use full path to gunicorn if necessary
+    GUNICORN_PATH=$(which gunicorn)
+    if [ -z "$GUNICORN_PATH" ]; then
+        log_output "Error: Gunicorn not found in virtual environment!"
+        exit 1
+    fi
+    $GUNICORN_PATH --bind ${VM_IP}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &  # Run Gunicorn in the background
     export GUNICORN_PID=$!
 }
 
@@ -130,7 +148,7 @@ stop_gunicorn() {
     fi
 }
 
-# Start Gunicorn for the primary server
+# If the role is primary, start Gunicorn
 if [ "$ROLE" == "primary" ]; then
     log_output "This is the primary node. Starting Gunicorn on ${VM_IP}:7012..."
     start_gunicorn
@@ -166,16 +184,11 @@ fi
 # Install and set up Nginx for frontend failover
 log_output "Setting up Nginx for frontend failover configuration..."
 
-# Function to update Nginx configuration dynamically
-update_nginx_config() {
-    if [ "$ROLE" == "primary" ]; then
-        log_output "Primary server taking over, updating Nginx configuration..."
-
-        # Update Nginx config to use primary Gunicorn server
-        sudo bash -c "cat <<EOF > /etc/nginx/sites-available/frontend_failover
+# Write the Nginx config to handle frontend failover
+sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/frontend_failover
 upstream frontend_cluster {
-    server ${PRIMARY_IP}:7012 max_fails=3 fail_timeout=30s;  # Primary frontend node (Gunicorn)
-    server ${SECONDARY_IP}:7012 backup;                       # Backup frontend node (Gunicorn)
+    server 10.147.17.11:7012 max_fails=3 fail_timeout=30s;  # Primary frontend node (Gunicorn on port 7012)
+    server 10.147.17.65:7012 backup;                       # Backup frontend node (Gunicorn on port 7012)
 }
 
 server {
@@ -192,41 +205,20 @@ server {
     access_log /var/log/nginx/frontend_failover.log;
     error_log /var/log/nginx/frontend_failover_error.log;
 }
-EOF"
-    elif [ "$ROLE" == "backup" ]; then
-        log_output "Backup server taking over, updating Nginx configuration..."
+EOF'
 
-        # Update Nginx config to use backup Gunicorn server
-        sudo bash -c "cat <<EOF > /etc/nginx/sites-available/frontend_failover
-upstream frontend_cluster {
-    server ${SECONDARY_IP}:7012 max_fails=3 fail_timeout=30s;  # Backup frontend node (Gunicorn)
-    server ${PRIMARY_IP}:7012 backup;                          # Primary frontend node (Gunicorn)
-}
+# Create symbolic link to enable the configuration
+if [ ! -L /etc/nginx/sites-enabled/frontend_failover ]; then
+    sudo ln -s /etc/nginx/sites-available/frontend_failover /etc/nginx/sites-enabled/
+fi
 
-server {
-    listen 80;  # Nginx listens on port 80
-    server_name frontend_cluster;
+# Check Nginx configuration syntax before restarting
+log_output "Checking Nginx configuration syntax..."
+sudo nginx -t
 
-    location / {
-        proxy_pass http://frontend_cluster;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-    }
-
-    access_log /var/log/nginx/frontend_failover.log;
-    error_log /var/log/nginx/frontend_failover_error.log;
-}
-EOF"
-    fi
-
-    # Reload Nginx to apply the updated configuration
-    log_output "Reloading Nginx to apply the new configuration..."
-    sudo systemctl reload nginx
-}
-
-# Update Nginx configuration based on the role (primary or backup)
-update_nginx_config
+# Restart Nginx
+log_output "Restarting Nginx..."
+sudo systemctl restart nginx
 
 # Configure firewall rules for port 7012 (Gunicorn) and 80 (Nginx)
 log_output "Configuring firewall rules..."
