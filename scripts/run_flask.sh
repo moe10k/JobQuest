@@ -137,10 +137,10 @@ start_gunicorn() {
         exit 1
     fi
     
-    # Set the environment variable if necessary
-    export GUNICORN_FD=""  # Add this line to avoid the issue
+    # Set GUNICORN_FD to an empty value or ensure it's not causing issues
+    export GUNICORN_FD=""  # Clear the GUNICORN_FD to avoid the error
 
-    # Use Gunicorn without relying on GUNICORN_FD
+    # Start Gunicorn without relying on GUNICORN_FD
     $GUNICORN_PATH --bind ${VM_IP}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &  # Run Gunicorn in the background
     export GUNICORN_PID=$!
 }
