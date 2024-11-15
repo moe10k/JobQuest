@@ -3,11 +3,14 @@ import mysql.connector
 from flask import Flask, flash, render_template, request, redirect, url_for, session
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from flask_cors import CORS
 
 
 app =  Flask (__name__)
 app.secret_key = "secret_key" #Secret key for flashing messages
 
+# Enable CORS for all routes
+CORS(app)  # This will allow all domains by default, which is not secure for production
 
 # RabbitMQ connection details
 rabbitmq_host = '10.147.17.228'  # I used my VM IP but Change this to your RabbitMQ server's address if needed
