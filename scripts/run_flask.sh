@@ -138,7 +138,7 @@ start_gunicorn() {
         log_output "Error: Gunicorn not found in virtual environment!"
         exit 1
     fi
-    $GUNICORN_PATH --bind ${VM_IP}:7012 --workers 4 --worker-class sync --access-logfile $log_file --error-logfile $log_file app:app &
+    $GUNICORN_PATH --bind ${VM_IP}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &  # Run Gunicorn in the background
     export GUNICORN_PID=$!
 }
 
