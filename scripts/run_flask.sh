@@ -191,8 +191,8 @@ log_output "Setting up Nginx for frontend failover configuration..."
 # Write the Nginx config to handle frontend failover
 sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/frontend_failover
 upstream frontend_cluster {
-    server 10.147.17.11:7012 max_fails=3 fail_timeout=10s;  # Replace with actual primary IP
-    server 10.147.17.65:7012 backup;                         # Replace with actual backup IP
+    server 10.147.17.11:7012 max_fails=3 fail_timeout=10s;  # Primary IP
+    server 10.147.17.65:7012 backup;                        # Backup IP
 }
 
 server {
@@ -201,11 +201,11 @@ server {
 
     location / {
         proxy_pass http://frontend_cluster;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
 
-        # Retry the next server in case of failure
+        # Retry the next server if there's a failure
         proxy_next_upstream error timeout http_502 http_503 http_504;
         proxy_connect_timeout 3s;
         proxy_read_timeout 10s;
@@ -216,6 +216,7 @@ server {
     error_log /var/log/nginx/frontend_failover_error.log;
 }
 EOF'
+
 
 # Create symbolic link to enable the configuration
 if [ ! -L /etc/nginx/sites-enabled/frontend_failover ]; then
