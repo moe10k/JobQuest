@@ -189,7 +189,7 @@ fi
 log_output "Setting up Nginx for frontend failover configuration..."
 
 # Write the Nginx config to handle frontend failover
-sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/frontend_failover
+sudo bash -c "cat <<EOF > /etc/nginx/sites-available/frontend_failover
 upstream frontend_cluster {
     server 10.147.17.11:7012 max_fails=3 fail_timeout=10s;  # Primary IP
     server 10.147.17.65:7012 backup;                        # Backup IP
@@ -215,7 +215,7 @@ server {
     access_log /var/log/nginx/frontend_failover.log;
     error_log /var/log/nginx/frontend_failover_error.log;
 }
-EOF'
+EOF"
 
 
 # Create symbolic link to enable the configuration
