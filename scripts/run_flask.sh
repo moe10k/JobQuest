@@ -40,6 +40,12 @@ log_output "Attempting to activate the virtual environment..."
 source "$activate_venv"
 log_output "Virtual environment activated successfully."
 
+# Ensure pip is available
+if ! command -v pip &> /dev/null; then
+    log_output "pip not found! Installing pip..."
+    python -m ensurepip --upgrade
+fi
+
 # Install required Python packages if not already installed
 log_output "Installing required Python packages..."
 pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn
