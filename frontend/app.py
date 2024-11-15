@@ -1,9 +1,10 @@
 import pika, time, json, re, requests
-import mysql.connector
 from flask import Flask, flash, render_template, request, redirect, url_for, session
-from flask_mail import Mail, Message
-from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
+from dotenv import load_dotenv #everyone run the command: pip install python-dotenv
+import os
+load_dotenv()
+api_key = os.getenv('API_KEY')
 
 app =  Flask (__name__)
 app.secret_key = "secret_key" #Secret key for flashing messages
@@ -413,6 +414,7 @@ def dashboard():
 def logout():
    if is_logged_in():
        session.clear()  # Clear the entire session
+       print("Session cleared.")  # Debugging message
        flash('You have been logged out.', 'success')
        return redirect('/login')
    else:
@@ -462,16 +464,15 @@ def resetpassword():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search_jobs():
-    job_results = None  # Default to None to avoid showing results on the initial load
+    job_results = None
     if request.method == 'POST':
         # Extract form data for job search
         job_title = request.form.get('job_title')
         location = request.form.get('location')
 
-        # API info - hardcoded for now, need to create .env later
         url = "https://api.apijobs.dev/v1/job/search"
         headers = {
-            'apikey': '9765c07340ff178432353d35e4658525d3bedd8e74cce25f3d982f2e24ac669e',
+            'apikey': api_key,
             'Content-Type': 'application/json'
         }
         payload = {
@@ -482,40 +483,21 @@ def search_jobs():
         # Send POST request
         response = requests.post(url, json=payload, headers=headers)
 
-        # Print the status code and response content for debugging
-        print("Status Code:", response.status_code)
-
-        # Check the response status
         if response.status_code == 200:
             job_results = response.json().get('hits', [])
-            
-            if job_results:
-                # Print the first job for debugging
-                print("First Job Details:", job_results[0])
-
-                # Extract specific job details for display
-                formatted_jobs = []
-                for job in job_results:
-                    formatted_jobs.append({
-                        'title': job.get('title'),
-                        'job_url': job.get('url'),
-                        'company': job.get('hiringOrganizationName', 'N/A'),
-                        'location': job.get('region', 'N/A'),
-                        'description': job.get('description', 'N/A')
-                    })
-
-                return render_template('search.html', jobs=formatted_jobs)
-
-            else:
-                print("No job data found.")
-                flash('No job results found.', 'info')
-                return render_template('search.html')
-
+            formatted_jobs = [
+                {
+                    'title': job.get('title'),
+                    'job_url': job.get('url'),
+                    'company': job.get('hiringOrganizationName', 'N/A'),
+                    'location': job.get('region', 'N/A'),
+                    'description': job.get('description', 'N/A'),
+                } for job in job_results
+            ]
+            return render_template('search.html', jobs=formatted_jobs)
         else:
             flash('Failed to fetch job data. Please try again later.', 'danger')
-            return render_template('search.html')
 
-    # Render the search page with job results (if any)
     return render_template('search.html', jobs=job_results)
 
 
