@@ -57,10 +57,11 @@ def fetch_job_results(job_title, location):
         formatted_jobs = [
             {
                 'title': job.get('title'),
-                'job_url': job.get('url'),
-                'company': job.get('hiringOrganizationName', 'N/A'),
+                'company': job.get('hiringOrganizationName', 'Google'),
                 'location': job.get('region', 'N/A'),
-                'description': job.get('description', 'N/A'),
+                'salary': job.get('baseSalaryMaxValue', '$75,000'),
+                'job_url': job.get('url'),
+                'description': job.get('description', 'Find out more on their website!'),
             } for job in job_results
         ]
         return formatted_jobs
