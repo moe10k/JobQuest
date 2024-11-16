@@ -3,11 +3,11 @@ import mysql.connector
 from flask import Flask, flash, render_template, request, redirect, url_for, session
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
-# from flask_cors import CORS
+from flask_cors import CORS
 
 
 app =  Flask (__name__)
-# CORS(app)
+CORS(app)
 
 app.secret_key = "secret_key" #Secret key for flashing messages
 
