@@ -45,7 +45,7 @@ log_output "Virtual environment activated successfully."
 
 # Install required Python packages
 log_output "Installing required Python packages..."
-$python_cmd -m pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn flask-cors
+$python_cmd -m pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn
 
 # Check if Gunicorn is installed and install it if necessary
 if ! command -v gunicorn &> /dev/null; then
@@ -129,23 +129,18 @@ else
     exit 1
 fi
 
+# Function to start Gunicorn
 start_gunicorn() {
     log_output "Starting Gunicorn on ${VM_IP}:7012..."
-    
-    # Unset GUNICORN_FD to avoid issues
-    unset GUNICORN_FD
-    
+    # Use full path to gunicorn if necessary
     GUNICORN_PATH=$(which gunicorn)
     if [ -z "$GUNICORN_PATH" ]; then
         log_output "Error: Gunicorn not found in virtual environment!"
         exit 1
     fi
-
-    # Start Gunicorn with explicit binding to TCP (no Unix socket)
     $GUNICORN_PATH --bind ${VM_IP}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &  # Run Gunicorn in the background
     export GUNICORN_PID=$!
 }
-
 
 # Function to stop Gunicorn if running
 stop_gunicorn() {
