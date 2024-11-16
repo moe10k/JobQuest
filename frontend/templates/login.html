@@ -187,6 +187,37 @@
         messageDiv.innerText = message;
         flashContainer.appendChild(messageDiv);
     }
+
+    // function checkServerStatus() {
+    //     const primaryUrl = "http://10.147.17.11:7012";  // Primary server URL
+    //     const backupUrl = "http://10.147.17.65:7012";   // Backup server URL
+
+    //     fetch(primaryUrl, { method: "HEAD" })
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 // Primary server is down, redirect to backup
+    //                 if (window.location.href !== backupUrl) {
+    //                     window.location.href = backupUrl;
+    //                 }
+    //             } else {
+    //                 // Primary server is up, redirect from backup to primary
+    //                 if (window.location.href !== primaryUrl) {
+    //                     window.location.href = primaryUrl;
+    //                 }
+    //             }
+    //         })
+    //         .catch(error => {
+    //             // If primary server is unreachable, redirect to backup
+    //             console.error("Primary server unreachable:", error);
+    //             if (window.location.href !== backupUrl) {
+    //                 window.location.href = backupUrl;
+    //             }
+    //         });
+    // }
+
+    // // Call the function when the page is loaded
+    // window.onload = checkServerStatus;
+
 </script>
 </body>
 
