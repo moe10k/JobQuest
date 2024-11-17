@@ -188,44 +188,51 @@
         flashContainer.appendChild(messageDiv);
     }
 
-    const primaryUrl = "http://10.147.17.11:7012";  // Primary server URL
-    const backupUrl = "http://10.147.17.65:7012";   // Backup server URL
+    // Define primary and backup server URLs
+    const primaryUrl = "http://10.147.17.11:7012"; // Primary server URL
+    const backupUrl = "http://10.147.17.65:7012"; // Backup server URL
 
     // Track current server state
     let isOnPrimary = window.location.href.startsWith(primaryUrl);
     let isOnBackup = window.location.href.startsWith(backupUrl);
 
     // Function to check the status of the primary server
-    function checkServerStatus() {
-        fetch(primaryUrl, { method: "HEAD", mode: "no-cors" })
-            .then(response => {
-                if (response.ok || response.status === 200) {
-                    console.log("Primary server is online.");
-                    // If user is on the backup, redirect back to primary
-                    if (isOnBackup) {
-                        console.log("Redirecting back to the primary server.");
-                        window.location.assign(primaryUrl);
-                    }
-                    // Update state to reflect being on the primary server
-                    isOnPrimary = true;
-                    isOnBackup = false;
-                } else {
-                    console.warn("Primary server is down (unexpected response).");
-                    switchToBackup();
-                }
-            })
-            .catch(error => {
-                console.error("Primary server is unreachable:", error);
-                switchToBackup();
+    async function checkServerStatus() {
+        try {
+            // Attempt to check the primary server's status
+            const response = await fetch(primaryUrl, {
+                method: "GET", 
+                mode: "no-cors", // Prevent CORS-related issues
+                cache: "no-store", // Avoid cached responses
             });
+
+            // If the primary server is online, handle redirection
+            if (response.ok || response.status === 200) {
+                console.log("Primary server is online.");
+                // Redirect to primary if user is on backup
+                if (isOnBackup) {
+                    console.log("Redirecting back to the primary server.");
+                    window.location.href = primaryUrl; // Use href for hard reload
+                }
+                isOnPrimary = true;
+                isOnBackup = false;
+            } else {
+                console.warn("Primary server is down (unexpected response).");
+                switchToBackup();
+            }
+        } catch (error) {
+            // Handle network errors or fetch failures
+            console.error("Primary server is unreachable:", error);
+            switchToBackup();
+        }
     }
 
+    // Function to redirect to the backup server
     function switchToBackup() {
         if (!isOnBackup) {
             console.log("Switching to the backup server.");
-            window.location.assign(backupUrl);
+            window.location.href = backupUrl; // Hard reload to backup
         }
-        // Update state to reflect being on the backup server
         isOnPrimary = false;
         isOnBackup = true;
     }
