@@ -45,7 +45,7 @@ log_output "Virtual environment activated successfully."
 
 # Install required Python packages
 log_output "Installing required Python packages..."
-$python_cmd -m pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn flask-cors
+$python_cmd -m pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn flask-cors python-dotenv
 
 # Check if Gunicorn is installed and install it if necessary
 if ! command -v gunicorn &> /dev/null; then
