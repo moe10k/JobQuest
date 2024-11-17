@@ -167,6 +167,7 @@ if [ "$ROLE" == "backup" ]; then
     log_output "Backup node detected. Monitoring primary server at ${PRIMARY_IP}..."
 
     primary_up_logged=false  # Track if the primary being online was logged
+    backup_active=false  # Track if the backup server is active
 
     while true; do
         # Check primary server status
@@ -176,15 +177,19 @@ if [ "$ROLE" == "backup" ]; then
                 primary_up_logged=true  # Prevent duplicate "online" logs
             fi
             stop_gunicorn  # Stop backup server if primary is online
+            backup_active=false  # Mark backup server as inactive
         else
-            log_output "Primary server is down! Activating backup server..."
-            if [ -z "$GUNICORN_PID" ]; then
-                start_gunicorn  # Start Gunicorn on backup
-                log_output "Backup server activated."
+            if [ "$backup_active" = false ]; then
+                log_output "Primary server is down! Activating backup server..."
+                if [ -z "$GUNICORN_PID" ]; then
+                    start_gunicorn  # Start Gunicorn on backup
+                    log_output "Backup server activated."
+                fi
+                backup_active=true  # Mark backup server as active
             fi
             primary_up_logged=false  # Reset logging for the next recovery
         fi
-        sleep 15  # Monitor every 15 seconds
+        sleep 2  # Monitor every 2 seconds
     done
 fi
 
