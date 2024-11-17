@@ -188,35 +188,43 @@
         flashContainer.appendChild(messageDiv);
     }
 
-    // function checkServerStatus() {
-    //     const primaryUrl = "http://10.147.17.11:7012";  // Primary server URL
-    //     const backupUrl = "http://10.147.17.65:7012";   // Backup server URL
+    // Function to check server status and handle redirection
+    function checkServerStatus() {
+        const primaryUrl = "http://10.147.17.11:7012";  // Primary server URL
+        const backupUrl = "http://10.147.17.65:7012";   // Backup server URL
 
-    //     fetch(primaryUrl, { method: "HEAD" })
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 // Primary server is down, redirect to backup
-    //                 if (window.location.href !== backupUrl) {
-    //                     window.location.href = backupUrl;
-    //                 }
-    //             } else {
-    //                 // Primary server is up, redirect from backup to primary
-    //                 if (window.location.href !== primaryUrl) {
-    //                     window.location.href = primaryUrl;
-    //                 }
-    //             }
-    //         })
-    //         .catch(error => {
-    //             // If primary server is unreachable, redirect to backup
-    //             console.error("Primary server unreachable:", error);
-    //             if (window.location.href !== backupUrl) {
-    //                 window.location.href = backupUrl;
-    //             }
-    //         });
-    // }
+        fetch(primaryUrl, { method: "HEAD" })
+            .then(response => {
+                if (response.ok) {
+                    // Primary server is online, redirect to primary if not already there
+                    if (window.location.href !== primaryUrl) {
+                        window.location.assign(primaryUrl);  // Complete redirect
+                    }
+                } else {
+                    // If primary server is down, redirect to backup
+                    redirectToBackup();
+                }
+            })
+            .catch(error => {
+                // If primary server is unreachable, redirect to backup
+                console.error("Primary server unreachable:", error);
+                redirectToBackup();
+            });
+    }
 
-    // // Call the function when the page is loaded
-    // window.onload = checkServerStatus;
+    // Function to redirect to backup server
+    function redirectToBackup() {
+        const backupUrl = "http://10.147.17.65:7012";   // Backup server URL
+        if (window.location.href !== backupUrl) {
+            window.location.assign(backupUrl);  // Complete redirect
+        }
+    }
+
+    // Poll the server status every 30 seconds
+    setInterval(checkServerStatus, 30000);  // Check every 30 seconds
+
+    // Initial check when the page is loaded
+    window.onload = checkServerStatus;
 
 </script>
 </body>
