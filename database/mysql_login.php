@@ -1,14 +1,20 @@
 <?php
 // PHP libraries for RabbitMQ and database connection
 require_once __DIR__ . '/../backend1/vendor/autoload.php';
-require_once __DIR__ . '/../backend1/db.php';
+require_once __DIR__ . '/db.php';
+$config = require __DIR__ . '/../messaging/config.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 try {
    // Establish RabbitMQ connection
-   $rabbitMQConnection = new AMQPStreamConnection('10.147.17.228', 5672, 'guest', 'guest'); // Ensure correct IP
+   $rabbitMQConnection = new AMQPStreamConnection(
+    $config['rabbitmq']['host'],
+    $config['rabbitmq']['port'],
+    $config['rabbitmq']['username'],
+    $config['rabbitmq']['password']
+);
    $channel = $rabbitMQConnection->channel();
 
    // Declare the queue to listen for login verification
