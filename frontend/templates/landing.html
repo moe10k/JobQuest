@@ -25,8 +25,8 @@
 
     <script>
     // Define primary and backup server URLs
-    const primaryUrl = "http://10.147.17.11:7012"; // Primary server URL
-    const backupUrl = "http://10.147.17.65:7012"; // Backup server URL
+    const primaryUrl = "http://10.147.17.11:7012/login"; // Primary server URL
+    const backupUrl = "http://10.147.17.65:7012/login"; // Backup server URL
 
     // Track current server state
     let isOnPrimary = window.location.href.startsWith(primaryUrl);
@@ -78,6 +78,8 @@
 
     // Initial check when the page loads
     window.onload = checkServerStatus;
-    </script>
+
+</script>
+
 </body>
 </html>
