@@ -1,47 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">   <!-- Source: www.geeksforgeeks.org/flask-message-flashing/-->
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Search </title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="/static/search.css">
+   <title>Search</title>
+   <style>
+       .job-description {
+           overflow: hidden;
+           display: -webkit-box;
+           /*-webkit-line-clamp: 3; /* Show 3 lines initially */
+           -webkit-box-orient: vertical;
+       }
+       .job-description.expanded {
+           /*-webkit-line-clamp: unset; /* Show full text when expanded */
+           overflow: visible;
+       }
+       .read-more {
+           color: #007bff;
+           cursor: pointer;
+           text-decoration: underline;
+       }
+   </style>
 </head>
 <body>
-
-    <!-- nav bar section -->
     {% include 'partials/nav.html' %}
-
-    <!-- Flash message section -->
     {% include 'partials/flash.html' %}
 
-        <!-- search.html -->
-    <form method="POST" action="/search">
-        <label for="job_title">Job Title:</label>
-        <input type="text" name="job_title" id="job_title" required>
-        <label for="location">Location (optional):</label>
-        <input type="text" name="location" id="location">
-        <button type="submit">Search</button>
-    </form>
+    <div class="search-container">
+        <h1>Find Your Next Opportunity</h1>
+        <form class="search-form" method="POST" action="/search">
+            <div class="form-group">
+                <label for="job_title">Job Title:</label>
+                <input type="text" name="job_title" id="job_title" placeholder="e.g., Software Engineer" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location (optional):</label>
+                <input type="text" name="location" id="location" placeholder="e.g., New York">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
 
     <hr>
 
-    <!-- Section to display job results -->
-    {% if jobs %}
-        <h2>Job Results</h2>
-        <ul>
-        {% for job in jobs %}
-            <li>
-                <h3>{{ job.title }}</h3>
-                <p><strong>Company:</strong> {{ job.company }}</p>
-                <p><strong>Location:</strong> {{ job.location }}</p>
-                <p><a href="{{ job.job_url }}">View Job</a></p>
-                <p><strong>Description:</strong> {{ job.description }}</p>
-            </li>
-        {% endfor %}
-        </ul>
-    {% elif jobs is not none %}
-        <p>No jobs found.</p>
-    {% endif %}
-        
-     
+    <div class="results-container">
+        {% if jobs %}
+            <h2>Job Results</h2>
+            <ul class="job-list">
+                {% for job in jobs %}
+                    <li class="job-item">
+                        <h3>{{ job.title }}</h3>
+                        <p><strong>Company:</strong> {{ job.company }}</p>
+                        <p><strong>Location:</strong> {{ job.location }}</p>
+                        <p><strong>Salary:</strong> {{ job.salary }}</p>
+                        <p><a href="{{ job.job_url }}" target="_blank" class="job-link">View Job</a></p>
+                        <p class="job-description" data-index="{{ loop.index }}">
+                            {{ job.description or 'Description not available.' }}
+                        </p>
+                        <span class="read-more" onclick="toggleDescription(this)">Read More</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% elif jobs is not none %}
+            <p>No jobs found.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function toggleDescription(element) {
+            const description = element.previousElementSibling;
+
+            if (description.classList.contains('expanded')) {
+                description.classList.remove('expanded');
+                element.innerText = "Read More";
+            } else {
+                description.classList.add('expanded');
+                element.innerText = "Read Less";
+            }
+        }
+    </script>
 </body>
 </html>
