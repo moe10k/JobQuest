@@ -241,6 +241,7 @@ sudo ufw allow 80
 sudo ufw allow 15672
 sudo ufw allow 5672 # Allow RabbitMQ ports
 sudo ufw allow 3306 # Allow MySQL port
+sudo ufw allow 22 # Allow SSH port
 sudo ufw reload  # Reload the firewall rules
 
 # Restart Nginx if it is the backup node
@@ -253,6 +254,7 @@ if [ "$ROLE" == "backup" ]; then
     sudo ufw allow 15672
     sudo ufw allow 5672 # Allow RabbitMQ ports
     sudo ufw allow 3306 # Allow MySQL port
+    sudo ufw allow 22 # Allow SSH port
     sudo ufw reload  # Reload the firewall rules
     sudo systemctl restart nginx
 fi
