@@ -66,6 +66,7 @@ pip install mysql-connector-python
 pip install mysql-connector-python pika
 pip install itsdangerous
 pip install gunicorn
+pip install python-dotenv
 
 # Create app.py if it doesn't exist
 if [ ! -f "app.py" ]; then
