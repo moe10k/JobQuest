@@ -1,10 +1,13 @@
 #!/bin/bash
 
-#Defining master and slave nodes
-MASTER_NODE="rabbbit@messaging"
+# Defining master and slave nodes
+MASTER_NODE="rabbit@messaging"
 SLAVE_NODES=("rabbit@andre" "rabbit@database490")
 SLAVE_IPS=("10.147.17.11" "10.147.17.146")
 SSH_USERS=("awh9" "jose")
+
+# To track node status
+NODE_STATUS=("on" "on" "on")  # First position for master, second and third for slaves
 
 check_node_status() {
     local node=$1
@@ -54,9 +57,24 @@ for i in "${!SLAVE_NODES[@]}"; do
         # Check if the slave node is now part of the cluster
         if ! check_node_status "$slave_node"; then
             echo "Node $slave_node is still not available after starting the service."
+            NODE_STATUS[$((i+1))]="failed"  # Mark the slave as failed
         else
             # Join the node to the cluster if it isn't already
             join_cluster "$slave_node"
+            NODE_STATUS[$((i+1))]="on"  # Mark the slave as successfully joined
         fi
+    else
+        NODE_STATUS[$((i+1))]="on"  # Slave node is already running and connected
     fi
 done
+
+# Output final status summary
+if [[ "${NODE_STATUS[1]}" == "on" && "${NODE_STATUS[2]}" == "on" ]]; then
+    echo "All nodes are on and connected."
+elif [[ "${NODE_STATUS[1]}" == "on" && "${NODE_STATUS[2]}" == "failed" ]]; then
+    echo "rabbit@messaging, and rabbit@andre are on and connected. rabbit@database490 failed."
+elif [[ "${NODE_STATUS[1]}" == "failed" && "${NODE_STATUS[2]}" == "on" ]]; then
+    echo "rabbit@messaging, and rabbit@database490 are on and connected. rabbit@andre failed."
+else
+    echo "All nodes failed to join. Only rabbit@messaging is on."
+fi
