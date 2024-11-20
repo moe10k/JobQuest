@@ -37,11 +37,8 @@ function isRabbitMqReachable($node) {
 
 // Attempt to connect to each node in order
 foreach ($rabbitmqNodes as $node) {
-    echo "$node[node_name] is off. Connecting to next node...\n"; // Output which node is off
-
     if (isRabbitMqReachable($node)) {
-        // If the connection is successful, output the connected node
-        echo "Connected to $node[node_name] at {$node['host']}\n";
+        // If the connection is successful, return the connection details for use
         return [
             'rabbitmq' => [
                 'host' => $node['host'],
@@ -53,6 +50,5 @@ foreach ($rabbitmqNodes as $node) {
     }
 }
 
-// If no nodes are reachable, handle the failure
-echo "Failed to connect to any RabbitMQ nodes.\n";
+// If no nodes are reachable, return null
 return null;
