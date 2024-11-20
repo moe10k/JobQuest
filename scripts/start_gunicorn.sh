@@ -103,8 +103,8 @@ export FLASK_ENV=production
 log_output "Stopping any existing processes on port 7012..."
 sudo fuser -k 7012/tcp || true
 
-# Check and set VM's VPN IP dynamically (ZeroTier IP)
-VPN_INTERFACE="ztbtoss2h4"  
+# Check and set VM's VPN IP dynamically (Tailscale IP)
+VPN_INTERFACE="tailscale0"  
 VM_IP=$(ifconfig "$VPN_INTERFACE" | grep 'inet ' | awk '{print $2}')  # Get VPN IP
 
 if [ -z "$VM_IP" ]; then
@@ -114,8 +114,8 @@ fi
 log_output "VM IP (ZeroTier): $VM_IP"
 
 # Set primary and secondary IPs
-PRIMARY_IP="10.147.17.11"
-SECONDARY_IP="10.147.17.65"
+PRIMARY_IP="10.77.152.51"
+SECONDARY_IP="10.64.1.4"
 
 # Check if VM's IP matches primary or secondary IP
 if [ "$VM_IP" == "$PRIMARY_IP" ]; then
