@@ -68,10 +68,29 @@
 </nav>
 
 <script>
-     // Toggle Dark Mode and Update Button Text
-     document.getElementById('toggle-dark-mode').addEventListener('click', function() {
+     // Function to apply dark mode based on local storage
+    function applyDarkModePreference() {
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('toggle-dark-mode').textContent = 'Light Mode';
+        } else {
+            document.getElementById('toggle-dark-mode').textContent = 'Dark Mode';
+        }
+    }
+
+    // Function to toggle dark mode and update button text
+    document.getElementById('toggle-dark-mode').addEventListener('click', function() {
         document.body.classList.toggle('dark-mode');
-        // Update button text based on the current mode
-        this.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('darkMode', 'enabled');
+            this.textContent = 'Light Mode';
+        } else {
+            localStorage.setItem('darkMode', 'disabled');
+            this.textContent = 'Dark Mode';
+        }
     });
+
+    // Apply dark mode preference on page load
+    applyDarkModePreference();
 </script>

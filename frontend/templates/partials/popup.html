@@ -167,8 +167,57 @@
                     <label for="state">State</label>
                     <select id="state" name="state">
                         <option value="" disabled selected>Select your state</option>
+                        <option value="Alabama">Alabama</option>
+                        <option value="Alaska">Alaska</option>
+                        <option value="Arizona">Arizona</option>
+                        <option value="Arkansas">Arkansas</option>
+                        <option value="California">California</option>
+                        <option value="Colorado">Colorado</option>
+                        <option value="Connecticut">Connecticut</option>
+                        <option value="Delaware">Delaware</option>
+                        <option value="Florida">Florida</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Hawaii">Hawaii</option>
+                        <option value="Idaho">Idaho</option>
+                        <option value="Illinois">Illinois</option>
+                        <option value="Indiana">Indiana</option>
+                        <option value="Iowa">Iowa</option>
+                        <option value="Kansas">Kansas</option>
+                        <option value="Kentucky">Kentucky</option>
+                        <option value="Louisiana">Louisiana</option>
+                        <option value="Maine">Maine</option>
+                        <option value="Maryland">Maryland</option>
+                        <option value="Massachusetts">Massachusetts</option>
+                        <option value="Michigan">Michigan</option>
+                        <option value="Minnesota">Minnesota</option>
+                        <option value="Mississippi">Mississippi</option>
+                        <option value="Missouri">Missouri</option>
+                        <option value="Montana">Montana</option>
+                        <option value="Nebraska">Nebraska</option>
+                        <option value="Nevada">Nevada</option>
+                        <option value="New Hampshire">New Hampshire</option>
                         <option value="New York">New Jersey</option>
+                        <option value="New Mexico">New Mexico</option>
                         <option value="California">New York</option>
+                        <option value="North Carolina">North Carolina</option>
+                        <option value="North Dakota">North Dakota</option>
+                        <option value="Ohio">Ohio</option>
+                        <option value="Oklahoma">Oklahoma</option>
+                        <option value="Oregon">Oregon</option>
+                        <option value="Pennsylvania">Pennsylvania</option>
+                        <option value="Rhode Island">Rhode Island</option>
+                        <option value="South Carolina">South Carolina</option>
+                        <option value="South Dakota">South Dakota</option>
+                        <option value="Tennessee">Tennessee</option>
+                        <option value="Texas">Texas</option>
+                        <option value="Utah">Utah</option>
+                        <option value="Vermont">Vermont</option>
+                        <option value="Virginia">Virginia</option>
+                        <option value="Washington">Washington</option>
+                        <option value="West Virginia">West Virginia</option>
+                        <option value="Wisconsin">Wisconsin</option>
+                        <option value="Wyoming">Wyoming</option>
+
                     </select>
                 </div>
                 <div class="form-group">
@@ -186,11 +235,53 @@
                 </div>
                 <div class="form-group">
                     <label for="jobStartMonth">Start Month/Year</label>
-                    <input type="date" id="jobStartMonth" name="jobStartMonth" placeholder="MM/DD/YYYY">
+                    <select id="jobStartMonth" name="jobStartMonth">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="jobEndMonth">End Month/Year</label>
-                    <input type="date" id="jobEndMonth" name="jobEndMonth" placeholder="MM/DD/YYYY">
+                    <label for="jobStartYear">Start Year</label>
+                    <select id="jobStartYear" name="jobStartYear">
+                        {% for year in range(2024, 1969, -1) %}
+                            <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="jobEndMonth">End Month</label>
+                    <select id="jobEndMonth" name="jobEndMonth">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="jobEndYear">Start Year</label>
+                    <select id="jobEndYear" name="jobEndYear">
+                        {% for year in range(2024, 1969, -1) %}
+                            <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="form-group checkbox-inline">
                     <input type="checkbox" id="jobCurrent" name="jobCurrent">
@@ -206,13 +297,57 @@
                     <input type="text" id="schoolName" name="schoolName" placeholder="School Name">
                 </div>
                 <div class="form-group">
-                    <label for="schoolStartMonth">Start Month/Year</label>
-                    <input type="date" id="schoolStartMonth" name="schoolStartMonth" placeholder="MM/DD/YYYY">
+                    <label for="schoolStartMonth">Start Month</label>
+                    <select id="schoolStartMonth" name="schoolStartMonth">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="schoolEndMonth">End Month/Year</label>
-                    <input type="date" id="schoolEndMonth" name="schoolEndMonth" placeholder="MM/DD/YYYY">
+                    <label for="schoolStartYear">Start Year</label>
+                    <select id="schoolStartYear" name="schoolStartYear">
+                        {% for year in range(2024, 1969, -1) %}
+                            <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
+                <div class="form-group">
+                    <label for="schoolEndMonth">End Month</label>
+                    <select id="schoolEndMonth" name="schoolEndMonth">
+                    <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+                <div class="form-group
+                ">
+                    <label for="schoolEndYear">End Year</label>
+                    <select id="schoolEndYear" name="schoolEndYear">
+                        {% for year in range(2024, 1969, -1) %}
+                            <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
                 <div class="form-group checkbox-inline">
                     <input type="checkbox" id="schoolCurrent" name="schoolCurrent">
                     <label for="schoolCurrent">Current</label>
@@ -285,4 +420,93 @@
         schoolCurrentCheckbox.addEventListener('change', function () {
             toggleEndDate(schoolCurrentCheckbox, schoolEndDate);
         });
+   
+
+    // // Define primary and backup server URLs
+    // const primaryUrl = "http://100.64.1.5:7012/popup"; // Primary server URL
+    // const backupUrl = "http://100.64.1.4:7012/popup"; // Backup server URL
+
+    // // Track current server state
+    // let isOnPrimary = window.location.href.startsWith(primaryUrl);
+    // let isOnBackup = window.location.href.startsWith(backupUrl);
+
+    // // Function to check the status of the primary and backup servers
+    // async function checkServerStatus() {
+    //     try {
+    //         // Attempt to check the primary server's status
+    //         const primaryResponse = await fetch(primaryUrl, {
+    //             method: "GET", 
+    //             mode: "no-cors",  // Set to no-cors mode to avoid CORS-related issues
+    //             cache: "no-store", // Avoid cached responses
+    //         });
+
+    //         // If the primary server is online, handle redirection
+    //         if (primaryResponse.ok || primaryResponse.status === 200) {
+    //             console.log("Primary server is online.");
+    //             // Redirect to primary if user is on backup
+    //             if (isOnBackup) {
+    //                 console.log("Redirecting back to the primary server.");
+    //                 window.location.href = primaryUrl; // Use href for hard reload
+    //             }
+    //             isOnPrimary = true;
+    //             isOnBackup = false;
+    //         } else {
+    //             console.warn("Primary server is down (unexpected response).");
+    //             switchToBackup();
+    //         }
+    //     } catch (error) {
+    //         // Handle network errors or fetch failures for primary server
+    //         console.error("Primary server is unreachable:", error);
+    //         switchToBackup();
+    //     }
+
+    //     // Check if the backup server is online
+    //     try {
+    //         const backupResponse = await fetch(backupUrl, {
+    //             method: "GET", 
+    //             mode: "no-cors",  // Set to no-cors mode for backup server
+    //             cache: "no-store", 
+    //         });
+
+    //         if (backupResponse.ok || backupResponse.status === 200) {
+    //             console.log("Backup server is online.");
+    //             // If user is on backup and it's reachable, do nothing
+    //             if (!isOnBackup) {
+    //                 switchToBackup();
+    //             }
+    //         } else {
+    //             console.warn("Backup server is down (unexpected response).");
+    //             // Redirect to primary if backup is down and user is on backup
+    //             if (isOnBackup) {
+    //                 console.log("Backup is down, redirecting to primary server.");
+    //                 window.location.href = primaryUrl; // Use href for hard reload
+    //             }
+    //         }
+    //     } catch (error) {
+    //         // Handle network errors or fetch failures for backup server
+    //         console.error("Backup server is unreachable:", error);
+    //         // Redirect to primary if backup is down and user is on backup
+    //         if (isOnBackup) {
+    //             console.log("Backup is down, redirecting to primary server.");
+    //             window.location.href = primaryUrl; // Use href for hard reload
+    //         }
+    //     }
+    // }
+
+    // // Function to redirect to the backup server
+    // function switchToBackup() {
+    //     if (!isOnBackup) {
+    //         console.log("Switching to the backup server.");
+    //         window.location.href = backupUrl; // Hard reload to backup
+    //     }
+    //     isOnPrimary = false;
+    //     isOnBackup = true;
+    // }
+
+    // // Poll the server status every 7 seconds
+    // setInterval(checkServerStatus, 7000);
+
+    // // Initial check when the page loads
+    // window.onload = checkServerStatus;    
+
 </script>
