@@ -187,6 +187,69 @@
         messageDiv.innerText = message;
         flashContainer.appendChild(messageDiv);
     }
+
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+    clearInterval(serverStatusInterval); // Stop periodic checks during submission
+    });
+
+
+    // Define primary and backup server URLs
+    const primaryUrl = "http://100.64.1.5:7012/login"; // Primary server URL
+    const backupUrl = "http://100.64.1.4:7012/login"; // Backup server URL
+
+// Track current server state
+let isOnPrimary = window.location.href.startsWith(primaryUrl);
+let isOnBackup = window.location.href.startsWith(backupUrl);
+
+async function checkServerStatus() {
+    let primaryIsOnline = false;
+    let backupIsOnline = false;
+
+    // Check the status of the primary server
+    try {
+        const primaryResponse = await fetch(primaryUrl, {
+            method: "HEAD", // Use HEAD request for lightweight checks
+            cache: "no-store", // Avoid cached responses
+        });
+        primaryIsOnline = primaryResponse.ok || primaryResponse.status === 200;
+    } catch {
+        console.info("Primary server is unreachable (expected during startup).");
+    }
+
+    // Check the status of the backup server
+    try {
+        const backupResponse = await fetch(backupUrl, {
+            method: "HEAD", // Use HEAD request for lightweight checks
+            cache: "no-store",
+        });
+        backupIsOnline = backupResponse.ok || backupResponse.status === 200;
+    } catch {
+        console.info("Backup server is unreachable (expected during startup).");
+    }
+
+    // Logic to decide redirection
+    if (primaryIsOnline && !isOnPrimary) {
+        console.log("Redirecting to the primary server.");
+        window.location.href = primaryUrl; // Hard reload to primary
+    } else if (!primaryIsOnline && backupIsOnline && !isOnBackup) {
+        console.log("Redirecting to the backup server.");
+        window.location.href = backupUrl; // Hard reload to backup
+    } else {
+        console.log("No redirection needed. Current state is stable.");
+    }
+
+    // Update flags
+    isOnPrimary = primaryIsOnline;
+    isOnBackup = backupIsOnline && !primaryIsOnline;
+}
+
+    // Call this function periodically or on certain triggers
+    setInterval(checkServerStatus, 7000); // Poll every 7 seconds
+
+    // Initial check when the page loads
+    window.onload = checkServerStatus;
+
+
 </script>
 </body>
 

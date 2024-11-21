@@ -79,6 +79,95 @@
                 element.innerText = "Read Less";
             }
         }
+
+    // Define primary and backup server URLs
+    const primaryUrl = "http://10.147.17.11:7012/search"; // Primary server URL
+    const backupUrl = "http://10.147.17.65:7012/search"; // Backup server URL
+
+    // Track current server state
+    let isOnPrimary = window.location.href.startsWith(primaryUrl);
+    let isOnBackup = window.location.href.startsWith(backupUrl);
+
+    // Function to check the status of the primary and backup servers
+    async function checkServerStatus() {
+        try {
+            // Attempt to check the primary server's status
+            const primaryResponse = await fetch(primaryUrl, {
+                method: "GET", 
+                mode: "no-cors",  // Set to no-cors mode to avoid CORS-related issues
+                cache: "no-store", // Avoid cached responses
+            });
+
+            // If the primary server is online, handle redirection
+            if (primaryResponse.ok || primaryResponse.status === 200) {
+                console.log("Primary server is online.");
+                // Redirect to primary if user is on backup
+                if (isOnBackup) {
+                    console.log("Redirecting back to the primary server.");
+                    window.location.href = primaryUrl; // Use href for hard reload
+                }
+                isOnPrimary = true;
+                isOnBackup = false;
+            } else {
+                console.warn("Primary server is down (unexpected response).");
+                switchToBackup();
+            }
+        } catch (error) {
+            // Handle network errors or fetch failures for primary server
+            console.error("Primary server is unreachable:", error);
+            switchToBackup();
+        }
+
+        // Check if the backup server is online
+        try {
+            const backupResponse = await fetch(backupUrl, {
+                method: "GET", 
+                mode: "no-cors",  // Set to no-cors mode for backup server
+                cache: "no-store", 
+            });
+
+            if (backupResponse.ok || backupResponse.status === 200) {
+                console.log("Backup server is online.");
+                // If user is on backup and it's reachable, do nothing
+                if (!isOnBackup) {
+                    switchToBackup();
+                }
+            } else {
+                console.warn("Backup server is down (unexpected response).");
+                // Redirect to primary if backup is down and user is on backup
+                if (isOnBackup) {
+                    console.log("Backup is down, redirecting to primary server.");
+                    window.location.href = primaryUrl; // Use href for hard reload
+                }
+            }
+        } catch (error) {
+            // Handle network errors or fetch failures for backup server
+            console.error("Backup server is unreachable:", error);
+            // Redirect to primary if backup is down and user is on backup
+            if (isOnBackup) {
+                console.log("Backup is down, redirecting to primary server.");
+                window.location.href = primaryUrl; // Use href for hard reload
+            }
+        }
+    }
+
+    // Function to redirect to the backup server
+    function switchToBackup() {
+        if (!isOnBackup) {
+            console.log("Switching to the backup server.");
+            window.location.href = backupUrl; // Hard reload to backup
+        }
+        isOnPrimary = false;
+        isOnBackup = true;
+    }
+
+    // Poll the server status every 7 seconds
+    setInterval(checkServerStatus, 7000);
+
+    // Initial check when the page loads
+    window.onload = checkServerStatus;
+
+
     </script>
 </body>
 </html>
