@@ -3,21 +3,21 @@
 // Define RabbitMQ nodes in order of priority
 $rabbitmqNodes = [
     [
-        'host' => '10.147.17.228',  // Primary Node (Nadia)
+        'host' => '100.64.1.4',  // Primary Node (Nadia)
         'node_name' => 'rabbit@messaging',  // Node identifier
         'port' => 5672,
         'username' => 'guest',
         'password' => 'guest',
     ],
     [
-        'host' => '10.147.17.11',   // Secondary Node (Andre)
+        'host' => '100.64.1.5',   // Secondary Node (Andre)
         'node_name' => 'rabbit@andre',  // Node identifier
         'port' => 5672,
         'username' => 'guest',
         'password' => 'guest',
     ],
     [
-        'host' => '10.147.17.146',  // Fallback Node (Jose)
+        'host' => '100.64.1.2',  // Fallback Node (Jose)
         'node_name' => 'rabbit@database490',  // Node identifier
         'port' => 5672,
         'username' => 'guest',
