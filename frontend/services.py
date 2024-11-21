@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
-rabbitmq_host = '10.147.17.228'  # Update this to your RabbitMQ server's address
+rabbitmq_host = '100.64.1.4'  # Update this to your RabbitMQ server's address
 api_key = os.getenv('API_KEY')  # Fetch API key from .env file
 
 # RabbitMQ Functions
