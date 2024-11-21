@@ -7,19 +7,19 @@ log_output() {
     unset TZ
 }
 
-# Check and set VM's VPN IP dynamically (ZeroTier IP)
-VPN_INTERFACE="ztbtoss2h4"  # Replace with your ZeroTier interface name
+# Check and set VM's VPN IP dynamically (Tailscale IP)
+VPN_INTERFACE="tailscale0"  
 VM_IP=$(ifconfig "$VPN_INTERFACE" | grep 'inet ' | awk '{print $2}')  # Get VPN IP
 
 if [ -z "$VM_IP" ]; then
     log_output "Error: Unable to get VPN IP address for this VM."
     exit 1
 fi
-log_output "VM IP (ZeroTier): $VM_IP"
+log_output "VM IP (tailscale): $VM_IP"
 
 # Set primary and secondary IPs
-PRIMARY_IP="10.147.17.11"
-SECONDARY_IP="10.147.17.65"
+PRIMARY_IP="100.64.1.5"
+SECONDARY_IP="100.64.1.4"
 
 # Check if VM's IP matches primary or secondary IP
 if [ "$VM_IP" == "$PRIMARY_IP" ]; then
