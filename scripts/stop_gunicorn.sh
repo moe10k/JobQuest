@@ -18,7 +18,7 @@ fi
 log_output "VM IP (tailscale): $VM_IP"
 
 # Set primary and secondary IPs
-PRIMARY_IP="100.77.152.51"
+PRIMARY_IP="100.64.1.5"
 SECONDARY_IP="100.64.1.4"
 
 # Check if VM's IP matches primary or secondary IP
