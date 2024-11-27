@@ -161,11 +161,19 @@ if [ ! -L /etc/nginx/sites-enabled/frontend_failover ]; then
     sudo ln -s /etc/nginx/sites-available/frontend_failover /etc/nginx/sites-enabled/
 fi
 
+# Start or restart Nginx service
+log_output "Starting Nginx service..."
+sudo systemctl start nginx || { log_output "Error: Failed to start Nginx."; exit 1; }
+log_output "Nginx started successfully."
+
 # Check and reload Nginx
 log_output "Checking Nginx configuration..."
-sudo nginx -t
-sudo systemctl reload nginx
+sudo nginx -t || { log_output "Error: Nginx configuration is invalid."; exit 1; }
+
+log_output "Reloading Nginx..."
+sudo systemctl reload nginx || { log_output "Error: Failed to reload Nginx."; exit 1; }
 
 # Log the final status
 log_output "Frontend services started successfully."
 log_output "Gunicorn PID: $GUNICORN_PID"
+log_output "Role: $ROLE"
