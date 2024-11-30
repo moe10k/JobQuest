@@ -182,6 +182,74 @@ def search_jobs():
     
     return render_template('search.html')
 
+@app.route('/tracker', methods=['GET'])
+def track_jobs():
+    # Mock data for testing purposes
+    applications = [
+        {
+            "job_name": "Software Engineer",
+            "date_applied": "2024-11-01",
+            "response_received": "Yes",
+            "response_method": "Email",
+            "interview_scheduled": "Yes",
+            "number_of_interviews": 2,
+            "offer_received": "Yes",
+            "date_received": "2024-11-15"
+        },
+        {
+            "job_name": "Data Analyst",
+            "date_applied": "2024-10-20",
+            "response_received": "No",
+            "response_method": "-",
+            "interview_scheduled": "-",
+            "number_of_interviews": "-",
+            "offer_received": "No",
+            "date_received": "-"
+        }
+    ]
+
+    # Pass mock data to the template
+    return render_template('tracker.html', applications=applications)
+
+
+# @app.route('/tracker', methods=['GET', 'POST'])
+# def track_jobs():
+#     # if request.method == 'POST':
+#     #     # Extract form data
+#     #     job_name = request.form.get('job_name')
+#     #     date_applied = request.form.get('date_applied')
+#     #     response_received = request.form.get('response_received')
+#     #     response_method = request.form.get('response_method', '').strip()
+#     #     interview_scheduled = request.form.get('interview_scheduled')
+#     #     number_of_interviews = request.form.get('number_of_interviews', '').strip()
+#     #     offer_received = request.form.get('offer_received')
+#     #     date_received = request.form.get('date_received', '').strip()
+
+#     #     # Validate required fields
+#     #     if not job_name or not date_applied or not response_received or not interview_scheduled or not offer_received:
+#     #         flash("Please fill out all required fields.", "error")
+#     #         return redirect('/tracker')
+
+#     #     # Add application to the in-memory list
+#     #     applications.append({
+#     #         "job_name": job_name,
+#     #         "date_applied": date_applied,
+#     #         "response_received": response_received,
+#     #         "response_method": response_method if response_received == 'Yes' else '-',
+#     #         "interview_scheduled": interview_scheduled,
+#     #         "number_of_interviews": int(number_of_interviews) if number_of_interviews.isdigit() else '-',
+#     #         "offer_received": offer_received,
+#     #         "date_received": date_received if offer_received == 'Yes' else '-'
+#     #     })
+
+#     #     flash("Job application added successfully!", "success")
+#     #     return redirect('/tracker')
+
+#     # # Render the tracker page
+#     # return render_template('tracker.html', user={"username": "JohnDoe"}, applications=applications)
+#     return render_template('tracker.html')
+
+
 @app.route('/logout')
 def logout(): #If not logged in - redirect to Login Page
     if not is_logged_in():
