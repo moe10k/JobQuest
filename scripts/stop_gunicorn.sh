@@ -17,17 +17,26 @@ if [ -z "$VM_IP" ]; then
 fi
 log_output "VM IP (tailscale): $VM_IP"
 
-# Set primary and secondary IPs
+# Set primary, secondary, and new node IPs
 PRIMARY_IP="100.64.1.5"
 SECONDARY_IP="100.64.1.4"
+JOSE_IP="100.64.1.2"
+MOE_IP="100.64.1.1"
+KEV_IP="100.64.1.3"
 
-# Check if VM's IP matches primary or secondary IP
+# Determine the role based on the VM's IP
 if [ "$VM_IP" == "$PRIMARY_IP" ]; then
     ROLE="primary"
 elif [ "$VM_IP" == "$SECONDARY_IP" ]; then
     ROLE="backup"
+elif [ "$VM_IP" == "$JOSE_IP" ]; then
+    ROLE="jose"
+elif [ "$VM_IP" == "$MOE_IP" ]; then
+    ROLE="moe"
+elif [ "$VM_IP" == "$KEV_IP" ]; then
+    ROLE="kev"
 else
-    log_output "Error: This VM's IP does not match primary or secondary IP."
+    log_output "Error: This VM's IP does not match any defined roles."
     exit 1
 fi
 log_output "Role set to: $ROLE"
@@ -35,11 +44,11 @@ log_output "Role set to: $ROLE"
 # Define Gunicorn port
 GUNICORN_PORT="7012"
 
-# Find and kill the Gunicorn process running on the specified IP and port
-GUNICORN_PID=$(ps aux | grep "gunicorn" | grep "$PRIMARY_IP:$GUNICORN_PORT" | awk '{print $2}')
+# Find and kill the Gunicorn process for the appropriate server
+GUNICORN_PID=$(ps aux | grep "gunicorn" | grep "$VM_IP:$GUNICORN_PORT" | awk '{print $2}')
 
 if [ -z "$GUNICORN_PID" ]; then
-    log_output "No Gunicorn process found on $PRIMARY_IP:$GUNICORN_PORT"
+    log_output "No Gunicorn process found on $VM_IP:$GUNICORN_PORT"
 else
     log_output "Stopping Gunicorn process with PID: $GUNICORN_PID"
     kill $GUNICORN_PID
