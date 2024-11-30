@@ -1,11 +1,130 @@
+/* General Styling */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f5f5f5;
+    color: #333;
 }
-/* Dark Mode */
+
 body.dark-mode {
     background-color: #121212;
     color: #f5f5f5;
+}
+
+/* Container */
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+body.dark-mode .container {
+    background: #1e1e1e;
+    box-shadow: 0px 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+/* Headings */
+h1, h2 {
+    text-align: center;
+    margin: 20px 0;
+    color: inherit;
+}
+
+/* Dashboard Grid Layout */
+.dashboard-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Pie Chart Section */
+.piechart-container {
+    flex: 1;
+    max-width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .piechart-container {
+    background-color: #1e1e1e;
+    box-shadow: 0px 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+canvas {
+    max-width: 100%;
+    max-height: 300px;
+}
+
+/* Friends Section */
+.friends-container {
+    flex: 1;
+    max-width: 45%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .friends-container {
+    background-color: #1e1e1e;
+    box-shadow: 0px 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+.friends-container h3 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.friend-list {
+    list-style: none;
+    padding: 0;
+}
+
+.friend-list li {
+    margin: 10px 0;
+    font-size: 16px;
+    color: inherit;
+}
+
+/* Button Section */
+.button-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#view-friends-btn {
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#view-friends-btn:hover {
+    background-color: #0056b3;
+}
+
+body.dark-mode #view-friends-btn {
+    background-color: #1e90ff;
+    color: #121212;
+}
+
+body.dark-mode #view-friends-btn:hover {
+    background-color: #4682b4;
 }
