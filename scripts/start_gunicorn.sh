@@ -10,6 +10,24 @@ log_output() {
     unset TZ
 }
 
+# Check if Nginx is installed and install it if necessary
+if ! command -v nginx &> /dev/null; then
+    log_output "Nginx not found. Installing Nginx..."
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        sudo apt update && sudo apt install -y nginx || {
+            log_output "Error: Failed to install Nginx."; exit 1;
+        }
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        log_output "Error: Nginx installation is not supported automatically for macOS. Install it manually."
+        exit 1
+    else
+        log_output "Error: Unsupported OS for automatic Nginx installation."
+        exit 1
+    fi
+else
+    log_output "Nginx is already installed."
+fi
+
 # Detect the operating system and set appropriate variables
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     activate_venv="../frontend/venv/bin/activate"  # Correct path for Linux/MacOS
@@ -105,14 +123,23 @@ log_output "VM IP (tailscale): $VM_IP"
 # Primary and secondary IPs
 PRIMARY_IP="100.64.1.5"
 SECONDARY_IP="100.64.1.4"
+NODE_JOSE="100.64.1.2"
+NODE_MOE="100.64.1.1"
+NODE_KEV="100.64.1.3"
 
 # Determine role based on IP
 if [ "$VM_IP" == "$PRIMARY_IP" ]; then
     ROLE="primary"
 elif [ "$VM_IP" == "$SECONDARY_IP" ]; then
     ROLE="backup"
+elif [ "$VM_IP" == "$NODE_JOSE" ]; then
+    ROLE="jose"
+elif [ "$VM_IP" == "$NODE_MOE" ]; then
+    ROLE="moe"
+elif [ "$VM_IP" == "$NODE_KEV" ]; then
+    ROLE="kev"
 else
-    log_output "Error: This VM's IP does not match primary or secondary IP."
+    log_output "Error: This VM's IP does not match any known roles."
     exit 1
 fi
 log_output "Role set to: $ROLE"
@@ -133,6 +160,9 @@ sudo bash -c "cat <<'EOF' > /etc/nginx/sites-available/frontend_failover
 upstream frontend_cluster {
     server $PRIMARY_IP:7012 max_fails=3 fail_timeout=10s;
     server $SECONDARY_IP:7012 backup;
+    server $NODE_JOSE:7012 backup;
+    server $NODE_MOE:7012 backup;
+    server $NODE_KEV:7012 backup;
 }
 
 server {
