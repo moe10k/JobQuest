@@ -1,33 +1,70 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/dashboard.css"> <!-- Links to css--> 
-    <title> Dashboard </title>
+    <link rel="stylesheet" href="/static/dashboard.css"> <!-- Link to external CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
+    <title>Dashboard</title>
 </head>
 <body>
 
-    <!-- nav bar section -->
+    <!-- Navigation Bar -->
     {% include 'partials/nav.html' %}
 
-    <!-- Flash message section -->
+    <!-- Flash Message Section -->
     {% include 'partials/flash.html' %}
 
-
     <div class="container">
-        <h1>Welcome to your dashboard, {{ user.username }} with user id of {{ user_id }}!</h1>
-        <p>Here is where your content will go...</p>
+        <h1>Welcome to your dashboard!</h1>
+    
+        <div class="dashboard-grid">
+            <!-- Pie Chart Section -->
+            <div class="piechart-container">
+                <canvas id="applicationStats"></canvas>
+            </div>
+    
+            <!-- Friends Section -->
+            <div class="friends-container">
+                <h3>Your Friends</h3>
+                <ul class="friend-list">
+                    <!-- Placeholder list of friends -->
+                    <li>Friend 1</li>
+                    <li>Friend 2</li>
+                    <li>Friend 3</li>
+                    <li>Friend 4</li>
+                </ul>
+            </div>
+        </div>
     </div>
+    
 
-    <!-- popup section-->
-    {% if show_popup %}
-        {% include 'partials/popup.html' %}
-    {% endif %}
-     
-
+    <!-- Script for Pie Chart -->
     <script>
-                // Define primary and backup server URLs
+        const ctx = document.getElementById('applicationStats').getContext('2d');
+        const applicationStats = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Applied', 'Interviewed', 'Offered', 'Rejected'],
+                datasets: [{
+                    data: [40, 30, 20, 10], // Example data
+                    backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
+                    borderColor: ['#fff', '#fff', '#fff', '#fff'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                },
+            }
+        });
+
+
+    // Define primary and backup server URLs
         const primaryUrl = "http://100.64.1.5:7012/dashboard"; // Primary server URL
         const backupUrl = "http://100.64.1.4:7012/dshboard"; // Backup server URL
 
@@ -106,5 +143,6 @@
         window.addEventListener("load", checkServerStatus);
 
     </script>
+
 </body>
 </html>

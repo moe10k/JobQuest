@@ -84,15 +84,19 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/dashboard') #Dashboard Page - Must be logged in
+# @app.route('/dashboard') #Dashboard Page - Must be logged in
+# def dashboard():
+#     if is_logged_in(): #Checks if User is logged in and if true - grabs session variables
+#         user = session['user']
+#         user_id = user.get('user_id')
+#         show_popup = True if user.get('popup_enabled') == 0 else False
+#         return render_template('dashboard.html', user=user, user_id=user_id, show_popup=show_popup)
+#     flash('You must login first.', 'danger') #If not logged in - redirect to Login Page
+#     return redirect('/login')
+
+@app.route('/dashboard') #Dashboard Page - Don't have to be logged in
 def dashboard():
-    if is_logged_in(): #Checks if User is logged in and if true - grabs session variables
-        user = session['user']
-        user_id = user.get('user_id')
-        show_popup = True if user.get('popup_enabled') == 0 else False
-        return render_template('dashboard.html', user=user, user_id=user_id, show_popup=show_popup)
-    flash('You must login first.', 'danger') #If not logged in - redirect to Login Page
-    return redirect('/login')
+    return render_template('dashboard.html', show_popup = True)
 
 
 @app.route('/submit_popup', methods=['POST']) #Popup Page
