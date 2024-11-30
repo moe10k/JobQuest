@@ -1,0 +1,255 @@
+/* Define light mode variables */
+:root {
+    --bg-color: #f9f9f9;
+    --text-color: #333;
+    --container-bg: #fff;
+    --container-shadow: rgba(0, 0, 0, 0.1);
+    --form-bg: #f4f4f4;
+    --form-border: #ccc;
+    --form-focus: rgba(0, 123, 255, 0.5);
+    --button-bg: #007bff;
+    --button-bg-hover: #0056b3;
+    --table-header-bg: #007bff;
+    --table-header-text: #fff;
+    --table-row-bg-alt: #f4f4f4;
+    --table-row-hover: #f1f1f1;
+    --flash-success-bg: #d4edda;
+    --flash-success-border: #c3e6cb;
+    --flash-success-text: #155724;
+    --flash-error-bg: #f8d7da;
+    --flash-error-border: #f5c6cb;
+    --flash-error-text: #721c24;
+    --toggle-bg: #ddd;
+    --toggle-text: #444;
+}
+
+/* Define dark mode variables */
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --container-bg: #1e1e1e;
+    --container-shadow: rgba(255, 255, 255, 0.1);
+    --form-bg: #2c2c2c;
+    --form-border: #444;
+    --form-focus: rgba(0, 123, 255, 0.7);
+    --button-bg: #1e90ff;
+    --button-bg-hover: #1c7ed6;
+    --table-header-bg: #333;
+    --table-header-text: #fff;
+    --table-row-bg-alt: #2a2a2a;
+    --table-row-hover: #3a3a3a;
+    --flash-success-bg: #264d35;
+    --flash-success-border: #3e8e41;
+    --flash-success-text: #c8f2d1;
+    --flash-error-bg: #5b1f1f;
+    --flash-error-border: #8a3a3a;
+    --flash-error-text: #f8dcdc;
+    --toggle-bg: #444;
+    --toggle-text: #ddd;
+}
+
+/* Apply variables to styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: var(--container-bg);
+    box-shadow: 0 4px 8px var(--container-shadow);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Toggle button styling */
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--toggle-bg);
+    color: var(--toggle-text);
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--button-bg);
+    color: var(--table-header-text);
+}
+
+/* Headings */
+h1, h2 {
+    text-align: center;
+    color: var(--text-color);
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+form.job-form {
+    background: var(--form-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px var(--container-shadow);
+    padding: 20px;
+}
+
+form.job-form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+form.job-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form.job-form input,
+form.job-form select,
+form.job-form button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid var(--form-border);
+    border-radius: 5px;
+}
+
+form.job-form input:focus,
+form.job-form select:focus {
+    outline: none;
+    border-color: var(--button-bg);
+    box-shadow: 0 0 5px var(--form-focus);
+}
+
+form.job-form button {
+    background-color: var(--button-bg);
+    color: var(--table-header-text);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+}
+
+form.job-form button:hover {
+    background-color: var(--button-bg-hover);
+}
+
+/* Table Styles */
+table.application-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: var(--container-bg);
+}
+
+table.application-table th,
+table.application-table td {
+    padding: 10px 15px;
+    text-align: left;
+    border: 1px solid var(--form-border);
+}
+
+table.application-table th {
+    background-color: var(--table-header-bg);
+    color: var(--table-header-text);
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+table.application-table tr:nth-child(even) {
+    background-color: var(--table-row-bg-alt);
+}
+
+table.application-table tr:hover {
+    background-color: var(--table-row-hover);
+}
+
+table.application-table td {
+    font-size: 14px;
+}
+
+/* Flash Messages */
+.flash-message {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
+
+.flash-message.success {
+    background-color: var(--flash-success-bg);
+    border-color: var(--flash-success-border);
+    color: var(--flash-success-text);
+}
+
+.flash-message.error {
+    background-color: var(--flash-error-bg);
+    border-color: var(--flash-error-border);
+    color: var(--flash-error-text);
+}
+
+.application-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: var(--container-bg);
+    box-shadow: 0 2px 6px var(--container-shadow);
+    border-radius: 8px;
+}
+
+.application-table th, .application-table td {
+    padding: 10px 15px;
+    text-align: left;
+    border: 1px solid var(--form-border);
+}
+
+.application-table th {
+    background-color: var(--table-header-bg);
+    color: var(--table-header-text);
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.application-table tr:nth-child(even) {
+    background-color: var(--table-row-bg-alt);
+}
+
+.application-table tr:hover {
+    background-color: var(--table-row-hover);
+}
+
+/* Styling for the toggle form button */
+#toggle-form-button {
+    display: inline-block;
+    margin-bottom: 20px;
+    float: right; /* Align to the right side */
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+#toggle-form-button:hover {
+    background-color: #0056b3;
+}
+
+/* Class to hide the form */
+.hidden {
+    display: none;
+}
