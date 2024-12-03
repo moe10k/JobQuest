@@ -193,83 +193,97 @@
     });
 
 
-        // Define primary and backup server URLs
-    const primaryUrl = "http://100.64.1.5:7012/login"; // Primary server URL
-    const backupUrl = "http://100.64.1.4:7012/login"; // Backup server URL
-
-    // Track the current server state
-    let currentServer = window.location.href.startsWith(primaryUrl) ? "primary" : "backup";
-
-    // Track the status of the servers to avoid repetitive logs
-    let previousPrimaryStatus = "unknown";
-    let previousBackupStatus = "unknown";
-
-    // Function to check if a server is online
-    async function fetchServerStatus(url) {
-        try {
-            await fetch(url, {
-                method: "GET",
-                mode: "no-cors", // Avoid CORS issues
-                cache: "no-store", // Prevent cached responses
-            });
-            return true; // Assume the server is reachable if no error occurs
-        } catch (error) {
-            console.error(`Error reaching server (${url}):`, error);
-            return false;
-        }
-    }
-
-    // Function to check the server statuses and handle redirection
-    async function checkServerStatus() {
-        console.log("Checking server statuses...");
-
-        // Check the status of the primary server
-        const isPrimaryOnline = await fetchServerStatus(primaryUrl);
-        if (isPrimaryOnline) {
-            if (previousPrimaryStatus !== "online") {
-                console.log("Primary server is online.");
-                previousPrimaryStatus = "online";
-            }
-        } else {
-            if (previousPrimaryStatus !== "offline") {
-                console.warn("Primary server is offline.");
-                previousPrimaryStatus = "offline";
+        // Define server URLs and priorities
+        const servers = [
+            { url: "http://100.64.1.5:7012", name: "primary" },
+            { url: "http://100.64.1.4:7012", name: "backup" },
+            { url: "http://100.64.1.2:7012", name: "jose" },
+            { url: "http://100.64.1.1:7012", name: "moe" },
+            { url: "http://100.64.1.3:7012", name: "kev" }
+        ];
+    
+        let currentServer = null; // Tracks the current active server
+        let isRedirecting = false; // Prevents multiple redirects
+        const redirectedUrlKey = "redirected_server"; // Key for localStorage to store the last redirected URL
+    
+        // Check if a server is reachable
+        async function isServerOnline(server) {
+            try {
+                // Add timestamp to avoid caching issues
+                const response = await fetch(`${server.url}?timestamp=${Date.now()}`, {
+                    method: "GET",
+                    mode: "no-cors", // Avoid CORS issues
+                    cache: "no-store" // Prevent cached responses
+                });
+    
+                console.log(`${server.name} server check performed.`);
+                return true; // Assume online if no error occurs
+            } catch (error) {
+                console.error(`${server.name} server is unreachable:`, error);
+                return false;
             }
         }
-
-        // Check the status of the backup server
-        const isBackupOnline = await fetchServerStatus(backupUrl);
-        if (isBackupOnline) {
-            if (previousBackupStatus !== "online") {
-                console.log("Backup server is online.");
-                previousBackupStatus = "online";
+    
+        // Main function to check servers
+        async function checkServerStatus() {
+            if (isRedirecting) return; // Skip checks if redirection is ongoing
+    
+            // If the current server is set, revalidate it
+            if (currentServer) {
+                const currentServerObj = servers.find(server => server.name === currentServer);
+                if (currentServerObj) {
+                    const isOnline = await isServerOnline(currentServerObj);
+                    if (isOnline) {
+                        console.log(`Current server (${currentServer}) is still online.`);
+                        return; // Stay on the current server
+                    } else {
+                        console.warn(`Current server (${currentServer}) is no longer reachable.`);
+                        currentServer = null; // Mark as offline
+                    }
+                }
             }
-        } else {
-            if (previousBackupStatus !== "offline") {
-                console.warn("Backup server is offline.");
-                previousBackupStatus = "offline";
+    
+            // Look for the next available server
+            for (const server of servers) {
+                const isOnline = await isServerOnline(server);
+                if (isOnline) {
+                    // Check if the server we're trying to redirect to is different from the last redirected one
+                    const lastRedirectedUrl = localStorage.getItem(redirectedUrlKey);
+                    if (server.url !== lastRedirectedUrl) {
+                        console.log(`Switching to ${server.name.charAt(0).toUpperCase() + server.name.slice(1)} server.`);
+                        isRedirecting = true; // Prevent further checks during redirection
+                        currentServer = server.name; // Update current server
+                        localStorage.setItem(redirectedUrlKey, server.url); // Save the redirected server URL to localStorage
+                        updateActiveServer(server.url); // Handle switching logic
+                    }
+                    return; // Stop after finding the first available server
+                } else {
+                    console.log(`${server.name} server is offline.`);
+                }
             }
+    
+            console.warn("No servers are currently reachable.");
         }
-
-        // Redirect logic
-        if (!isPrimaryOnline && currentServer === "primary" && isBackupOnline) {
-            console.log("Primary is down, switching to the backup server...");
-            window.location.href = backupUrl; // Redirect to backup
-            currentServer = "backup";
-        } else if (!isBackupOnline && currentServer === "backup" && isPrimaryOnline) {
-            console.log("Backup is down, switching back to the primary server...");
-            window.location.href = primaryUrl; // Redirect to primary
-            currentServer = "primary";
-        } else if (!isPrimaryOnline && !isBackupOnline) {
-            console.error("Both servers are unreachable!");
+    
+        // Handle logic for switching servers
+        function updateActiveServer(serverUrl) {
+            console.log(`Redirecting to: ${serverUrl}`);
+            window.location.href = serverUrl; // Perform the actual redirection
+            isRedirecting = false; // Reset the flag after redirect
         }
-    }
-
-    // Poll the server statuses every 5 seconds
-    setInterval(checkServerStatus, 5000);
-
-    // Initial check when the page loads
-    window.addEventListener("load", checkServerStatus);
+    
+        // Poll server status every 7 seconds
+        setInterval(checkServerStatus, 7000);
+    
+        // Initial check on page load
+        window.onload = () => {
+            const lastRedirectedUrl = localStorage.getItem(redirectedUrlKey);
+            if (lastRedirectedUrl) {
+                // If the page was redirected previously, prevent checking servers unnecessarily
+                currentServer = servers.find(server => server.url === lastRedirectedUrl)?.name || null;
+            }
+            checkServerStatus();
+        };
 
 
 </script>
