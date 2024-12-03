@@ -44,6 +44,7 @@
                     mode: "no-cors", // Avoid CORS issues
                     cache: "no-store" // Prevent cached responses
                 });
+                console.log(`${server.name} server check returned ${response.status || "no response"} (${response.ok ? "OK" : "Not OK"}).`);
                 return response.ok || response.status === 200;
             } catch (error) {
                 console.error(`${server.name} server is unreachable:`, error);
@@ -55,21 +56,22 @@
         async function checkServerStatus() {
             if (isRedirecting) return; // Skip checks if redirection is ongoing
     
-            for (const server of servers) {
-                if (currentServer === server.name) {
-                    // If already on the current server, confirm it's still online
-                    const isOnline = await isServerOnline(server);
-                    if (!isOnline) {
-                        console.warn(`${server.name} server is no longer reachable.`);
-                        currentServer = null; // Mark current server as offline
-                    } else {
-                        console.log(`${server.name} server is active.`);
+            // Recheck the current server if set
+            if (currentServer) {
+                const currentServerObj = servers.find(server => server.name === currentServer);
+                if (currentServerObj) {
+                    const isOnline = await isServerOnline(currentServerObj);
+                    if (isOnline) {
+                        console.log(`Current server (${currentServer}) is still online.`);
                         return; // Stay on the current server
+                    } else {
+                        console.warn(`Current server (${currentServer}) is no longer reachable.`);
+                        currentServer = null; // Mark as offline
                     }
                 }
             }
     
-            // Look for the first available server in priority order
+            // Find the next available server
             for (const server of servers) {
                 const isOnline = await isServerOnline(server);
                 if (isOnline) {
@@ -80,19 +82,19 @@
                         updateActiveServer(server.url); // Handle switching logic
                     }
                     return; // Stop after finding the first available server
+                } else {
+                    console.log(`${server.name} server is offline.`);
                 }
             }
     
             console.warn("No servers are currently reachable.");
         }
     
-        // Handle logic for switching servers without page reload
+        // Handle logic for switching servers
         function updateActiveServer(serverUrl) {
-            console.log(`Updating active server to: ${serverUrl}`);
-            // Example: Update application state, API base URL, etc.
-            // Replace this with your application's handling logic
-            // apiBaseUrl = serverUrl;
-            isRedirecting = false; // Reset redirect flag
+            console.log(`Redirecting to: ${serverUrl}`);
+            window.location.href = serverUrl; // Perform the actual redirection
+            isRedirecting = false; // Reset the flag after redirect
         }
     
         // Poll server status every 7 seconds
@@ -101,6 +103,7 @@
         // Initial check on page load
         window.onload = checkServerStatus;
     </script>
+    
     
     
     
