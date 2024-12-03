@@ -24,112 +24,71 @@
     </div>
 
     <script>
-        // Define primary, backup, and new node server URLs
+        // Define server URLs
         const primaryUrl = "http://100.64.1.5:7012"; // Primary server URL
         const backupUrl = "http://100.64.1.4:7012"; // Backup server URL
-        const joseUrl = "http://100.64.1.2:7012"; // Jose's server URL
-        const moeUrl = "http://100.64.1.1:7012"; // Moe's server URL
-        const kevUrl = "http://100.64.1.3:7012"; // Kev's server URL
+        const joseUrl = "http://100.64.1.2:7012";   // Jose's server URL
+        const moeUrl = "http://100.64.1.1:7012";    // Moe's server URL
+        const kevUrl = "http://100.64.1.3:7012";    // Kev's server URL
     
         // Track the current server state
-        let currentServer = ""; // Will hold current server name (primary, backup, jose, moe, kev)
+        let currentServer = ""; // Will hold current server name (primary, backup, etc.)
+        let isRedirecting = false; // Prevent multiple redirects simultaneously
     
-        // Function to check the status of the primary, backup, and new nodes
-        async function checkServerStatus() {
+        // Function to check the status of a server
+        async function checkServer(url) {
             try {
-                // Attempt to check the primary server's status
-                const primaryResponse = await fetch(primaryUrl, {
-                    method: "GET", 
-                    mode: "no-cors",  // Set to no-cors mode to avoid CORS-related issues
-                    cache: "no-store", // Avoid cached responses
+                const response = await fetch(url, {
+                    method: "GET",
+                    mode: "no-cors", // Avoid CORS issues
+                    cache: "no-store" // Prevent cached responses
                 });
-    
-                // If the primary server is online, handle redirection
-                if (primaryResponse.ok || primaryResponse.status === 200) {
-                    console.log("Primary server is online.");
-                    // Redirect to primary if user is on backup or another server
-                    if (currentServer !== 'primary') {
-                        console.log("Redirecting to the primary server.");
-                        window.location.href = primaryUrl;
-                        currentServer = 'primary';
-                    }
-                } else {
-                    console.warn("Primary server is down (unexpected response).");
-                    switchToBackup();
-                }
+                return response.ok || response.status === 200;
             } catch (error) {
-                // Handle network errors or fetch failures for primary server
-                console.error("Primary server is unreachable:", error);
-                switchToBackup();
+                console.error(`Server at ${url} is unreachable:`, error);
+                return false;
             }
-    
-            // Check if the backup server is online
-            try {
-                const backupResponse = await fetch(backupUrl, {
-                    method: "GET", 
-                    mode: "no-cors",  // Set to no-cors mode for backup server
-                    cache: "no-store", 
-                });
-    
-                if (backupResponse.ok || backupResponse.status === 200) {
-                    console.log("Backup server is online.");
-                    // If user is on backup and it's reachable, do nothing
-                    if (currentServer !== 'backup') {
-                        console.log("Redirecting to the backup server.");
-                        window.location.href = backupUrl;
-                        currentServer = 'backup';
-                    }
-                } else {
-                    console.warn("Backup server is down (unexpected response).");
-                    // Redirect to primary if backup is down and user is on backup
-                    if (currentServer === 'backup') {
-                        console.log("Backup is down, redirecting to primary server.");
-                        window.location.href = primaryUrl; // Redirect to primary
-                        currentServer = 'primary';
-                    }
-                }
-            } catch (error) {
-                // Handle network errors or fetch failures for backup server
-                console.error("Backup server is unreachable:", error);
-                // Redirect to primary if backup is down and user is on backup
-                if (currentServer === 'backup') {
-                    console.log("Backup is down, redirecting to primary server.");
-                    window.location.href = primaryUrl; // Redirect to primary
-                    currentServer = 'primary';
-                }
-            }
-    
-            // If both primary and backup servers are down, switch to the new nodes
-            switchToBackup();
         }
     
-        // Function to switch to the backup or the next available server (Jose, Moe, Kev)
-        function switchToBackup() {
-            // Array of all servers in order of priority
+        // Main function to handle server checks and redirection
+        async function checkServerStatus() {
+            if (isRedirecting) return; // Skip if a redirection is already in progress
+    
+            // Server priority list
             const servers = [
-                { url: backupUrl, name: 'backup' }, // Backup server
-                { url: joseUrl, name: 'jose' },     // Jose's server
-                { url: moeUrl, name: 'moe' },       // Moe's server
-                { url: kevUrl, name: 'kev' }        // Kev's server
+                { url: primaryUrl, name: "primary" },
+                { url: backupUrl, name: "backup" },
+                { url: joseUrl, name: "jose" },
+                { url: moeUrl, name: "moe" },
+                { url: kevUrl, name: "kev" }
             ];
     
-            // Find the first available server that the user is not already on
+            // Iterate through servers and find the first available one
             for (const server of servers) {
-                if (currentServer !== server.name) {
-                    console.log(`Switching to the ${server.name.charAt(0).toUpperCase() + server.name.slice(1)} server.`);
-                    window.location.href = server.url; // Redirect to the first available server
-                    currentServer = server.name; // Update the current server state
-                    break; // Exit loop after redirection
+                const isOnline = await checkServer(server.url);
+                if (isOnline) {
+                    if (currentServer !== server.name) {
+                        console.log(`Switching to ${server.name.charAt(0).toUpperCase() + server.name.slice(1)} server.`);
+                        isRedirecting = true; // Prevent further checks during redirection
+                        currentServer = server.name; // Update current server
+                        window.location.href = server.url; // Redirect
+                    } else {
+                        console.log(`${server.name.charAt(0).toUpperCase() + server.name.slice(1)} server is active.`);
+                    }
+                    return; // Stop checking once an active server is found
                 }
             }
+    
+            console.warn("No servers are currently reachable.");
         }
     
         // Poll the server status every 7 seconds
         setInterval(checkServerStatus, 7000);
     
-        // Initial check when the page loads
+        // Initial check on page load
         window.onload = checkServerStatus;
     </script>
+    
     
 
 </body>
