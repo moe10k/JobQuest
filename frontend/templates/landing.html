@@ -35,12 +35,12 @@
     
         let currentServer = null; // Tracks the current active server
         let isRedirecting = false; // Prevents multiple redirects
-        let lastRedirectedUrl = ""; // Tracks the last server URL we redirected to
+        const redirectedUrlKey = "redirected_server"; // Key for localStorage to store the last redirected URL
     
-        // Function to check if a server is reachable
+        // Check if a server is reachable
         async function isServerOnline(server) {
             try {
-                // Use a timestamp to prevent cached responses
+                // Add timestamp to avoid caching issues
                 const response = await fetch(`${server.url}?timestamp=${Date.now()}`, {
                     method: "GET",
                     mode: "no-cors", // Avoid CORS issues
@@ -48,7 +48,7 @@
                 });
     
                 console.log(`${server.name} server check performed.`);
-                return true; // Assume the server is online if no error occurs
+                return true; // Assume online if no error occurs
             } catch (error) {
                 console.error(`${server.name} server is unreachable:`, error);
                 return false;
@@ -59,7 +59,7 @@
         async function checkServerStatus() {
             if (isRedirecting) return; // Skip checks if redirection is ongoing
     
-            // If current server is set, revalidate it
+            // If the current server is set, revalidate it
             if (currentServer) {
                 const currentServerObj = servers.find(server => server.name === currentServer);
                 if (currentServerObj) {
@@ -78,12 +78,13 @@
             for (const server of servers) {
                 const isOnline = await isServerOnline(server);
                 if (isOnline) {
-                    // Avoid redirecting to the same server we're already on
-                    if (currentServer !== server.name && lastRedirectedUrl !== server.url) {
+                    // Check if the server we're trying to redirect to is different from the last redirected one
+                    const lastRedirectedUrl = localStorage.getItem(redirectedUrlKey);
+                    if (server.url !== lastRedirectedUrl) {
                         console.log(`Switching to ${server.name.charAt(0).toUpperCase() + server.name.slice(1)} server.`);
                         isRedirecting = true; // Prevent further checks during redirection
                         currentServer = server.name; // Update current server
-                        lastRedirectedUrl = server.url; // Update the last redirected URL
+                        localStorage.setItem(redirectedUrlKey, server.url); // Save the redirected server URL to localStorage
                         updateActiveServer(server.url); // Handle switching logic
                     }
                     return; // Stop after finding the first available server
@@ -106,8 +107,16 @@
         setInterval(checkServerStatus, 7000);
     
         // Initial check on page load
-        window.onload = checkServerStatus;
+        window.onload = () => {
+            const lastRedirectedUrl = localStorage.getItem(redirectedUrlKey);
+            if (lastRedirectedUrl) {
+                // If the page was redirected previously, prevent checking servers unnecessarily
+                currentServer = servers.find(server => server.url === lastRedirectedUrl)?.name || null;
+            }
+            checkServerStatus();
+        };
     </script>
+    
     
     
 
