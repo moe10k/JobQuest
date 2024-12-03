@@ -33,7 +33,8 @@
             { url: "http://100.64.1.3:7012", name: "kev" }
         ];
     
-        let currentServer = null; // Tracks the current server
+        let currentServer = null; // Tracks the current active server
+        let isRedirecting = false; // Prevents multiple redirects
     
         // Function to check if a server is reachable
         async function isServerOnline(server) {
@@ -50,41 +51,57 @@
             }
         }
     
-        // Function to check servers without reloading
+        // Main function to check servers
         async function checkServerStatus() {
+            if (isRedirecting) return; // Skip checks if redirection is ongoing
+    
+            for (const server of servers) {
+                if (currentServer === server.name) {
+                    // If already on the current server, confirm it's still online
+                    const isOnline = await isServerOnline(server);
+                    if (!isOnline) {
+                        console.warn(`${server.name} server is no longer reachable.`);
+                        currentServer = null; // Mark current server as offline
+                    } else {
+                        console.log(`${server.name} server is active.`);
+                        return; // Stay on the current server
+                    }
+                }
+            }
+    
+            // Look for the first available server in priority order
             for (const server of servers) {
                 const isOnline = await isServerOnline(server);
-    
                 if (isOnline) {
-                    if (currentServer === server.name) {
-                        console.log(`${server.name} server is active.`);
-                    } else {
-                        console.log(`Switching to ${server.name} server.`);
-                        currentServer = server.name;
-                        // Update application state for the active server
-                        // Example: dynamically update content, API endpoint, or connection logic
-                        updateActiveServer(server.url);
+                    if (currentServer !== server.name) {
+                        console.log(`Switching to ${server.name.charAt(0).toUpperCase() + server.name.slice(1)} server.`);
+                        isRedirecting = true; // Prevent further checks during redirection
+                        currentServer = server.name; // Update current server
+                        updateActiveServer(server.url); // Handle switching logic
                     }
-                    return; // Stop checking once an active server is found
+                    return; // Stop after finding the first available server
                 }
             }
     
             console.warn("No servers are currently reachable.");
         }
     
-        // Function to handle switching logic within the application
+        // Handle logic for switching servers without page reload
         function updateActiveServer(serverUrl) {
             console.log(`Updating active server to: ${serverUrl}`);
-            // Example: Update an API base URL, reconnect a WebSocket, etc.
-            // Example: apiBaseUrl = serverUrl;
+            // Example: Update application state, API base URL, etc.
+            // Replace this with your application's handling logic
+            // apiBaseUrl = serverUrl;
+            isRedirecting = false; // Reset redirect flag
         }
     
-        // Poll the server status every 7 seconds
+        // Poll server status every 7 seconds
         setInterval(checkServerStatus, 7000);
     
         // Initial check on page load
         window.onload = checkServerStatus;
     </script>
+    
     
     
     
