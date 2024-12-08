@@ -215,6 +215,13 @@ def track_jobs():
     # Pass mock data to the template
     return render_template('tracker.html', applications=applications)
 
+@app.route('/profile')
+def profile():
+    # Pass user details dynamically
+    #user = get_user_details()  # Replace with actual user data retrieval logic
+    #return render_template('profile.html', user=user)
+    return render_template('profile.html')
+
 
 # @app.route('/tracker', methods=['GET', 'POST'])
 # def track_jobs():
