@@ -128,3 +128,27 @@ body.dark-mode #view-friends-btn {
 body.dark-mode #view-friends-btn:hover {
     background-color: #4682b4;
 }
+
+#profile-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#profile-btn:hover {
+    background-color: #0056b3;
+}
+
+body.dark-mode #profile-btn {
+    background-color: #1e90ff;
+    color: #121212;
+}
+
+body.dark-mode #profile-btn:hover {
+    background-color: #4682b4;
+}
