@@ -271,15 +271,6 @@ def handle_friend_request():
 
     return redirect('/friends')
 
-@app.route('/logout')
-def logout(): #If not logged in - redirect to Login Page
-    if not is_logged_in():
-       flash('You must login first', 'danger')
-       return redirect('/login')
-    
-    session.clear()
-    flash('You have been logged out.', 'success')
-    return redirect('/login')
 
 @app.route('/profile')
 def profile():
