@@ -1,65 +1,151 @@
 <style>
-    .navbar {
-        background-color: #2d2d39;
-        color: #fff;
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 40px;
-        align-items: center;
-    }
-    .navbar h1 {
-        font-size: 28px;
-        margin: 0;
-    }
-    .navbar .nav-links {
-        display: flex;
-        gap: 30px;
-    }
-    .navbar .nav-links a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 18px;
-    }
-    .navbar .title-link {
-        text-decoration: none;
-        color: inherit;
-    }
-    /* Dark Mode Toggle Button Styles */
-    .dark-mode-toggle {
-        padding: 3px 13px;
-        background-color: #6f42c1;
-        color: #fff;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s, transform 0.2s;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    .dark-mode-toggle:hover {
-        background-color: #5a32a3;
-        transform: scale(1.05);
-    }
-    .dark-mode-toggle:active {
-        background-color: #482685;
-        transform: scale(0.95);
-    }
+    /* General Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.navbar {
+    background-color: #2d2d39;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+    align-items: center;
+}
+
+.navbar h1 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.navbar .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.navbar .title-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Dark Mode Toggle Button Styles */
+.dark-mode-toggle {
+    padding: 3px 13px;
+    background-color: #6f42c1;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode-toggle:hover {
+    background-color: #5a32a3;
+    transform: scale(1.05);
+}
+
+.dark-mode-toggle:active {
+    background-color: #482685;
+    transform: scale(0.95);
+}
+
+/* Profile Dropdown Section */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #444;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    margin-top: 5px;
+    width: 200px;
+}
+
+.dropdown-content a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 5px 15px;
+    font-size: 16px;
+}
+
+.dropdown-content a:hover {
+    background-color: #555;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.profile-button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+    text-align: center;
+    position: relative;
+}
+
+/* Additional Dark Mode Styling */
+body.dark-mode .navbar {
+    background-color: #1f1f2e;
+}
+
+body.dark-mode .dropdown-content {
+    background-color: #333;
+}
+
+body.dark-mode .dropdown-content a:hover {
+    background-color: #444;
+}
+
+body.dark-mode .dark-mode-toggle {
+    background-color: #482685;
+    color: #ffffff;
+}
+
+
 </style>
 
 <nav class="navbar">
     <a href="/" class="title-link">
-        <h1>
-            JobQuest
-        </h1>
-
+        <h1>JobQuest</h1>
     </a>
     <div class="nav-links">
         {% if is_logged_in %}
             <a href="/dashboard">Dashboard</a>
             <a href="/search">Search</a>
-            <a href="/tracker">Tracker</a>
-            <a href="/logout">Logout</a>
-            <a href="/resetpassword">Reset Password</a>
+            <a href="/friends">Friends</a>
+            <div class="dropdown">
+                <button class="profile-button">Profile ▼</button>
+                <div class="dropdown-content">
+                    <a href="/resetpassword">About</a>
+                    <a href="/resetpassword">Resume</a>
+                    <a href="/resetpassword">Reset Password</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
         {% else %}
             <a href="/login">Login</a>
             <a href="/register">Register</a>
@@ -69,29 +155,10 @@
 </nav>
 
 <script>
-     // Function to apply dark mode based on local storage
-    function applyDarkModePreference() {
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('toggle-dark-mode').textContent = 'Light Mode';
-        } else {
-            document.getElementById('toggle-dark-mode').textContent = 'Dark Mode';
-        }
-    }
-
-    // Function to toggle dark mode and update button text
+    // Toggle Dark Mode and Update Button Text
     document.getElementById('toggle-dark-mode').addEventListener('click', function() {
         document.body.classList.toggle('dark-mode');
-
-        if (document.body.classList.contains('dark-mode')) {
-            localStorage.setItem('darkMode', 'enabled');
-            this.textContent = 'Light Mode';
-        } else {
-            localStorage.setItem('darkMode', 'disabled');
-            this.textContent = 'Dark Mode';
-        }
+        // Update button text based on the current mode
+        this.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
     });
-
-    // Apply dark mode preference on page load
-    applyDarkModePreference();
 </script>
