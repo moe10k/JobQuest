@@ -28,38 +28,29 @@ cd ../frontend || { log_output "Frontend directory not found"; exit 1; }
 # Create virtual environment if it doesn't exist
 if [ ! -d "venv" ]; then 
     log_output "Virtual environment not found! Creating it..."
-    $python_cmd -m venv venv
-    if [ $? -ne 0 ]; then
-        log_output "Error: Failed to create virtual environment."
-        exit 1
-    fi
+    $python_cmd -m venv venv || { log_output "Error: Failed to create virtual environment."; exit 1; }
 fi
 
-# Activate virtual environment with the correct path
-log_output "Attempting to activate the virtual environment..."
-if ! source "$activate_venv"; then
-    log_output "Error: Failed to activate virtual environment."
-    exit 1
-fi
+# Activate virtual environment
+log_output "Activating the virtual environment..."
+source "$activate_venv" || { log_output "Error: Failed to activate virtual environment."; exit 1; }
 log_output "Virtual environment activated successfully."
 
 # Install required Python packages
 log_output "Installing required Python packages..."
-$python_cmd -m pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn flask-cors python-dotenv
+$python_cmd -m pip install -q requests pika Flask Flask-Mail mysql-connector-python itsdangerous gunicorn flask-cors python-dotenv || {
+    log_output "Error: Failed to install required Python packages."; exit 1;
+}
 
 # Check if Gunicorn is installed and install it if necessary
 if ! command -v gunicorn &> /dev/null; then
     log_output "Gunicorn not found. Installing Gunicorn..."
-    pip install gunicorn
-    if [ $? -ne 0 ]; then
-        log_output "Error: Failed to install Gunicorn."
-        exit 1
-    fi
+    pip install gunicorn || { log_output "Error: Failed to install Gunicorn."; exit 1; }
 else
     log_output "Gunicorn is already installed."
 fi
 
-# Create app.py if it doesn't exist for backend
+# Create app.py if it doesn't exist
 if [ ! -f "app.py" ]; then
     log_output "Creating app.py for backend..."
     cat <<EOF > app.py
@@ -88,11 +79,9 @@ def hello():
     return "Hello from the backend server!"
 
 if __name__ == "__main__":
-    app.run(debug=True, port=7012)  # Default port for Gunicorn
+    app.run(debug=True, port=7012)
 EOF
     log_output "app.py created successfully."
-else
-    log_output "app.py already exists."
 fi
 
 # Set Flask app environment variables
@@ -103,9 +92,9 @@ export FLASK_ENV=production
 log_output "Stopping any existing processes on port 7012..."
 sudo fuser -k 7012/tcp || true
 
-# Check and set VM's VPN IP dynamically (Tailscale IP)
+# Get VPN IP dynamically (e.g., Tailscale IP)
 VPN_INTERFACE="tailscale0"  
-VM_IP=$(ifconfig "$VPN_INTERFACE" | grep 'inet ' | awk '{print $2}')  # Get VPN IP
+VM_IP=$(ifconfig "$VPN_INTERFACE" | grep 'inet ' | awk '{print $2}')
 
 if [ -z "$VM_IP" ]; then
     log_output "Error: Unable to get VPN IP address for this VM."
@@ -113,96 +102,37 @@ if [ -z "$VM_IP" ]; then
 fi
 log_output "VM IP (tailscale): $VM_IP"
 
-# Set primary and secondary IPs
+# Primary and secondary IPs
 PRIMARY_IP="100.64.1.5"
 SECONDARY_IP="100.64.1.4"
 
-# Check if VM's IP matches primary or secondary IP
+# Determine role based on IP
 if [ "$VM_IP" == "$PRIMARY_IP" ]; then
     ROLE="primary"
-    log_output "Role set to: primary"
 elif [ "$VM_IP" == "$SECONDARY_IP" ]; then
     ROLE="backup"
-    log_output "Role set to: backup"
 else
     log_output "Error: This VM's IP does not match primary or secondary IP."
     exit 1
 fi
+log_output "Role set to: $ROLE"
 
 # Function to start Gunicorn
 start_gunicorn() {
     log_output "Starting Gunicorn on ${VM_IP}:7012..."
-    # Use full path to gunicorn if necessary
-    GUNICORN_PATH=$(which gunicorn)
-    if [ -z "$GUNICORN_PATH" ]; then
-        log_output "Error: Gunicorn not found in virtual environment!"
-        exit 1
-    fi
-    $GUNICORN_PATH --bind ${VM_IP}:7012 --workers 4 --access-logfile $log_file --error-logfile $log_file app:app &  # Run Gunicorn in the background
+    gunicorn --bind "${VM_IP}:7012" --workers 4 --access-logfile "$log_file" --error-logfile "$log_file" app:app &
     export GUNICORN_PID=$!
 }
 
-# Function to stop Gunicorn if running
-stop_gunicorn() {
-    if [ -n "$GUNICORN_PID" ] && kill -0 "$GUNICORN_PID" 2>/dev/null; then
-        log_output "Stopping Gunicorn..."
-        kill "$GUNICORN_PID"
-        unset GUNICORN_PID
-    fi
-}
+# Start Gunicorn regardless of role
+start_gunicorn
 
-# If the role is primary, start Gunicorn
-if [ "$ROLE" == "primary" ]; then
-    log_output "This is the primary node. Starting Gunicorn on ${VM_IP}:7012..."
-    start_gunicorn
-elif [ "$ROLE" == "backup" ]; then
-    log_output "This is the backup node. Skipping Gunicorn start..."
-else
-    log_output "Error: Invalid ROLE. Set ROLE to 'primary' or 'backup'."
-    exit 1
-fi
-
-# Failover monitoring for backup server
-if [ "$ROLE" == "backup" ]; then
-    log_output "Backup node detected. Monitoring primary server at ${PRIMARY_IP}..."
-
-    primary_up_logged=false  # Track if the primary being online was logged
-    backup_active=false  # Track if the backup server is active
-
-    while true; do
-        # Check primary server status
-        if curl -s --max-time 5 --head "http://${PRIMARY_IP}:7012" | grep "200 OK" > /dev/null; then
-            if [ "$primary_up_logged" = false ]; then
-                log_output "Primary server is online."
-                primary_up_logged=true  # Prevent duplicate "online" logs
-            fi
-            stop_gunicorn  # Stop backup server if primary is online
-            backup_active=false  # Mark backup server as inactive
-        else
-            if [ "$backup_active" = false ]; then
-                log_output "Primary server is down! Activating backup server..."
-                if [ -z "$GUNICORN_PID" ]; then
-                    start_gunicorn  # Start Gunicorn on backup
-                    log_output "Backup server activated."
-                fi
-                backup_active=true  # Mark backup server as active
-            fi
-            primary_up_logged=false  # Reset logging for the next recovery
-        fi
-        sleep 2  # Monitor every 2 seconds
-    done
-fi
-
-
-
-# Install and set up Nginx for frontend failover
-log_output "Setting up Nginx for frontend failover configuration..."
-
-# Write the Nginx config to handle frontend failover
+# Set up Nginx failover configuration
+log_output "Setting up Nginx for frontend failover..."
 sudo bash -c "cat <<'EOF' > /etc/nginx/sites-available/frontend_failover
 upstream frontend_cluster {
-    server 100.64.1.5:7012 max_fails=3 fail_timeout=10s;  # Primary IP
-    server 100.64.1.4:7012 backup;                        # Backup IP
+    server $PRIMARY_IP:7012 max_fails=3 fail_timeout=10s;
+    server $SECONDARY_IP:7012 backup;
 }
 
 server {
@@ -215,7 +145,6 @@ server {
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
 
-        # Retry the next server if there's a failure
         proxy_next_upstream error timeout http_502 http_503 http_504;
         proxy_connect_timeout 3s;
         proxy_read_timeout 10s;
@@ -227,37 +156,24 @@ server {
 }
 EOF"
 
-# Create symbolic link to enable the configuration
+# Enable Nginx configuration
 if [ ! -L /etc/nginx/sites-enabled/frontend_failover ]; then
     sudo ln -s /etc/nginx/sites-available/frontend_failover /etc/nginx/sites-enabled/
 fi
 
-# Check Nginx configuration syntax before restarting
-log_output "Checking Nginx configuration syntax..."
-sudo nginx -t
-sudo ufw allow 'Nginx Full'  # Allow Nginx through the firewall
-sudo ufw allow 7012
-sudo ufw allow 80
-sudo ufw allow 15672
-sudo ufw allow 5672 # Allow RabbitMQ ports
-sudo ufw allow 3306 # Allow MySQL port
-sudo ufw allow 22 # Allow SSH port
-sudo ufw reload  # Reload the firewall rules
+# Start or restart Nginx service
+log_output "Starting Nginx service..."
+sudo systemctl start nginx || { log_output "Error: Failed to start Nginx."; exit 1; }
+log_output "Nginx started successfully."
 
-# Restart Nginx if it is the backup node
-if [ "$ROLE" == "backup" ]; then
-    log_output "Restarting Nginx to apply failover and firewall configuration..."
-    sudo nginx -t
-    sudo ufw allow 'Nginx Full'  # Allow Nginx through the firewall
-    sudo ufw allow 7012
-    sudo ufw allow 80
-    sudo ufw allow 15672
-    sudo ufw allow 5672 # Allow RabbitMQ ports
-    sudo ufw allow 3306 # Allow MySQL port
-    sudo ufw allow 22 # Allow SSH port
-    sudo ufw reload  # Reload the firewall rules
-    sudo systemctl restart nginx
-fi
+# Check and reload Nginx
+log_output "Checking Nginx configuration..."
+sudo nginx -t || { log_output "Error: Nginx configuration is invalid."; exit 1; }
+
+log_output "Reloading Nginx..."
+sudo systemctl reload nginx || { log_output "Error: Failed to reload Nginx."; exit 1; }
 
 # Log the final status
 log_output "Frontend services started successfully."
+log_output "Gunicorn PID: $GUNICORN_PID"
+log_output "Role: $ROLE"

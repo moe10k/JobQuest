@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 load_dotenv()
 api_key = os.getenv('API_KEY')  # Fetch API key from .env file
 
+# In-memory storage for applications (to be replaced with database logic in the future)
+applications = []
+
 #RabbitMQ cluster nodes
 rabbitmq_nodes = [
     '100.64.1.4', #rabbit@messaging - Master Node
