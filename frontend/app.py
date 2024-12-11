@@ -84,19 +84,15 @@ def login():
 
     return render_template('login.html')
 
-# @app.route('/dashboard') #Dashboard Page - Must be logged in
-# def dashboard():
-#     if is_logged_in(): #Checks if User is logged in and if true - grabs session variables
-#         user = session['user']
-#         user_id = user.get('user_id')
-#         show_popup = True if user.get('popup_enabled') == 0 else False
-#         return render_template('dashboard.html', user=user, user_id=user_id, show_popup=show_popup)
-#     flash('You must login first.', 'danger') #If not logged in - redirect to Login Page
-#     return redirect('/login')
-
-@app.route('/dashboard') #Dashboard Page - Don't have to be logged in
+@app.route('/dashboard') #Dashboard Page - Must be logged in
 def dashboard():
-    return render_template('dashboard.html', show_popup = True)
+    if is_logged_in(): #Checks if User is logged in and if true - grabs session variables
+        user = session['user']
+        user_id = user.get('user_id')
+        show_popup = True if user.get('popup_enabled') == 0 else False
+        return render_template('dashboard.html', user=user, user_id=user_id, show_popup=show_popup)
+    flash('You must login first.', 'danger') #If not logged in - redirect to Login Page
+    return redirect('/login')
 
 
 @app.route('/submit_popup', methods=['POST']) #Popup Page
@@ -214,6 +210,76 @@ def track_jobs():
 
     # Pass mock data to the template
     return render_template('tracker.html', applications=applications)
+
+@app.route('/friends', methods=['GET', 'POST'])
+def friends():
+    if not is_logged_in():  # Ensure user is logged in
+        flash('You must login first', 'danger')
+        return redirect('/login')
+    
+    user_id = session.get('user', {}).get('user_id')  # Current user's ID
+    user_email = session.get('user', {}).get('email')  # Current user's email
+
+    #Retrive friends list and pending friends list
+    send_message('fetch_pending_friendrequest_request_queue', str(user_id))
+    pending_requests = consume_message('fetch_pending_friendrequest_response_queue') or []
+    print(f"Pending friends: {pending_requests}")
+
+    send_message('fetch_friendslist_request_queue', user_email)
+    friends_list = consume_message('fetch_friendslist_response_queue') or []
+    print(f"Friends : {friends_list}")
+
+    # Handle friend request submission
+    if request.method == 'POST':
+        email = request.form.get('email')
+        if not validate_email(email):
+            flash('Invalid email address.', 'danger')
+            return redirect('/friends')
+
+        # Send friend request to RabbitMQ
+        message = f"{user_id},{email}"
+        send_message('send_friendrequest_request_queue', message)
+        response = consume_message('send_friendrequest_response_queue')
+
+        if response == 'success':
+            flash('Friend request sent successfully!', 'success')
+        else:
+            flash('Error sending friend request. Please try again.', 'danger')
+
+    return render_template('friends.html', friends_list=friends_list, pending_requests=pending_requests)
+
+@app.route('/handle_friend_request', methods=['POST'])
+def handle_friend_request():
+    if not is_logged_in():  # Ensure user is logged in
+        flash('You must login first', 'danger')
+        return redirect('/login')
+    
+    user_id = session.get('user', {}).get('user_id')  # Current user's ID
+    user_email = session.get('user', {}).get('email')  # Current user's email
+    friend_email = request.form.get('email')  # The corresponding email
+    action = request.form.get('action')  # Either 'accept' or 'reject'
+
+    # Handle the action
+    message = f"{user_id},{user_email},{friend_email},{action}"
+    send_message('pending_friendrequest_request_queue', message)
+    response = consume_message('pending_friendrequest_response_queue')
+
+    if response == 'success':
+        flash(f"Friend request for {friend_email} successfully processed!", 'success')
+    else:
+        flash(f"Error processing friend request for {friend_email}. Please try again.", 'danger')
+
+    return redirect('/friends')
+
+@app.route('/logout')
+def logout(): #If not logged in - redirect to Login Page
+    if not is_logged_in():
+       flash('You must login first', 'danger')
+       return redirect('/login')
+    
+    session.clear()
+    flash('You have been logged out.', 'success')
+    return redirect('/login')
 
 @app.route('/profile')
 def profile():
