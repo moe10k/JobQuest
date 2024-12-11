@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/dashboard.css"> <!-- Link to external CSS -->
+    <title>Profile Page</title>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    {% include 'partials/nav.html' %}
+
+    <!-- Flash Message Section -->
+    {% include 'partials/flash.html' %}
+
+    <div class="container profile-page">
+        <h1>Your Profile</h1>
+
+        <div class="profile-header">
+            <div class="profile-info">
+                <h2>John Doe</h2>
+            </div>
+        </div>
+
+        <div class="profile-details">
+            <h2>Account Details</h2>
+            <p><strong>Country:</strong> United States</p>
+            <p><strong>State:</strong> California</p>
+            <p><strong>Job Title:</strong> Software Engineer</p>
+            <p><strong>School:</strong> Stanford University</p>
+        </div>
+
+        <div class="profile-actions">
+            <button onclick="location.href='/popup';" class="btn">Edit Profile</button>
+            <button onclick="location.href='/logout';" class="btn logout">Log Out</button>
+        </div>
+    </div>
+
+</body>
+</html>
