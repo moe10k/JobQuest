@@ -52,3 +52,26 @@ CREATE TABLE Security_Questions (
     security_question_3 VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
+
+CREATE TABLE FriendRequests (
+    request_id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id INT,
+    sender_email VARCHAR(255),
+    receiver_id INT,
+    receiver_email VARCHAR(255),
+    status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES User(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES User(user_id)
+);
+
+CREATE TABLE Friends (
+    friendship_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    user_email VARCHAR(255),
+    friend_id INT,
+    friend_email VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES User(user_id),
+    FOREIGN KEY (friend_id) REFERENCES User(user_id)
+);
