@@ -155,10 +155,27 @@ body.dark-mode .dark-mode-toggle {
 </nav>
 
 <script>
+    // Check if dark mode is enabled on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('toggle-dark-mode').textContent = 'Light Mode';
+        } else {
+            document.getElementById('toggle-dark-mode').textContent = 'Dark Mode';
+        }
+    });
+
     // Toggle Dark Mode and Update Button Text
     document.getElementById('toggle-dark-mode').addEventListener('click', function() {
         document.body.classList.toggle('dark-mode');
-        // Update button text based on the current mode
-        this.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+        
+        // Save the user's preference to localStorage
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('darkMode', 'enabled');
+            this.textContent = 'Light Mode';
+        } else {
+            localStorage.setItem('darkMode', 'disabled');
+            this.textContent = 'Dark Mode';
+        }
     });
 </script>
