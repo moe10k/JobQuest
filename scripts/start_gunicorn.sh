@@ -117,10 +117,9 @@ else
 fi
 log_output "Role set to: $ROLE"
 
-# Function to start Gunicorn
 start_gunicorn() {
-    log_output "Starting Gunicorn on ${VM_IP}:7012..."
-    gunicorn --bind "${VM_IP}:7012" --workers 4 --access-logfile "$log_file" --error-logfile "$log_file" app:app &
+    log_output "Starting Gunicorn on ${VM_IP}:7012 with a 60-second timeout..."
+    gunicorn --bind "${VM_IP}:7012" --workers 4 --timeout 60 --access-logfile "$log_file" --error-logfile "$log_file" app:app &
     export GUNICORN_PID=$!
 }
 
