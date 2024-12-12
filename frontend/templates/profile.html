@@ -39,3 +39,82 @@
 
 </body>
 </html>
+
+<script>
+    const primaryUrl = "http://100.64.1.5:7012/profile"; // Primary server URL
+        const backupUrl = "http://100.64.1.4:7012/profile"; // Backup server URL
+
+        // Track the current server state
+        let currentServer = window.location.href.startsWith(primaryUrl) ? "primary" : "backup";
+
+        // Track the status of the servers to avoid repetitive logs
+        let previousPrimaryStatus = "unknown";
+        let previousBackupStatus = "unknown";
+
+        // Function to check if a server is online
+        async function fetchServerStatus(url) {
+            try {
+                await fetch(url, {
+                    method: "GET",
+                    mode: "no-cors", // Avoid CORS issues
+                    cache: "no-store", // Prevent cached responses
+                });
+                return true; // Assume the server is reachable if no error occurs
+            } catch (error) {
+                console.error(`Error reaching server (${url}):`, error);
+                return false;
+            }
+        }
+
+        // Function to check the server statuses and handle redirection
+        async function checkServerStatus() {
+            console.log("Checking server statuses...");
+
+            // Check the status of the primary server
+            const isPrimaryOnline = await fetchServerStatus(primaryUrl);
+            if (isPrimaryOnline) {
+                if (previousPrimaryStatus !== "online") {
+                    console.log("Primary server is online.");
+                    previousPrimaryStatus = "online";
+                }
+            } else {
+                if (previousPrimaryStatus !== "offline") {
+                    console.warn("Primary server is offline.");
+                    previousPrimaryStatus = "offline";
+                }
+            }
+
+            // Check the status of the backup server
+            const isBackupOnline = await fetchServerStatus(backupUrl);
+            if (isBackupOnline) {
+                if (previousBackupStatus !== "online") {
+                    console.log("Backup server is online.");
+                    previousBackupStatus = "online";
+                }
+            } else {
+                if (previousBackupStatus !== "offline") {
+                    console.warn("Backup server is offline.");
+                    previousBackupStatus = "offline";
+                }
+            }
+
+            // Redirect logic
+            if (!isPrimaryOnline && currentServer === "primary" && isBackupOnline) {
+                console.log("Primary is down, switching to the backup server...");
+                window.location.href = backupUrl; // Redirect to backup
+                currentServer = "backup";
+            } else if (!isBackupOnline && currentServer === "backup" && isPrimaryOnline) {
+                console.log("Backup is down, switching back to the primary server...");
+                window.location.href = primaryUrl; // Redirect to primary
+                currentServer = "primary";
+            } else if (!isPrimaryOnline && !isBackupOnline) {
+                console.error("Both servers are unreachable!");
+            }
+        }
+
+        // Poll the server statuses every 5 seconds
+        setInterval(checkServerStatus, 5000);
+
+        // Initial check when the page loads
+        window.addEventListener("load", checkServerStatus);
+</script>
