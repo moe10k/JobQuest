@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Tracker</title>
+    <link rel="stylesheet" href="/static/tracker.css"> <!-- Link to CSS -->
+    <title>Job Application Tracker</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Toggle dependent fields based on response
+            function toggleDependentFields() {
+                const responseReceived = document.getElementById('response_received').value;
+                const responseMethodGroup = document.getElementById('response_method_group');
+                const interviewScheduledGroup = document.getElementById('interview_scheduled_group');
+                const interviewCountGroup = document.getElementById('interview_count_group');
+                const offerReceivedGroup = document.getElementById('offer_received_group');
+                const dateReceivedGroup = document.getElementById('date_received_group');
+    
+                // Show or hide fields based on "Response Received"
+                if (responseReceived === "Yes") {
+                    responseMethodGroup.style.display = 'block';
+                    interviewScheduledGroup.style.display = 'block';
+    
+                    // Check Interview Scheduled
+                    const interviewScheduled = document.getElementById('interview_scheduled').value;
+                    interviewCountGroup.style.display = interviewScheduled === "Yes" ? 'block' : 'none';
+    
+                    // Check Offer Received
+                    const offerReceived = document.getElementById('offer_received').value;
+                    offerReceivedGroup.style.display = 'block';
+                    dateReceivedGroup.style.display = offerReceived === "Yes" ? 'block' : 'none';
+                } else {
+                    // Hide all dependent fields if "Response Received" is "No"
+                    responseMethodGroup.style.display = 'none';
+                    interviewScheduledGroup.style.display = 'none';
+                    interviewCountGroup.style.display = 'none';
+                    offerReceivedGroup.style.display = 'none';
+                    dateReceivedGroup.style.display = 'none';
+                }
+            }
+    
+            // Toggle form visibility
+            function toggleForm() {
+                const form = document.getElementById('job-form');
+                const toggleButton = document.getElementById('toggle-form-button');
+                const isHidden = form.style.display === 'none';
+    
+                form.style.display = isHidden ? 'block' : 'none';
+                toggleButton.textContent = isHidden ? 'Hide Form' : 'Show Form';
+            }
+    
+            // Sorting and Filtering Functionality
+            function filterAndSortTable() {
+                const responseFilter = document.getElementById("filter-response-received").value;
+                const offerFilter = document.getElementById("filter-offer-received").value;
+                const sortBy = document.getElementById("sort-column").value;
+                const tableBody = document.querySelector(".application-table tbody");
+    
+                // Get all table rows
+                const rows = Array.from(tableBody.querySelectorAll("tr"));
+    
+                // Filter rows
+                let filteredRows = rows.filter(row => {
+                    const responseCell = row.cells[2].textContent.trim();
+                    const offerCell = row.cells[6].textContent.trim();
+    
+                    const responseMatches = responseFilter === "" || responseCell === responseFilter;
+                    const offerMatches = offerFilter === "" || offerCell === offerFilter;
+    
+                    return responseMatches && offerMatches;
+                });
+    
+                // Sort rows
+                filteredRows.sort((a, b) => {
+                    const valueA = a.querySelector(`td:nth-child(${getColumnIndex(sortBy)})`).textContent.trim();
+                    const valueB = b.querySelector(`td:nth-child(${getColumnIndex(sortBy)})`).textContent.trim();
+    
+                    // Sort dates properly
+                    if (sortBy.includes("date")) {
+                        return new Date(valueA) - new Date(valueB);
+                    }
+                    // Sort strings
+                    return valueA.localeCompare(valueB);
+                });
+    
+                // Update table
+                tableBody.innerHTML = "";
+                filteredRows.forEach(row => tableBody.appendChild(row));
+            }
+    
+            // Get column index for sorting
+            function getColumnIndex(columnName) {
+                const headers = Array.from(document.querySelectorAll(".application-table thead th"));
+                return headers.findIndex(header => header.dataset.column === columnName) + 1;
+            }
+    
+            // Attach event listeners
+            const responseReceivedSelect = document.getElementById('response_received');
+            const interviewScheduledSelect = document.getElementById('interview_scheduled');
+            const offerReceivedSelect = document.getElementById('offer_received');
+            const toggleFormButton = document.getElementById('toggle-form-button');
+            const filterResponse = document.getElementById("filter-response-received");
+            const filterOffer = document.getElementById("filter-offer-received");
+            const sortColumn = document.getElementById("sort-column");
+    
+            responseReceivedSelect.addEventListener('change', toggleDependentFields);
+            interviewScheduledSelect.addEventListener('change', toggleDependentFields);
+            offerReceivedSelect.addEventListener('change', toggleDependentFields);
+            toggleFormButton.addEventListener('click', toggleForm);
+            filterResponse.addEventListener('change', filterAndSortTable);
+            filterOffer.addEventListener('change', filterAndSortTable);
+            sortColumn.addEventListener('change', filterAndSortTable);
+    
+            // Initial table update
+            filterAndSortTable();
+        });
+    </script>
+    
+    
+</head>
+<body>
+    <!-- Navigation Bar -->
+    {% include 'partials/nav.html' %}
+
+    <!-- Flash Message Section -->
+    {% include 'partials/flash.html' %}
+
+    <div class="container mt-5">
+        <h1 class="text-center">Job Application Tracker</h1>
+
+        <!-- Button to toggle form visibility -->
+        <button id="toggle-form-button" class="btn btn-secondary" onclick="toggleForm()">Hide Form</button>
+
+        <!-- Job Form (initially hidden) -->
+        <form id="job-form" class="job-form" method="POST" action="/tracker" style="display: block;">
+            <div class="form-group mb-3">
+                <label for="job_name">Job Name</label>
+                <input type="text" id="job_name" name="job_name" class="form-control" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="date_applied">Date Applied</label>
+                <input type="date" id="date_applied" name="date_applied" class="form-control" required>
+            </div>
+            <div class="form-group mb-3">
+                <label>Response Received?</label>
+                <select id="response_received" name="response_received" class="form-select" onchange="toggleDependentFields()" required>
+                    <option value="" disabled selected>Choose...</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div id="response_method_group" class="form-group mb-3" style="display: none;">
+                <label for="response_method">How did you get the response?</label>
+                <select id="response_method" name="response_method" class="form-select">
+                    <option value="" disabled selected>Choose...</option>
+                    <option value="Email">Email</option>
+                    <option value="Text">Text</option>
+                    <option value="JobQuest">JobQuest</option>
+                </select>
+            </div>
+
+            <div id="interview_scheduled_group" class="form-group mb-3" style="display: none;">
+                <label>Interview Scheduled?</label>
+                <select id="interview_scheduled" name="interview_scheduled" class="form-select" onchange="toggleDependentFields()">
+                    <option value="" disabled selected>Choose...</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div id="interview_count_group" class="form-group mb-3" style="display: none;">
+                <label for="number_of_interviews">Number of Interviews</label>
+                <input type="number" id="number_of_interviews" name="number_of_interviews" class="form-control" min="1">
+            </div>
+
+            <div id="offer_received_group" class="form-group mb-3" style="display: none;">
+                <label>Offer Received?</label>
+                <select id="offer_received" name="offer_received" class="form-select" onchange="toggleDependentFields()">
+                    <option value="" disabled selected>Choose...</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div id="date_received_group" class="form-group mb-3" style="display: none;">
+                <label for="date_received">Date Received</label>
+                <input type="date" id="date_received" name="date_received" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Add Application</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Application Records</h2>
+    
+        <!-- Filter and Sort Controls -->
+        <div class="filter-sort-controls">
+            <label for="filter-response-received">Filter by Response Received:</label>
+            <select id="filter-response-received" class="form-select">
+                <option value="">All</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+    
+            <label for="filter-offer-received">Filter by Offer Received:</label>
+            <select id="filter-offer-received" class="form-select">
+                <option value="">All</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+    
+            <label for="sort-column">Sort by:</label>
+            <select id="sort-column" class="form-select">
+                <option value="job_name">Job Name</option>
+                <option value="date_applied">Date Applied</option>
+                <option value="response_received">Response Received</option>
+                <option value="offer_received">Offer Received</option>
+            </select>
+        </div>
+    
+        <!-- Application Records Table -->
+        <table class="application-table">
+            <thead>
+                <tr>
+                    <th data-column="job_name">Job Name</th>
+                    <th data-column="date_applied">Date Applied</th>
+                    <th data-column="response_received">Response Received</th>
+                    <th data-column="response_method">Response Method</th>
+                    <th data-column="interview_scheduled">Interview Scheduled</th>
+                    <th data-column="number_of_interviews">Number of Interviews</th>
+                    <th data-column="offer_received">Offer Received</th>
+                    <th data-column="date_received">Date Received</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                <tr>
+                    <td>{{ app.job_name }}</td>
+                    <td>{{ app.date_applied }}</td>
+                    <td>{{ app.response_received }}</td>
+                    <td>{{ app.response_method }}</td>
+                    <td>{{ app.interview_scheduled }}</td>
+                    <td>{{ app.number_of_interviews }}</td>
+                    <td>{{ app.offer_received }}</td>
+                    <td>{{ app.date_received }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
