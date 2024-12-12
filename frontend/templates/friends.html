@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends</title>
+</head>
+<body>
+    {% include 'partials/nav.html' %}
+    {% include 'partials/flash.html' %}
+    <h1>Friends</h1>
+
+    <!-- Send Friend Request -->
+    <div>
+        <h2>Send Friend Request</h2>
+        <form action="/friends" method="POST">
+            <input type="email" name="email" placeholder="Enter friend's email" required>
+            <button type="submit">Send Request</button>
+        </form>
+    </div>
+
+    <!-- Pending Friend Requests -->
+    <div>
+        <h2>Pending Friend Requests</h2>
+        <ul>
+            {% if pending_requests %}
+                {% for email in pending_requests %}
+                    <li>
+                        {{ email }}
+                        <div class="action-buttons">
+                            <form action="/handle_friend_request" method="POST" style="display: inline;">
+                                <input type="hidden" name="request_id" value="{{ loop.index }}"> <!-- Optional if no unique ID -->
+                                <input type="hidden" name="email" value="{{ email }}"> <!-- Include the email -->
+                                <input type="hidden" name="action" value="accepted">
+                                <button type="submit">Accept</button>
+                            </form>
+                            <form action="/handle_friend_request" method="POST" style="display: inline;">
+                                <input type="hidden" name="request_id" value="{{ loop.index }}"> <!-- Optional if no unique ID -->
+                                <input type="hidden" name="email" value="{{ email }}"> <!-- Include the email -->
+                                <input type="hidden" name="action" value="rejected">
+                                <button type="submit" class="reject-button">Reject</button>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>No pending friend requests.</li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Friends List -->
+    <div>
+        <h2>Your Friends</h2>
+        <ul>
+            {% if friends_list %}
+                {% for friend in friends_list %}
+                    <li>{{ friend }}</li>
+                {% endfor %}
+            {% else %}
+                <li>You have no friends yet.</li>
+            {% endif %}
+        </ul>
+    </div>
+</body>
+</html>
