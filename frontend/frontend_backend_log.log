@@ -328,3 +328,1203 @@
 [2024-11-14 16:40:26 -0500] [57904] [INFO] Worker exiting (pid: 57904)
 [2024-11-14 16:40:26 -0500] [57872] [ERROR] Worker (pid:57896) was sent SIGTERM!
 [2024-11-14 16:40:27 -0500] [57872] [INFO] Shutting down: Master
+2024-12-13 10:02:18 - Activating the virtual environment...
+2024-12-13 10:02:18 - Virtual environment activated successfully.
+2024-12-13 10:02:18 - Installing required Python packages...
+2024-12-13 10:02:25 - Gunicorn is already installed.
+2024-12-13 10:02:25 - Stopping any existing processes on port 7012...
+2024-12-13 10:02:26 - VM IP (tailscale): 100.64.1.5
+2024-12-13 10:02:26 - Role set to: primary
+2024-12-13 10:02:26 - Starting Gunicorn on 100.64.1.5:7012 with a 60-second timeout...
+2024-12-13 10:02:26 - Setting up Nginx for frontend failover...
+2024-12-13 10:02:26 - Starting Nginx service...
+[2024-12-13 10:02:27 -0500] [46621] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 10:02:27 -0500] [46621] [INFO] Listening at: http://100.64.1.5:7012 (46621)
+[2024-12-13 10:02:27 -0500] [46621] [INFO] Using worker: sync
+[2024-12-13 10:02:27 -0500] [46637] [INFO] Booting worker with pid: 46637
+[2024-12-13 10:02:27 -0500] [46638] [INFO] Booting worker with pid: 46638
+[2024-12-13 10:02:27 -0500] [46639] [INFO] Booting worker with pid: 46639
+[2024-12-13 10:02:27 -0500] [46640] [INFO] Booting worker with pid: 46640
+2024-12-13 10:02:27 - Nginx started successfully.
+2024-12-13 10:02:27 - Checking Nginx configuration...
+2024-12-13 10:02:28 - Reloading Nginx...
+2024-12-13 10:02:30 - Frontend services started successfully.
+2024-12-13 10:02:30 - Gunicorn PID: 46621
+2024-12-13 10:02:30 - Role: primary
+100.123.9.34 - - [13/Dec/2024:10:02:32 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:03:02 -0500] [46621] [CRITICAL] WORKER TIMEOUT (pid:46638)
+[2024-12-13 10:03:02 -0500] [46638] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-12-13 10:03:02 -0500] [46638] [INFO] Worker exiting (pid: 46638)
+[2024-12-13 10:03:03 -0500] [46705] [INFO] Booting worker with pid: 46705
+[2024-12-13 10:03:04 -0500] [46621] [INFO] Handling signal: term
+[2024-12-13 10:03:05 -0500] [46637] [INFO] Worker exiting (pid: 46637)
+[2024-12-13 10:03:05 -0500] [46639] [INFO] Worker exiting (pid: 46639)
+[2024-12-13 10:03:05 -0500] [46640] [INFO] Worker exiting (pid: 46640)
+[2024-12-13 10:03:05 -0500] [46705] [INFO] Worker exiting (pid: 46705)
+[2024-12-13 10:03:06 -0500] [46621] [INFO] Shutting down: Master
+2024-12-13 10:04:10 - Activating the virtual environment...
+2024-12-13 10:04:10 - Virtual environment activated successfully.
+2024-12-13 10:04:10 - Installing required Python packages...
+2024-12-13 10:04:15 - Gunicorn is already installed.
+2024-12-13 10:04:15 - Stopping any existing processes on port 7012...
+2024-12-13 10:04:15 - VM IP (tailscale): 100.64.1.5
+2024-12-13 10:04:15 - Role set to: primary
+2024-12-13 10:04:15 - Starting Gunicorn on 100.64.1.5:7012 with a 60-second timeout...
+2024-12-13 10:04:15 - Setting up Nginx for frontend failover...
+2024-12-13 10:04:16 - Starting Nginx service...
+[2024-12-13 10:04:16 -0500] [46872] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 10:04:16 -0500] [46872] [INFO] Listening at: http://100.64.1.5:7012 (46872)
+[2024-12-13 10:04:16 -0500] [46872] [INFO] Using worker: sync
+[2024-12-13 10:04:16 -0500] [46888] [INFO] Booting worker with pid: 46888
+[2024-12-13 10:04:17 -0500] [46890] [INFO] Booting worker with pid: 46890
+[2024-12-13 10:04:17 -0500] [46891] [INFO] Booting worker with pid: 46891
+[2024-12-13 10:04:17 -0500] [46892] [INFO] Booting worker with pid: 46892
+2024-12-13 10:04:18 - Nginx started successfully.
+2024-12-13 10:04:18 - Checking Nginx configuration...
+2024-12-13 10:04:18 - Reloading Nginx...
+2024-12-13 10:04:18 - Frontend services started successfully.
+2024-12-13 10:04:18 - Gunicorn PID: 46872
+2024-12-13 10:04:19 - Role: primary
+100.123.9.34 - - [13/Dec/2024:10:04:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:10:04:35 -0500] "GET / HTTP/1.1" 200 7773 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:10:04:35 -0500] "GET /static/landing.css HTTP/1.1" 200 0 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:10:04:35 -0500] "GET /static/images/Job.png HTTP/1.1" 200 0 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:10:04:36 -0500] "GET /favicon.ico HTTP/1.1" 404 207 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:10:04:36 -0500] "GET /landing HTTP/1.1" 404 207 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:10:04:36 -0500] "GET /landing HTTP/1.1" 404 207 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:10:04:43 -0500] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:10:04:43 -0500] "GET /static/register_login.css HTTP/1.1" 200 0 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+[2024-12-13 10:05:00 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:46892)
+[2024-12-13 10:05:01 -0500] [46872] [ERROR] Worker (pid:46892) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:05:02 -0500] [46976] [INFO] Booting worker with pid: 46976
+[2024-12-13 10:05:24 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:46891)
+[2024-12-13 10:05:24 -0500] [46891] [ERROR] Error handling request /login
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/app.py", line 71, in login
+    response = consume_message('login_response_queue')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/services.py", line 49, in consume_message
+    time.sleep(delay)  # Optional delay to allow message processing
+    ^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+100.64.1.1 - - [13/Dec/2024:10:05:24 -0500] "POST /login HTTP/1.1" 500 0 "-" "-"
+[2024-12-13 10:05:24 -0500] [46891] [INFO] Worker exiting (pid: 46891)
+[2024-12-13 10:05:25 -0500] [46872] [ERROR] Worker (pid:46891) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:05:25 -0500] [47002] [INFO] Booting worker with pid: 47002
+100.123.9.34 - - [13/Dec/2024:10:05:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:06:45 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:07:13 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:46976)
+[2024-12-13 10:07:14 -0500] [46976] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-12-13 10:07:14 -0500] [46872] [ERROR] Worker (pid:46976) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:07:15 -0500] [47084] [INFO] Booting worker with pid: 47084
+100.123.9.34 - - [13/Dec/2024:10:08:31 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:09:00 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:47002)
+[2024-12-13 10:09:02 -0500] [46872] [ERROR] Worker (pid:47002) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:09:03 -0500] [47265] [INFO] Booting worker with pid: 47265
+100.123.9.34 - - [13/Dec/2024:10:09:34 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:10:04 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:46890)
+[2024-12-13 10:10:05 -0500] [46872] [ERROR] Worker (pid:46890) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:10:05 -0500] [47357] [INFO] Booting worker with pid: 47357
+100.123.9.34 - - [13/Dec/2024:10:10:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:11:32 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:12:00 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:47084)
+[2024-12-13 10:12:01 -0500] [46872] [ERROR] Worker (pid:47084) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:12:02 -0500] [47477] [INFO] Booting worker with pid: 47477
+100.123.9.34 - - [13/Dec/2024:10:12:35 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:13:04 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:47265)
+[2024-12-13 10:13:06 -0500] [46872] [ERROR] Worker (pid:47265) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:13:06 -0500] [47525] [INFO] Booting worker with pid: 47525
+100.123.9.34 - - [13/Dec/2024:10:13:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:14:31 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:15:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:16:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:17:00 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:47525)
+[2024-12-13 10:17:00 -0500] [47525] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-12-13 10:17:01 -0500] [46872] [ERROR] Worker (pid:47525) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:17:01 -0500] [47750] [INFO] Booting worker with pid: 47750
+100.123.9.34 - - [13/Dec/2024:10:18:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:19:31 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:20:33 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:21:33 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:22:02 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:47750)
+[2024-12-13 10:22:02 -0500] [47750] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-12-13 10:22:03 -0500] [47750] [INFO] Worker exiting (pid: 47750)
+[2024-12-13 10:22:03 -0500] [46872] [ERROR] Worker (pid:47750) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:22:03 -0500] [48195] [INFO] Booting worker with pid: 48195
+100.64.1.1 - - [13/Dec/2024:10:22:13 -0500] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+[2024-12-13 10:22:51 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:47477)
+[2024-12-13 10:22:51 -0500] [47477] [ERROR] Error handling request /login
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/app.py", line 71, in login
+    response = consume_message('login_response_queue')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/services.py", line 49, in consume_message
+    time.sleep(delay)  # Optional delay to allow message processing
+    ^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+100.64.1.1 - - [13/Dec/2024:10:22:51 -0500] "POST /login HTTP/1.1" 500 0 "-" "-"
+[2024-12-13 10:22:51 -0500] [47477] [INFO] Worker exiting (pid: 47477)
+[2024-12-13 10:22:52 -0500] [46872] [ERROR] Worker (pid:47477) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:22:53 -0500] [48248] [INFO] Booting worker with pid: 48248
+100.64.1.1 - - [13/Dec/2024:10:22:57 -0500] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:10:23:34 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:24:00 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:46888)
+[2024-12-13 10:24:02 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:48248)
+[2024-12-13 10:24:08 -0500] [46872] [ERROR] Worker (pid:46888) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:24:09 -0500] [46872] [ERROR] Worker (pid:48248) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:24:10 -0500] [48312] [INFO] Booting worker with pid: 48312
+[2024-12-13 10:24:10 -0500] [48313] [INFO] Booting worker with pid: 48313
+100.123.9.34 - - [13/Dec/2024:10:24:54 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:25:23 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:48312)
+[2024-12-13 10:25:24 -0500] [46872] [ERROR] Worker (pid:48312) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:25:24 -0500] [48356] [INFO] Booting worker with pid: 48356
+100.123.9.34 - - [13/Dec/2024:10:25:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:26:31 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:26:59 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:48356)
+[2024-12-13 10:27:01 -0500] [46872] [ERROR] Worker (pid:48356) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:27:01 -0500] [48453] [INFO] Booting worker with pid: 48453
+100.123.9.34 - - [13/Dec/2024:10:27:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:28:32 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:29:00 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:48453)
+[2024-12-13 10:29:01 -0500] [46872] [ERROR] Worker (pid:48453) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:29:01 -0500] [48569] [INFO] Booting worker with pid: 48569
+100.123.9.34 - - [13/Dec/2024:10:29:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:30:48 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:31:16 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:48313)
+[2024-12-13 10:31:17 -0500] [48313] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-12-13 10:31:18 -0500] [46872] [ERROR] Worker (pid:48313) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:31:18 -0500] [48683] [INFO] Booting worker with pid: 48683
+100.123.9.34 - - [13/Dec/2024:10:32:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:33:50 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:34:16 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:48569)
+[2024-12-13 10:34:18 -0500] [46872] [ERROR] Worker (pid:48569) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:34:19 -0500] [48897] [INFO] Booting worker with pid: 48897
+100.123.9.34 - - [13/Dec/2024:10:34:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:35:31 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:36:00 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:47357)
+[2024-12-13 10:36:00 -0500] [47357] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-12-13 10:36:00 -0500] [47357] [INFO] Worker exiting (pid: 47357)
+[2024-12-13 10:36:01 -0500] [46872] [ERROR] Worker (pid:47357) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:36:01 -0500] [49051] [INFO] Booting worker with pid: 49051
+100.123.9.34 - - [13/Dec/2024:10:37:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:38:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:39:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:40:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:41:00 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:48683)
+[2024-12-13 10:41:01 -0500] [46872] [ERROR] Worker (pid:48683) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:41:01 -0500] [49382] [INFO] Booting worker with pid: 49382
+100.123.9.34 - - [13/Dec/2024:10:41:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:42:51 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:43:19 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:48195)
+[2024-12-13 10:43:20 -0500] [46872] [ERROR] Worker (pid:48195) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:43:20 -0500] [49504] [INFO] Booting worker with pid: 49504
+100.123.9.34 - - [13/Dec/2024:10:43:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:44:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:45:40 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 10:46:08 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:48897)
+[2024-12-13 10:46:09 -0500] [46872] [ERROR] Worker (pid:48897) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 10:46:09 -0500] [49670] [INFO] Booting worker with pid: 49670
+100.123.9.34 - - [13/Dec/2024:10:46:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:47:33 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:49:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:50:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:51:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:52:31 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:53:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:54:30 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:55:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:56:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:57:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:58:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:10:59:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:00:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:01:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:02:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:02:58 -0500] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:02:59 -0500] "GET /static/register_login.css HTTP/1.1" 200 0 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:02:59 -0500] "GET /favicon.ico HTTP/1.1" 404 207 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:03:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.2 - - [13/Dec/2024:11:03:48 -0500] "GET / HTTP/1.1" 200 7773 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:03:49 -0500] "GET /static/landing.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:03:49 -0500] "GET /static/images/Job.png HTTP/1.1" 304 0 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:03:49 -0500] "GET /landing HTTP/1.1" 404 207 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:03:50 -0500] "GET /landing HTTP/1.1" 404 207 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+[2024-12-13 11:03:53 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:49382)
+[2024-12-13 11:03:53 -0500] [49382] [ERROR] Error handling request /login
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/app.py", line 71, in login
+    response = consume_message('login_response_queue')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/services.py", line 49, in consume_message
+    time.sleep(delay)  # Optional delay to allow message processing
+    ^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+100.64.1.1 - - [13/Dec/2024:11:03:53 -0500] "POST /login HTTP/1.1" 500 0 "-" "-"
+[2024-12-13 11:03:53 -0500] [49382] [INFO] Worker exiting (pid: 49382)
+[2024-12-13 11:03:54 -0500] [46872] [ERROR] Worker (pid:49382) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 11:03:54 -0500] [51209] [INFO] Booting worker with pid: 51209
+100.64.1.2 - - [13/Dec/2024:11:03:55 -0500] "GET /landing HTTP/1.1" 404 207 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:03:58 -0500] "GET /landing HTTP/1.1" 404 207 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:04:14 -0500] "GET /landing HTTP/1.1" 404 207 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:04:19 -0500] "GET /landing HTTP/1.1" 404 207 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:04:19 -0500] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:04:20 -0500] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:04:27 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:04:28 -0500] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:04:28 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.123.9.34 - - [13/Dec/2024:11:04:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.2 - - [13/Dec/2024:11:04:33 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:04:38 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:04:43 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:04:48 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.1 - - [13/Dec/2024:11:04:51 -0500] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.2 - - [13/Dec/2024:11:04:53 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:04:58 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:05:03 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:05:08 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:05:14 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:05:19 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.2 - - [13/Dec/2024:11:05:24 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.123.9.34 - - [13/Dec/2024:11:05:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.2 - - [13/Dec/2024:11:05:29 -0500] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.5:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+[2024-12-13 11:05:32 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:49504)
+[2024-12-13 11:05:32 -0500] [49504] [ERROR] Error handling request /register
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/app.py", line 41, in register
+    response = consume_message('registration_response_queue')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/services.py", line 49, in consume_message
+    time.sleep(delay)  # Optional delay to allow message processing
+    ^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+100.64.1.2 - - [13/Dec/2024:11:05:33 -0500] "POST /register HTTP/1.1" 500 0 "-" "-"
+[2024-12-13 11:05:33 -0500] [49504] [INFO] Worker exiting (pid: 49504)
+[2024-12-13 11:05:34 -0500] [46872] [ERROR] Worker (pid:49504) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 11:05:34 -0500] [51333] [INFO] Booting worker with pid: 51333
+100.123.9.34 - - [13/Dec/2024:11:06:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:07:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 11:07:56 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:49051)
+[2024-12-13 11:07:56 -0500] [49051] [ERROR] Error handling request /login
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/app.py", line 71, in login
+    response = consume_message('login_response_queue')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/services.py", line 49, in consume_message
+    time.sleep(delay)  # Optional delay to allow message processing
+    ^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+100.64.1.1 - - [13/Dec/2024:11:07:56 -0500] "POST /login HTTP/1.1" 500 0 "-" "-"
+[2024-12-13 11:07:56 -0500] [49051] [INFO] Worker exiting (pid: 49051)
+[2024-12-13 11:07:57 -0500] [46872] [ERROR] Worker (pid:49051) was sent SIGKILL! Perhaps out of memory?
+[2024-12-13 11:07:57 -0500] [51366] [INFO] Booting worker with pid: 51366
+100.64.1.1 - - [13/Dec/2024:11:08:13 -0500] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:08:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 11:08:50 -0500] [46872] [CRITICAL] WORKER TIMEOUT (pid:51366)
+[2024-12-13 11:08:50 -0500] [51366] [ERROR] Error handling request /login
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/app.py", line 71, in login
+    response = consume_message('login_response_queue')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/services.py", line 49, in consume_message
+    time.sleep(delay)  # Optional delay to allow message processing
+    ^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+100.64.1.1 - - [13/Dec/2024:11:08:50 -0500] "POST /login HTTP/1.1" 500 0 "-" "-"
+[2024-12-13 11:08:50 -0500] [51366] [INFO] Worker exiting (pid: 51366)
+[2024-12-13 11:08:50 -0500] [51377] [INFO] Booting worker with pid: 51377
+100.123.9.34 - - [13/Dec/2024:11:09:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:10:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:11:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:12:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 11:12:37 -0500] [46872] [INFO] Handling signal: term
+[2024-12-13 11:12:37 -0500] [51377] [INFO] Worker exiting (pid: 51377)
+[2024-12-13 11:12:37 -0500] [51333] [INFO] Worker exiting (pid: 51333)
+[2024-12-13 11:12:37 -0500] [51209] [INFO] Worker exiting (pid: 51209)
+[2024-12-13 11:12:37 -0500] [49670] [INFO] Worker exiting (pid: 49670)
+[2024-12-13 11:12:41 -0500] [46872] [INFO] Shutting down: Master
+2024-12-13 11:12:41 - Activating the virtual environment...
+2024-12-13 11:12:41 - Virtual environment activated successfully.
+2024-12-13 11:12:41 - Installing required Python packages...
+2024-12-13 11:12:44 - Gunicorn is already installed.
+2024-12-13 11:12:44 - Stopping any existing processes on port 7012...
+2024-12-13 11:12:44 - VM IP (tailscale): 100.64.1.5
+2024-12-13 11:12:44 - Role set to: primary
+2024-12-13 11:12:44 - Starting Gunicorn on 100.64.1.5:7012 with a 60-second timeout...
+2024-12-13 11:12:44 - Setting up Nginx for frontend failover...
+2024-12-13 11:12:44 - Starting Nginx service...
+2024-12-13 11:12:44 - Nginx started successfully.
+2024-12-13 11:12:44 - Checking Nginx configuration...
+[2024-12-13 11:12:44 -0500] [51551] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 11:12:44 -0500] [51551] [INFO] Listening at: http://100.64.1.5:7012 (51551)
+[2024-12-13 11:12:44 -0500] [51551] [INFO] Using worker: sync
+[2024-12-13 11:12:44 -0500] [51579] [INFO] Booting worker with pid: 51579
+[2024-12-13 11:12:44 -0500] [51585] [INFO] Booting worker with pid: 51585
+2024-12-13 11:12:44 - Reloading Nginx...
+[2024-12-13 11:12:44 -0500] [51588] [INFO] Booting worker with pid: 51588
+[2024-12-13 11:12:44 -0500] [51590] [INFO] Booting worker with pid: 51590
+2024-12-13 11:12:45 - Frontend services started successfully.
+2024-12-13 11:12:45 - Gunicorn PID: 51551
+2024-12-13 11:12:45 - Role: primary
+100.64.1.1 - - [13/Dec/2024:11:12:49 -0500] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.5:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:13:27 -0500] "POST /login HTTP/1.1" 302 207 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:13:27 -0500] "GET /dashboard HTTP/1.1" 200 10567 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:13:27 -0500] "GET /static/dashboard.css HTTP/1.1" 200 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:13:28 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:13:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:13:33 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:13:38 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:13:43 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:13:48 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:13:53 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:13:58 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:03 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:08 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:13 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:18 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:23 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:27 -0500] "GET / HTTP/1.1" 302 207 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:27 -0500] "GET /dashboard HTTP/1.1" 200 10571 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:28 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:28 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:28 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:14:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:14:32 -0500] "GET /logout HTTP/1.1" 302 199 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:32 -0500] "GET /login HTTP/1.1" 200 13096 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:32 -0500] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:33 -0500] "GET /dashboard HTTP/1.1" 302 199 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:33 -0500] "GET /login HTTP/1.1" 200 13091 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:35 -0500] "GET /dashboard HTTP/1.1" 302 199 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:35 -0500] "GET /login HTTP/1.1" 200 13091 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:14:35 -0500] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:20 -0500] "POST /login HTTP/1.1" 302 207 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:20 -0500] "GET /dashboard HTTP/1.1" 200 10567 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:20 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:20 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:23 -0500] "POST /login HTTP/1.1" 302 207 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:24 -0500] "GET /dashboard HTTP/1.1" 200 10571 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:24 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:24 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:25 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:15:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:15:29 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:30 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:35 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:35 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:40 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:40 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:44 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:45 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:15:49 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:16:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:16:34 -0500] "POST /friends HTTP/1.1" 200 10956 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:17:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:18:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:19:03 -0500] "GET /api/pending_requests HTTP/1.1" 200 16 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:19:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:19:53 -0500] "GET /api/friends_list HTTP/1.1" 200 15 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:20:18 -0500] "GET /logout HTTP/1.1" 302 199 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:20:18 -0500] "GET /login HTTP/1.1" 200 13096 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:20:19 -0500] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:20:23 -0500] "GET /dashboard HTTP/1.1" 302 199 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:20:23 -0500] "GET /login HTTP/1.1" 200 13091 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:20:23 -0500] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:20:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:21:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:21:52 -0500] "POST /login HTTP/1.1" 302 207 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:21:52 -0500] "GET /dashboard HTTP/1.1" 200 10567 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:21:52 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:21:52 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:21:57 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:22:02 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:22:07 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:22:12 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:22:17 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:22:22 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:22:27 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:22:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:22:32 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:22:37 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:22:42 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:22:47 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:22:52 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:22:57 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:23:02 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:23:08 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:23:13 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:23:18 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:23:23 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:23:28 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:23:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:23:33 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:23:38 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:23:43 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:23:48 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:23:53 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:23:58 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:24:03 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:24:08 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:24:13 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:24:18 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:24:23 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:24:28 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:24:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:24:34 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:24:39 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:24:44 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:24:49 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:24:54 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:24:59 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:25:05 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:25:10 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:25:15 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:25:20 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:25:25 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:25:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:25:30 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:25:35 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:25:41 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:25:46 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:25:51 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:25:56 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:26:01 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:26:06 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:26:11 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:26:16 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:26:22 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:26:27 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:26:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:26:32 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:26:37 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:26:42 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:26:47 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:26:52 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:26:58 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:27:03 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:27:08 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:27:13 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:27:18 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:27:23 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:27:28 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:27:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:27:33 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:27:38 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:27:43 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:27:48 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:27:53 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:27:58 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:28:03 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:28:08 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:28:13 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:28:18 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:28:23 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:28:28 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:28:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:28:33 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:28:38 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:28:43 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:28:48 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:28:53 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:28:58 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:29:04 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:29:09 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:29:14 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:29:19 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:29:24 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:29:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:29:29 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:29:34 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:29:39 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:29:44 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:29:49 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:29:54 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:29:59 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:30:04 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:30:09 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:30:14 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:30:19 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:30:24 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:30:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:30:29 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:30:34 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:30:39 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:30:44 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:30:49 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:30:54 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:30:59 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:31:04 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:31:09 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:31:14 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:31:19 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:31:24 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:31:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:31:29 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:31:34 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:31:39 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:31:44 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:31:50 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:31:54 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:31:59 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:32:04 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:32:10 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:32:14 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:32:20 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:32:25 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:32:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:32:30 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:32:35 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:32:40 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:32:45 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:32:50 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:32:55 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:33:00 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:33:06 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:33:11 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:33:16 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:33:21 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:33:26 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:33:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:33:32 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:33:37 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:33:42 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:33:47 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:33:52 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:33:57 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:02 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:07 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:13 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:18 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:23 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:28 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:34:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:34:33 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:38 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:43 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:45 -0500] "GET / HTTP/1.1" 302 207 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:45 -0500] "GET /dashboard HTTP/1.1" 200 10571 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:45 -0500] "GET /static/dashboard.css HTTP/1.1" 200 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:45 -0500] "GET /favicon.ico HTTP/1.1" 404 207 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:45 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:48 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:53 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:55 -0500] "GET /logout HTTP/1.1" 302 199 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:55 -0500] "GET /login HTTP/1.1" 200 13096 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:34:56 -0500] "GET /static/register_login.css HTTP/1.1" 200 0 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:35:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:35:38 -0500] "POST /login HTTP/1.1" 302 207 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:35:38 -0500] "GET /dashboard HTTP/1.1" 200 10567 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:35:38 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:35:38 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:35:43 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:35:48 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:35:53 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:35:58 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:36:03 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:36:08 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:36:13 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:36:18 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:36:23 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:36:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:36:28 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:36:34 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:36:39 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:36:44 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:36:49 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:36:54 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:36:59 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:37:04 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:37:09 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:37:14 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:37:19 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:37:24 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:37:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:37:29 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:37:34 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:37:39 -0500] "GET /dashboard HTTP/1.1" 200 10459 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+[2024-12-13 11:37:42 -0500] [51551] [INFO] Handling signal: term
+[2024-12-13 11:37:42 -0500] [51585] [INFO] Worker exiting (pid: 51585)
+[2024-12-13 11:37:42 -0500] [51590] [INFO] Worker exiting (pid: 51590)
+[2024-12-13 11:37:42 -0500] [51579] [INFO] Worker exiting (pid: 51579)
+[2024-12-13 11:37:42 -0500] [51588] [INFO] Worker exiting (pid: 51588)
+[2024-12-13 11:37:42 -0500] [51551] [ERROR] Worker (pid:51590) was sent SIGTERM!
+[2024-12-13 11:37:42 -0500] [51551] [ERROR] Worker (pid:51579) was sent SIGTERM!
+[2024-12-13 11:37:42 -0500] [51551] [ERROR] Worker (pid:51585) was sent SIGTERM!
+[2024-12-13 11:37:42 -0500] [51551] [ERROR] Worker (pid:51588) was sent SIGTERM!
+[2024-12-13 11:37:42 -0500] [51551] [INFO] Shutting down: Master
+2024-12-13 11:40:13 - Activating the virtual environment...
+2024-12-13 11:40:13 - Virtual environment activated successfully.
+2024-12-13 11:40:13 - Installing required Python packages...
+2024-12-13 11:40:14 - Gunicorn is already installed.
+2024-12-13 11:40:14 - Stopping any existing processes on port 7012...
+2024-12-13 11:40:14 - VM IP (tailscale): 100.64.1.5
+2024-12-13 11:40:14 - Role set to: primary
+2024-12-13 11:40:14 - Starting Gunicorn on 100.64.1.5:7012 with a 60-second timeout...
+2024-12-13 11:40:14 - Setting up Nginx for frontend failover...
+2024-12-13 11:40:14 - Starting Nginx service...
+2024-12-13 11:40:14 - Nginx started successfully.
+2024-12-13 11:40:15 - Checking Nginx configuration...
+[2024-12-13 11:40:15 -0500] [51990] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 11:40:15 -0500] [51990] [INFO] Listening at: http://100.64.1.5:7012 (51990)
+[2024-12-13 11:40:15 -0500] [51990] [INFO] Using worker: sync
+[2024-12-13 11:40:15 -0500] [52020] [INFO] Booting worker with pid: 52020
+2024-12-13 11:40:15 - Reloading Nginx...
+[2024-12-13 11:40:15 -0500] [52027] [INFO] Booting worker with pid: 52027
+[2024-12-13 11:40:15 -0500] [52029] [INFO] Booting worker with pid: 52029
+[2024-12-13 11:40:15 -0500] [52031] [INFO] Booting worker with pid: 52031
+2024-12-13 11:40:15 - Frontend services started successfully.
+2024-12-13 11:40:15 - Gunicorn PID: 51990
+2024-12-13 11:40:15 - Role: primary
+100.64.1.1 - - [13/Dec/2024:11:40:16 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:40:20 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:40:23 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:40:23 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:40:24 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:40:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:40:29 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:40:34 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:40:39 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:40:44 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:40:49 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:40:54 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:40:59 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:41:04 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:41:09 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:11:41:11 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:41:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:42:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:43:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:44:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:45:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:46:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:47:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:11:47:38 -0500] "POST /friends HTTP/1.1" 200 10956 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:11:48:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:49:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:50:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:51:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:52:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:53:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:54:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:55:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:56:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:57:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:58:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:11:59:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:12:00:25 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:12:00:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:12:01:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:12:02:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:12:03:22 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:03:22 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:03:22 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:03:25 -0500] "GET /search HTTP/1.1" 200 9395 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:03:26 -0500] "GET /static/search.css HTTP/1.1" 200 0 "http://100.64.1.5:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:03:26 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:03:26 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:03:27 -0500] "GET /static/resetpassword.css HTTP/1.1" 200 0 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:03:27 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:12:03:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:12:03:30 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:04:19 -0500] "POST /friends HTTP/1.1" 200 10956 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:12:04:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:12:05:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:12:06:23 -0500] "POST /friends HTTP/1.1" 200 10956 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.34 - - [13/Dec/2024:12:06:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:12:07:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.34 - - [13/Dec/2024:12:08:29 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.22 - - [13/Dec/2024:12:09:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 12:09:29 -0500] [51990] [CRITICAL] WORKER TIMEOUT (pid:52031)
+[2024-12-13 12:09:29 -0500] [52031] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-12-13 12:09:29 -0500] [52031] [INFO] Worker exiting (pid: 52031)
+[2024-12-13 12:09:29 -0500] [52335] [INFO] Booting worker with pid: 52335
+100.64.1.1 - - [13/Dec/2024:12:10:05 -0500] "GET /logout HTTP/1.1" 302 199 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:10:05 -0500] "GET /login HTTP/1.1" 200 13096 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:10:05 -0500] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.22 - - [13/Dec/2024:12:10:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 12:10:53,942] ERROR in app: Exception on /login [POST]
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/app.py", line 73, in login
+    if response['status'] == 'success':
+       ~~~~~~~~^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+100.64.1.1 - - [13/Dec/2024:12:10:53 -0500] "POST /login HTTP/1.1" 500 265 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.22 - - [13/Dec/2024:12:11:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 12:12:16 -0500] [51990] [INFO] Handling signal: term
+[2024-12-13 12:12:16 -0500] [52020] [INFO] Worker exiting (pid: 52020)
+[2024-12-13 12:12:16 -0500] [52029] [INFO] Worker exiting (pid: 52029)
+[2024-12-13 12:12:16 -0500] [52335] [INFO] Worker exiting (pid: 52335)
+[2024-12-13 12:12:16 -0500] [52027] [INFO] Worker exiting (pid: 52027)
+[2024-12-13 12:12:17 -0500] [51990] [INFO] Shutting down: Master
+2024-12-13 12:12:48 - Activating the virtual environment...
+2024-12-13 12:12:49 - Virtual environment activated successfully.
+2024-12-13 12:12:49 - Installing required Python packages...
+2024-12-13 12:12:50 - Gunicorn is already installed.
+2024-12-13 12:12:50 - Stopping any existing processes on port 7012...
+2024-12-13 12:12:50 - VM IP (tailscale): 100.64.1.5
+2024-12-13 12:12:50 - Role set to: primary
+2024-12-13 12:12:50 - Starting Gunicorn on 100.64.1.5:7012 with a 60-second timeout...
+2024-12-13 12:12:50 - Setting up Nginx for frontend failover...
+2024-12-13 12:12:50 - Starting Nginx service...
+2024-12-13 12:12:50 - Nginx started successfully.
+2024-12-13 12:12:50 - Checking Nginx configuration...
+[2024-12-13 12:12:50 -0500] [52464] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 12:12:50 -0500] [52464] [INFO] Listening at: http://100.64.1.5:7012 (52464)
+[2024-12-13 12:12:50 -0500] [52464] [INFO] Using worker: sync
+[2024-12-13 12:12:50 -0500] [52492] [INFO] Booting worker with pid: 52492
+[2024-12-13 12:12:50 -0500] [52495] [INFO] Booting worker with pid: 52495
+2024-12-13 12:12:50 - Reloading Nginx...
+[2024-12-13 12:12:50 -0500] [52500] [INFO] Booting worker with pid: 52500
+[2024-12-13 12:12:50 -0500] [52503] [INFO] Booting worker with pid: 52503
+2024-12-13 12:12:50 - Frontend services started successfully.
+2024-12-13 12:12:51 - Gunicorn PID: 52464
+2024-12-13 12:12:51 - Role: primary
+100.64.1.1 - - [13/Dec/2024:12:13:09 -0500] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.22 - - [13/Dec/2024:12:13:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:12:14:02 -0500] "POST /login HTTP/1.1" 302 207 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:14:02 -0500] "GET /dashboard HTTP/1.1" 200 10574 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:14:03 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:14:03 -0500] "GET /dashboard HTTP/1.1" 200 10466 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:14:06 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.22 - - [13/Dec/2024:12:14:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.22 - - [13/Dec/2024:12:15:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.64.1.1 - - [13/Dec/2024:12:15:30 -0500] "POST /friends HTTP/1.1" 200 10943 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.123.9.22 - - [13/Dec/2024:12:16:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.22 - - [13/Dec/2024:12:17:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+100.123.9.22 - - [13/Dec/2024:12:18:28 -0500] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.5:7012/resetpassword" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+[2024-12-13 12:19:13 -0500] [52464] [INFO] Handling signal: term
+[2024-12-13 12:19:13 -0500] [52492] [INFO] Worker exiting (pid: 52492)
+[2024-12-13 12:19:13 -0500] [52495] [INFO] Worker exiting (pid: 52495)
+[2024-12-13 12:19:13 -0500] [52500] [INFO] Worker exiting (pid: 52500)
+[2024-12-13 12:19:13 -0500] [52503] [INFO] Worker exiting (pid: 52503)
+[2024-12-13 12:19:13 -0500] [52464] [INFO] Shutting down: Master
+2024-12-13 12:19:58 - Activating the virtual environment...
+2024-12-13 12:19:58 - Virtual environment activated successfully.
+2024-12-13 12:19:58 - Installing required Python packages...
+2024-12-13 12:19:59 - Gunicorn is already installed.
+2024-12-13 12:19:59 - Stopping any existing processes on port 7012...
+2024-12-13 12:19:59 - VM IP (tailscale): 100.64.1.5
+2024-12-13 12:19:59 - Role set to: primary
+2024-12-13 12:19:59 - Starting Gunicorn on 100.64.1.5:7012 with a 60-second timeout...
+2024-12-13 12:19:59 - Setting up Nginx for frontend failover...
+2024-12-13 12:19:59 - Starting Nginx service...
+2024-12-13 12:19:59 - Nginx started successfully.
+[2024-12-13 12:19:59 -0500] [52684] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 12:19:59 -0500] [52684] [INFO] Listening at: http://100.64.1.5:7012 (52684)
+[2024-12-13 12:19:59 -0500] [52684] [INFO] Using worker: sync
+[2024-12-13 12:19:59 -0500] [52711] [INFO] Booting worker with pid: 52711
+2024-12-13 12:19:59 - Checking Nginx configuration...
+2024-12-13 12:19:59 - Reloading Nginx...
+[2024-12-13 12:19:59 -0500] [52718] [INFO] Booting worker with pid: 52718
+[2024-12-13 12:19:59 -0500] [52722] [INFO] Booting worker with pid: 52722
+[2024-12-13 12:20:00 -0500] [52728] [INFO] Booting worker with pid: 52728
+2024-12-13 12:20:00 - Frontend services started successfully.
+2024-12-13 12:20:00 - Gunicorn PID: 52684
+2024-12-13 12:20:00 - Role: primary
+100.64.1.1 - - [13/Dec/2024:12:22:28 -0500] "GET /logout HTTP/1.1" 302 199 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:22:28 -0500] "GET /login HTTP/1.1" 200 13096 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:22:28 -0500] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+[2024-12-13 12:23:14,593] ERROR in app: Exception on /login [POST]
+Traceback (most recent call last):
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/awh9/Capstone-Group-03/frontend/app.py", line 73, in login
+    if response['status'] == 'success':
+       ~~~~~~~~^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+100.64.1.1 - - [13/Dec/2024:12:23:14 -0500] "POST /login HTTP/1.1" 500 265 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:28:22 -0500] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:29:03 -0500] "POST /login HTTP/1.1" 302 207 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:29:04 -0500] "GET /dashboard HTTP/1.1" 200 10572 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:29:04 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:29:05 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:29:10 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:29:15 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:29:17 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:29:55 -0500] "GET /api/pending_requests HTTP/1.1" 200 16 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:32:00 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:33:26 -0500] "GET /api/pending_requests HTTP/1.1" 200 16 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:35:05 -0500] "GET /api/pending_requests HTTP/1.1" 200 16 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:40:20 -0500] "GET /api/pending_requests HTTP/1.1" 200 16 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:41:58 -0500] "GET /api/friends_list HTTP/1.1" 200 15 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:43:13 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:43:13 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:43:13 -0500] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:43:15 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:44:00 -0500] "POST /friends HTTP/1.1" 200 10943 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:45:02 -0500] "GET /api/pending_requests HTTP/1.1" 200 16 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:45:14 -0500] "GET /logout HTTP/1.1" 302 199 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:45:14 -0500] "GET /login HTTP/1.1" 200 13096 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:45:15 -0500] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:46:01 -0500] "POST /login HTTP/1.1" 302 207 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:46:01 -0500] "GET /dashboard HTTP/1.1" 200 10574 "http://100.64.1.5:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:46:01 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:46:02 -0500] "GET /dashboard HTTP/1.1" 200 10466 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:46:06 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:46:46 -0500] "GET /api/pending_requests HTTP/1.1" 200 41 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:49:43 -0500] "POST /handle_friend_request HTTP/1.1" 302 203 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:49:43 -0500] "GET /friends HTTP/1.1" 200 10968 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:51:09 -0500] "GET /api/friends_list HTTP/1.1" 200 15 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:58:14 -0500] "GET /dashboard HTTP/1.1" 200 10466 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:58:15 -0500] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:58:15 -0500] "GET /dashboard HTTP/1.1" 200 10466 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:58:17 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:12:58:59 -0500] "GET /api/pending_requests HTTP/1.1" 200 41 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+[2024-12-13 13:03:09 -0500] [52711] [INFO] Worker exiting (pid: 52711)
+[2024-12-13 13:03:09 -0500] [52718] [INFO] Worker exiting (pid: 52718)
+[2024-12-13 13:03:09 -0500] [52722] [INFO] Worker exiting (pid: 52722)
+[2024-12-13 13:03:09 -0500] [52728] [INFO] Worker exiting (pid: 52728)
+[2024-12-13 13:03:09 -0500] [52684] [INFO] Handling signal: term
+[2024-12-13 13:03:09 -0500] [52684] [ERROR] Worker (pid:52711) was sent SIGTERM!
+[2024-12-13 13:03:09 -0500] [52684] [ERROR] Worker (pid:52718) was sent SIGTERM!
+[2024-12-13 13:03:09 -0500] [52684] [ERROR] Worker (pid:52722) was sent SIGTERM!
+[2024-12-13 13:03:10 -0500] [52684] [INFO] Shutting down: Master
+2024-12-13 13:03:18 - Activating the virtual environment...
+2024-12-13 13:03:18 - Virtual environment activated successfully.
+2024-12-13 13:03:18 - Installing required Python packages...
+2024-12-13 13:03:19 - Gunicorn is already installed.
+2024-12-13 13:03:19 - Stopping any existing processes on port 7012...
+2024-12-13 13:03:19 - VM IP (tailscale): 100.64.1.5
+2024-12-13 13:03:19 - Role set to: primary
+2024-12-13 13:03:19 - Starting Gunicorn on 100.64.1.5:7012 with a 60-second timeout...
+2024-12-13 13:03:19 - Setting up Nginx for frontend failover...
+2024-12-13 13:03:19 - Starting Nginx service...
+2024-12-13 13:03:20 - Nginx started successfully.
+2024-12-13 13:03:20 - Checking Nginx configuration...
+[2024-12-13 13:03:20 -0500] [53274] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 13:03:20 -0500] [53274] [INFO] Listening at: http://100.64.1.5:7012 (53274)
+[2024-12-13 13:03:20 -0500] [53274] [INFO] Using worker: sync
+[2024-12-13 13:03:20 -0500] [53307] [INFO] Booting worker with pid: 53307
+2024-12-13 13:03:20 - Reloading Nginx...
+[2024-12-13 13:03:20 -0500] [53312] [INFO] Booting worker with pid: 53312
+[2024-12-13 13:03:20 -0500] [53316] [INFO] Booting worker with pid: 53316
+[2024-12-13 13:03:20 -0500] [53317] [INFO] Booting worker with pid: 53317
+2024-12-13 13:03:20 - Frontend services started successfully.
+2024-12-13 13:03:20 - Gunicorn PID: 53274
+2024-12-13 13:03:20 - Role: primary
+100.64.1.1 - - [13/Dec/2024:13:03:31 -0500] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:13:04:18 -0500] "GET /api/pending_requests HTTP/1.1" 200 41 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:13:05:43 -0500] "POST /handle_friend_request HTTP/1.1" 302 203 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:13:05:43 -0500] "GET /friends HTTP/1.1" 200 10968 "http://100.64.1.5:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+[2024-12-13 13:07:14 -0500] [53274] [INFO] Handling signal: term
+[2024-12-13 13:07:14 -0500] [53312] [INFO] Worker exiting (pid: 53312)
+[2024-12-13 13:07:14 -0500] [53307] [INFO] Worker exiting (pid: 53307)
+[2024-12-13 13:07:14 -0500] [53316] [INFO] Worker exiting (pid: 53316)
+[2024-12-13 13:07:14 -0500] [53317] [INFO] Worker exiting (pid: 53317)
+[2024-12-13 13:07:15 -0500] [53274] [INFO] Shutting down: Master
