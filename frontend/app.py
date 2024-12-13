@@ -291,44 +291,6 @@ def profile():
     return render_template('profile.html')
 
 
-# @app.route('/tracker', methods=['GET', 'POST'])
-# def track_jobs():
-#     # if request.method == 'POST':
-#     #     # Extract form data
-#     #     job_name = request.form.get('job_name')
-#     #     date_applied = request.form.get('date_applied')
-#     #     response_received = request.form.get('response_received')
-#     #     response_method = request.form.get('response_method', '').strip()
-#     #     interview_scheduled = request.form.get('interview_scheduled')
-#     #     number_of_interviews = request.form.get('number_of_interviews', '').strip()
-#     #     offer_received = request.form.get('offer_received')
-#     #     date_received = request.form.get('date_received', '').strip()
-
-#     #     # Validate required fields
-#     #     if not job_name or not date_applied or not response_received or not interview_scheduled or not offer_received:
-#     #         flash("Please fill out all required fields.", "error")
-#     #         return redirect('/tracker')
-
-#     #     # Add application to the in-memory list
-#     #     applications.append({
-#     #         "job_name": job_name,
-#     #         "date_applied": date_applied,
-#     #         "response_received": response_received,
-#     #         "response_method": response_method if response_received == 'Yes' else '-',
-#     #         "interview_scheduled": interview_scheduled,
-#     #         "number_of_interviews": int(number_of_interviews) if number_of_interviews.isdigit() else '-',
-#     #         "offer_received": offer_received,
-#     #         "date_received": date_received if offer_received == 'Yes' else '-'
-#     #     })
-
-#     #     flash("Job application added successfully!", "success")
-#     #     return redirect('/tracker')
-
-#     # # Render the tracker page
-#     # return render_template('tracker.html', user={"username": "JohnDoe"}, applications=applications)
-#     return render_template('tracker.html')
-
-
 @app.route('/logout')
 def logout(): #If not logged in - redirect to Login Page
     if not is_logged_in():
