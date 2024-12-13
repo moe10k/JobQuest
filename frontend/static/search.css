@@ -49,6 +49,28 @@ body {
     color: #444;
 }
 
+/* Coming Soon Section */
+.coming-soon {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 50px 20px;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+}
+
+.coming-soon h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.coming-soon p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
 /* Form Styles */
 form {
     margin-bottom: 25px;
