@@ -265,7 +265,7 @@ def handle_friend_request():
 
     user_id = session.get('user', {}).get('user_id')  # Current user's ID
     user_email = session.get('user', {}).get('email')  # Current user's email
-    friend_email = request.json.get('email')  # The corresponding email
+    friend_email = request.form.get('email')  # The corresponding email
     action = request.json.get('action')  # Either 'accept' or 'reject'
 
     # Handle the action
