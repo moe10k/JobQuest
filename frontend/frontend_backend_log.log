@@ -1528,3 +1528,213 @@ TypeError: 'NoneType' object is not subscriptable
 [2024-12-13 13:07:14 -0500] [53316] [INFO] Worker exiting (pid: 53316)
 [2024-12-13 13:07:14 -0500] [53317] [INFO] Worker exiting (pid: 53317)
 [2024-12-13 13:07:15 -0500] [53274] [INFO] Shutting down: Master
+2024-12-13 14:34:49 - Activating the virtual environment...
+2024-12-13 14:34:49 - Virtual environment activated successfully.
+2024-12-13 14:34:50 - Installing required Python packages...
+2024-12-13 14:34:51 - Gunicorn is already installed.
+2024-12-13 14:34:51 - Stopping any existing processes on port 7012...
+2024-12-13 14:34:52 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:34:52 - Role set to: backup
+2024-12-13 14:34:52 - Starting Gunicorn on 100.64.1.4:7012 with a 60-second timeout...
+2024-12-13 14:34:52 - Setting up Nginx for frontend failover...
+2024-12-13 14:34:52 - Starting Nginx service...
+2024-12-13 14:34:52 - Nginx started successfully.
+2024-12-13 14:34:52 - Checking Nginx configuration...
+2024-12-13 14:34:52 - Reloading Nginx...
+2024-12-13 14:34:52 - Frontend services started successfully.
+2024-12-13 14:34:52 - Gunicorn PID: 11125
+2024-12-13 14:34:52 - Role: backup
+[2024-12-13 19:34:53 +0000] [11125] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 19:34:53 +0000] [11125] [INFO] Listening at: http://100.64.1.4:7012 (11125)
+[2024-12-13 19:34:53 +0000] [11125] [INFO] Using worker: sync
+[2024-12-13 19:34:53 +0000] [11177] [INFO] Booting worker with pid: 11177
+[2024-12-13 19:34:53 +0000] [11178] [INFO] Booting worker with pid: 11178
+[2024-12-13 19:34:53 +0000] [11179] [INFO] Booting worker with pid: 11179
+[2024-12-13 19:34:53 +0000] [11180] [INFO] Booting worker with pid: 11180
+2024-12-13 14:36:39 - Activating the virtual environment...
+2024-12-13 14:36:39 - Virtual environment activated successfully.
+2024-12-13 14:36:39 - Installing required Python packages...
+2024-12-13 14:36:40 - Gunicorn is already installed.
+2024-12-13 14:36:40 - Stopping any existing processes on port 7012...
+2024-12-13 14:36:40 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:36:40 - Role set to: backup
+2024-12-13 14:36:40 - Starting Gunicorn on 100.64.1.4:7012 with a 60-second timeout...
+2024-12-13 14:36:41 - Setting up Nginx for frontend failover...
+2024-12-13 14:36:41 - Starting Nginx service...
+2024-12-13 14:36:41 - Nginx started successfully.
+2024-12-13 14:36:41 - Checking Nginx configuration...
+2024-12-13 14:36:41 - Reloading Nginx...
+[2024-12-13 19:36:41 +0000] [11554] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 19:36:41 +0000] [11554] [INFO] Listening at: http://100.64.1.4:7012 (11554)
+[2024-12-13 19:36:41 +0000] [11554] [INFO] Using worker: sync
+[2024-12-13 19:36:41 +0000] [11593] [INFO] Booting worker with pid: 11593
+[2024-12-13 19:36:41 +0000] [11597] [INFO] Booting worker with pid: 11597
+2024-12-13 14:36:41 - Frontend services started successfully.
+[2024-12-13 19:36:41 +0000] [11600] [INFO] Booting worker with pid: 11600
+[2024-12-13 19:36:41 +0000] [11605] [INFO] Booting worker with pid: 11605
+2024-12-13 14:36:41 - Gunicorn PID: 11554
+2024-12-13 14:36:41 - Role: backup
+100.64.1.1 - - [13/Dec/2024:19:37:34 +0000] "GET /dashboard HTTP/1.1" 302 199 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:37:34 +0000] "GET /login HTTP/1.1" 200 13091 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:37:34 +0000] "GET /static/register_login.css HTTP/1.1" 200 0 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:37:35 +0000] "GET /favicon.ico HTTP/1.1" 404 207 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:37:52 +0000] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:37:53 +0000] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:37:54 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:37:54 +0000] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:38:12 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:38:12 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:38:13 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:38:13 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:38:13 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:38:13 +0000] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:38:21 +0000] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:38:21 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:38:21 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:38:21 +0000] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:39:03 +0000] "POST /login HTTP/1.1" 302 207 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:39:03 +0000] "GET /dashboard HTTP/1.1" 200 10574 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:39:04 +0000] "GET /static/dashboard.css HTTP/1.1" 200 0 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:39:09 +0000] "GET /friends HTTP/1.1" 200 10819 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:39:09 +0000] "GET /dashboard HTTP/1.1" 200 10466 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:39:57 +0000] "GET /api/pending_requests HTTP/1.1" 200 41 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:41:11 +0000] "POST /handle_friend_request HTTP/1.1" 302 203 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:41:11 +0000] "GET /friends HTTP/1.1" 200 10968 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+2024-12-13 14:48:27 - Activating the virtual environment...
+2024-12-13 14:48:27 - Virtual environment activated successfully.
+2024-12-13 14:48:27 - Installing required Python packages...
+2024-12-13 14:48:28 - Gunicorn is already installed.
+2024-12-13 14:48:28 - Stopping any existing processes on port 7012...
+2024-12-13 14:48:28 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:48:28 - Role set to: backup
+2024-12-13 14:48:28 - Starting Gunicorn on 100.64.1.4:7012 with a 60-second timeout...
+2024-12-13 14:48:28 - Setting up Nginx for frontend failover...
+2024-12-13 14:48:28 - Starting Nginx service...
+2024-12-13 14:48:28 - Nginx started successfully.
+2024-12-13 14:48:28 - Checking Nginx configuration...
+2024-12-13 14:48:28 - Reloading Nginx...
+[2024-12-13 19:48:28 +0000] [12609] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 19:48:28 +0000] [12609] [INFO] Listening at: http://100.64.1.4:7012 (12609)
+[2024-12-13 19:48:28 +0000] [12609] [INFO] Using worker: sync
+[2024-12-13 19:48:28 +0000] [12644] [INFO] Booting worker with pid: 12644
+[2024-12-13 19:48:29 +0000] [12650] [INFO] Booting worker with pid: 12650
+2024-12-13 14:48:29 - Frontend services started successfully.
+2024-12-13 14:48:29 - Gunicorn PID: 12609
+2024-12-13 14:48:29 - Role: backup
+[2024-12-13 19:48:29 +0000] [12663] [INFO] Booting worker with pid: 12663
+[2024-12-13 19:48:29 +0000] [12664] [INFO] Booting worker with pid: 12664
+100.64.1.1 - - [13/Dec/2024:19:48:38 +0000] "GET /friends HTTP/1.1" 200 10812 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:48:49 +0000] "GET /dashboard HTTP/1.1" 200 10466 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:48:49 +0000] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:48:52 +0000] "GET /friends HTTP/1.1" 200 10812 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:48:52 +0000] "GET /dashboard HTTP/1.1" 200 10466 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:49:27 +0000] "GET /api/pending_requests HTTP/1.1" 200 41 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:50:24 +0000] "POST /handle_friend_request HTTP/1.1" 302 203 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:50:25 +0000] "GET /friends HTTP/1.1" 200 10961 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+2024-12-13 14:53:21 - Activating the virtual environment...
+2024-12-13 14:53:21 - Virtual environment activated successfully.
+2024-12-13 14:53:21 - Installing required Python packages...
+2024-12-13 14:53:21 - Gunicorn is already installed.
+2024-12-13 14:53:21 - Stopping any existing processes on port 7012...
+2024-12-13 14:53:22 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:53:22 - Role set to: backup
+2024-12-13 14:53:22 - Starting Gunicorn on 100.64.1.4:7012 with a 60-second timeout...
+2024-12-13 14:53:22 - Setting up Nginx for frontend failover...
+2024-12-13 14:53:22 - Starting Nginx service...
+2024-12-13 14:53:22 - Nginx started successfully.
+2024-12-13 14:53:22 - Checking Nginx configuration...
+2024-12-13 14:53:22 - Reloading Nginx...
+[2024-12-13 19:53:22 +0000] [12935] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 19:53:22 +0000] [12935] [INFO] Listening at: http://100.64.1.4:7012 (12935)
+[2024-12-13 19:53:22 +0000] [12935] [INFO] Using worker: sync
+[2024-12-13 19:53:22 +0000] [12975] [INFO] Booting worker with pid: 12975
+2024-12-13 14:53:22 - Frontend services started successfully.
+2024-12-13 14:53:22 - Gunicorn PID: 12935
+[2024-12-13 19:53:22 +0000] [12984] [INFO] Booting worker with pid: 12984
+2024-12-13 14:53:22 - Role: backup
+[2024-12-13 19:53:22 +0000] [12988] [INFO] Booting worker with pid: 12988
+[2024-12-13 19:53:22 +0000] [12989] [INFO] Booting worker with pid: 12989
+100.64.1.1 - - [13/Dec/2024:19:53:36 +0000] "GET /dashboard HTTP/1.1" 200 10466 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:53:36 +0000] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:53:38 +0000] "GET /friends HTTP/1.1" 200 10812 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:53:38 +0000] "GET /dashboard HTTP/1.1" 200 10466 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:54:13 +0000] "GET /api/pending_requests HTTP/1.1" 200 41 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:55:02 +0000] "POST /handle_friend_request HTTP/1.1" 302 203 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:55:02 +0000] "GET /friends HTTP/1.1" 200 10959 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:55:59 +0000] "GET /api/friends_list HTTP/1.1" 200 30 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.4 - - [13/Dec/2024:19:56:29 +0000] "GET / HTTP/1.1" 200 7773 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:56:29 +0000] "GET /static/landing.css HTTP/1.1" 200 0 "http://100.64.1.4:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:56:29 +0000] "GET /static/images/Job.png HTTP/1.1" 200 0 "http://100.64.1.4:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:56:37 +0000] "GET /landing HTTP/1.1" 404 207 "http://100.64.1.4:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:56:37 +0000] "GET /landing HTTP/1.1" 404 207 "http://100.64.1.4:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:56:44 +0000] "GET / HTTP/1.1" 200 7773 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:56:44 +0000] "GET /landing HTTP/1.1" 404 207 "http://100.64.1.4:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:56:45 +0000] "GET /static/landing.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:56:45 +0000] "GET /static/images/Job.png HTTP/1.1" 304 0 "http://100.64.1.4:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:56:47 +0000] "GET /landing HTTP/1.1" 404 207 "http://100.64.1.4:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:56:47 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:56:47 +0000] "GET /static/register_login.css HTTP/1.1" 200 0 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:57:17 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:57:17 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:57:17 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:57:17 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:57:17 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:57:17 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.1 - - [13/Dec/2024:19:57:38 +0000] "GET /logout HTTP/1.1" 302 199 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:57:39 +0000] "GET /login HTTP/1.1" 200 13096 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:57:39 +0000] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.4 - - [13/Dec/2024:19:57:47 +0000] "POST /register HTTP/1.1" 200 12574 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:57:47 +0000] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.1 - - [13/Dec/2024:19:58:23 +0000] "POST /login HTTP/1.1" 302 207 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:58:23 +0000] "GET /dashboard HTTP/1.1" 200 10572 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:58:23 +0000] "GET /static/dashboard.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /login HTTP/1.1" 200 12980 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:22 +0000] "GET /register HTTP/1.1" 200 12464 "http://100.64.1.4:7012/register" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:19:59:23 +0000] "GET /static/register_login.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.1 - - [13/Dec/2024:19:59:31 +0000] "GET /friends HTTP/1.1" 200 10812 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:31 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:31 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:31 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:31 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:31 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:31 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:31 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:32 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:32 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:32 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:32 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:32 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:32 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:19:59:32 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.4 - - [13/Dec/2024:20:00:03 +0000] "POST /login HTTP/1.1" 302 207 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:20:00:03 +0000] "GET /dashboard HTTP/1.1" 200 10575 "http://100.64.1.4:7012/login" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:20:00:03 +0000] "GET /static/dashboard.css HTTP/1.1" 200 0 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.1 - - [13/Dec/2024:20:00:03 +0000] "GET /api/friends_list HTTP/1.1" 200 32 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.4 - - [13/Dec/2024:20:00:20 +0000] "GET /friends HTTP/1.1" 200 10812 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:20:00:20 +0000] "GET /dashboard HTTP/1.1" 200 10467 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:20:00:20 +0000] "GET /dashboard HTTP/1.1" 200 10467 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:20:00:20 +0000] "GET /dashboard HTTP/1.1" 200 10467 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.1 - - [13/Dec/2024:20:01:25 +0000] "POST /friends HTTP/1.1" 200 10936 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.4 - - [13/Dec/2024:20:02:08 +0000] "GET /api/pending_requests HTTP/1.1" 200 41 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:20:02:51 +0000] "POST /handle_friend_request HTTP/1.1" 302 203 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:20:02:51 +0000] "GET /friends HTTP/1.1" 200 10959 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.4 - - [13/Dec/2024:20:03:31 +0000] "GET /api/friends_list HTTP/1.1" 200 30 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
+100.64.1.1 - - [13/Dec/2024:20:03:54 +0000] "GET /api/friends_list HTTP/1.1" 200 52 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"

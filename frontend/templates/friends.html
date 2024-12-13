@@ -88,7 +88,7 @@
                                 acceptButton.textContent = 'Accept';
                                 acceptButton.addEventListener('click', () => {
                                     console.log('Accept button clicked');
-                                    handleFriendRequest(request.id, 'accepted');
+                                    handleFriendRequest(request.email, 'accepted');
                                 });
                                 li.appendChild(acceptButton);
     
@@ -97,7 +97,7 @@
                                 rejectButton.textContent = 'Reject';
                                 rejectButton.addEventListener('click', () => {
                                     console.log('Reject button clicked');
-                                    handleFriendRequest(request.id, 'rejected');
+                                    handleFriendRequest(request.email, 'rejected');
                                 });
                                 li.appendChild(rejectButton);
     
@@ -116,13 +116,13 @@
             }
         });
     
-        function handleFriendRequest(requestId, action) {
+        function handleFriendRequest(email, action) {
             fetch('/handle_friend_request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ request_id: requestId, action }),
+                body: JSON.stringify({ email: email, action }),
             })
                 .then(response => {
                     if (response.ok) {
