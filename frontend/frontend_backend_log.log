@@ -1738,3 +1738,225 @@ TypeError: 'NoneType' object is not subscriptable
 100.64.1.4 - - [13/Dec/2024:20:02:51 +0000] "GET /friends HTTP/1.1" 200 10959 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
 100.64.1.4 - - [13/Dec/2024:20:03:31 +0000] "GET /api/friends_list HTTP/1.1" 200 30 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0"
 100.64.1.1 - - [13/Dec/2024:20:03:54 +0000] "GET /api/friends_list HTTP/1.1" 200 52 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+2024-12-13 16:39:00 - Activating the virtual environment...
+2024-12-13 16:39:00 - Virtual environment activated successfully.
+2024-12-13 16:39:00 - Installing required Python packages...
+2024-12-13 16:39:01 - Gunicorn is already installed.
+2024-12-13 16:39:01 - Stopping any existing processes on port 7012...
+2024-12-13 16:39:01 - VM IP (tailscale): 100.64.1.4
+2024-12-13 16:39:01 - Role set to: backup
+2024-12-13 16:39:01 - Starting Gunicorn on 100.64.1.4:7012 with a 60-second timeout...
+2024-12-13 16:39:01 - Setting up Nginx for frontend failover...
+2024-12-13 16:39:01 - Starting Nginx service...
+2024-12-13 16:39:01 - Nginx started successfully.
+2024-12-13 16:39:01 - Checking Nginx configuration...
+2024-12-13 16:39:01 - Reloading Nginx...
+[2024-12-13 21:39:01 +0000] [15511] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 21:39:01 +0000] [15511] [INFO] Listening at: http://100.64.1.4:7012 (15511)
+[2024-12-13 21:39:01 +0000] [15511] [INFO] Using worker: sync
+[2024-12-13 21:39:01 +0000] [15587] [INFO] Booting worker with pid: 15587
+2024-12-13 16:39:01 - Frontend services started successfully.
+2024-12-13 16:39:01 - Gunicorn PID: 15511
+2024-12-13 16:39:01 - Role: backup
+[2024-12-13 21:39:01 +0000] [15604] [INFO] Booting worker with pid: 15604
+[2024-12-13 21:39:01 +0000] [15605] [INFO] Booting worker with pid: 15605
+[2024-12-13 21:39:01 +0000] [15606] [INFO] Booting worker with pid: 15606
+100.64.1.1 - - [13/Dec/2024:21:39:07 +0000] "GET /friends HTTP/1.1" 200 11519 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:39:07 +0000] "GET /favicon.ico HTTP/1.1" 404 207 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:39:09 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:39:10 +0000] "GET /static/dashboard.css HTTP/1.1" 200 0 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:39:19 +0000] "GET /friends HTTP/1.1" 200 11519 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:39:19 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:39:19 +0000] "GET /dashboard HTTP/1.1" 200 10464 "http://100.64.1.4:7012/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:39:53 +0000] "GET /api/pending_requests HTTP/1.1" 200 16 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:40:24 +0000] "GET /api/pending_requests HTTP/1.1" 200 16 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:40:27 +0000] "POST /friends HTTP/1.1" 200 11656 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:41:00 +0000] "GET /api/friends_list HTTP/1.1" 200 52 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:41:03 +0000] "GET /api/pending_requests HTTP/1.1" 200 16 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+2024-12-13 16:44:17 - Activating the virtual environment...
+2024-12-13 16:44:18 - Virtual environment activated successfully.
+2024-12-13 16:44:18 - Installing required Python packages...
+2024-12-13 16:44:18 - Gunicorn is already installed.
+2024-12-13 16:44:18 - Stopping any existing processes on port 7012...
+2024-12-13 16:44:18 - VM IP (tailscale): 100.64.1.4
+2024-12-13 16:44:18 - Role set to: backup
+2024-12-13 16:44:18 - Starting Gunicorn on 100.64.1.4:7012 with a 60-second timeout...
+2024-12-13 16:44:18 - Setting up Nginx for frontend failover...
+2024-12-13 16:44:18 - Starting Nginx service...
+2024-12-13 16:44:18 - Nginx started successfully.
+2024-12-13 16:44:18 - Checking Nginx configuration...
+2024-12-13 16:44:18 - Reloading Nginx...
+[2024-12-13 21:44:18 +0000] [15803] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 21:44:18 +0000] [15803] [INFO] Listening at: http://100.64.1.4:7012 (15803)
+[2024-12-13 21:44:18 +0000] [15803] [INFO] Using worker: sync
+[2024-12-13 21:44:18 +0000] [15840] [INFO] Booting worker with pid: 15840
+2024-12-13 16:44:18 - Frontend services started successfully.
+2024-12-13 16:44:19 - Gunicorn PID: 15803
+2024-12-13 16:44:19 - Role: backup
+[2024-12-13 21:44:19 +0000] [15856] [INFO] Booting worker with pid: 15856
+[2024-12-13 21:44:19 +0000] [15857] [INFO] Booting worker with pid: 15857
+[2024-12-13 21:44:19 +0000] [15858] [INFO] Booting worker with pid: 15858
+100.64.1.1 - - [13/Dec/2024:21:44:24 +0000] "GET /friends HTTP/1.1" 200 11523 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:44:58 +0000] "GET /api/pending_requests HTTP/1.1" 200 16 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:44:59 +0000] "GET /api/friends_list HTTP/1.1" 200 52 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+2024-12-13 16:48:28 - Activating the virtual environment...
+2024-12-13 16:48:28 - Virtual environment activated successfully.
+2024-12-13 16:48:28 - Installing required Python packages...
+2024-12-13 16:48:29 - Gunicorn is already installed.
+2024-12-13 16:48:29 - Stopping any existing processes on port 7012...
+2024-12-13 16:48:29 - VM IP (tailscale): 100.64.1.4
+2024-12-13 16:48:29 - Role set to: backup
+2024-12-13 16:48:29 - Starting Gunicorn on 100.64.1.4:7012 with a 60-second timeout...
+2024-12-13 16:48:29 - Setting up Nginx for frontend failover...
+2024-12-13 16:48:29 - Starting Nginx service...
+2024-12-13 16:48:29 - Nginx started successfully.
+2024-12-13 16:48:29 - Checking Nginx configuration...
+[2024-12-13 21:48:29 +0000] [16024] [INFO] Starting gunicorn 23.0.0
+[2024-12-13 21:48:29 +0000] [16024] [INFO] Listening at: http://100.64.1.4:7012 (16024)
+[2024-12-13 21:48:29 +0000] [16024] [INFO] Using worker: sync
+2024-12-13 16:48:29 - Reloading Nginx...
+[2024-12-13 21:48:29 +0000] [16059] [INFO] Booting worker with pid: 16059
+2024-12-13 16:48:29 - Frontend services started successfully.
+2024-12-13 16:48:29 - Gunicorn PID: 16024
+2024-12-13 16:48:29 - Role: backup
+[2024-12-13 21:48:29 +0000] [16076] [INFO] Booting worker with pid: 16076
+[2024-12-13 21:48:29 +0000] [16077] [INFO] Booting worker with pid: 16077
+[2024-12-13 21:48:29 +0000] [16078] [INFO] Booting worker with pid: 16078
+100.64.1.1 - - [13/Dec/2024:21:48:33 +0000] "GET /friends HTTP/1.1" 200 11514 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:48:34 +0000] "GET /static/friends.css HTTP/1.1" 200 0 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:48:40 +0000] "GET /search HTTP/1.1" 200 9395 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:48:40 +0000] "GET /static/search.css HTTP/1.1" 200 0 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:48:42 +0000] "GET /friends HTTP/1.1" 200 11514 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:48:42 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:48:42 +0000] "GET /static/friends.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:48:48 +0000] "GET /search HTTP/1.1" 200 9395 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:48:48 +0000] "GET /static/search.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:51:55 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:52:00 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:52:05 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:52:10 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:52:15 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:53:21 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:53:24 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:53:30 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:53:35 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:53:40 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:53:45 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:54:51 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:54:55 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:55:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:55:06 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:55:11 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:55:16 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:56:22 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:56:26 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:56:31 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:56:37 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:56:42 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:56:46 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:57:52 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:57:57 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:00 +0000] "GET /friends HTTP/1.1" 200 11514 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:01 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:02 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /static/friends.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:21:58:03 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:00:12 +0000] "GET /friends HTTP/1.1" 200 11514 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:00:12 +0000] "GET /static/friends.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:00:32 +0000] "GET /search HTTP/1.1" 200 9395 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:00:32 +0000] "GET /static/search.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /friends HTTP/1.1" 200 11514 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /resetpassword HTTP/1.1" 200 10474 "http://100.64.1.4:7012/search" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+100.64.1.1 - - [13/Dec/2024:22:01:20 +0000] "GET /static/friends.css HTTP/1.1" 304 0 "http://100.64.1.4:7012/friends" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="/static/friends.css"> -->
+    <link rel="stylesheet" href="/static/friends.css">
     <title>Friends</title>
 </head>
 <body>
@@ -43,7 +43,16 @@
     </div>
 
     <script>
+	function disableButton(buttonId, timeout = 30000) {
+            const button = document.getElementById(buttonId);
+    	    button.disabled = true; // Disable the button
+       	    setTimeout(() => {
+       	        button.disabled = false; // Re-enable the button after timeout
+       	    }, timeout);
+	}	
+
         document.getElementById('friends-list-toggle').addEventListener('click', () => {
+	disableButton('friends-list-toggle'); // Disable the button for 30 seconds
         const friendsList = document.getElementById('friends-list');
         if (friendsList.style.display === 'none') {
             fetch('/api/friends_list')
@@ -68,7 +77,9 @@
             friendsList.style.display = 'none';
         }
     });
+
         document.getElementById('pending-requests-toggle').addEventListener('click', () => {
+            disableButton('pending-requests-toggle'); // Disable the button for 30 seconds
             const pendingRequests = document.getElementById('pending-requests');
             if (pendingRequests.style.display === 'none') {
                 fetch('/api/pending_requests')
@@ -114,6 +125,10 @@
             } else {
                 pendingRequests.style.display = 'none';
             }
+        });
+
+        document.querySelector('form[action="/friends"]').addEventListener('submit', (event) => {
+            disableButton(event.target.querySelector('button').id = 'send-request'); // Disable the button for 30 seconds
         });
     
         function handleFriendRequest(email, action) {
