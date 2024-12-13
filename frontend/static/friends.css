@@ -1,0 +1,166 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Body Styles */
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+/* Navbar (Assumed from partials) */
+.navbar {
+    background-color: #1c1c28;
+    color: #fff;
+    padding: 15px 30px;
+    border-bottom: 2px solid #6f42c1;
+}
+
+/* Flash Messages (Assumed from partials) */
+.flash {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+/* Form Styles */
+form {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+form input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    transition: border-color 0.3s;
+}
+
+form input:focus {
+    border-color: #6f42c1;
+}
+
+form button {
+    background-color: #6f42c1;
+    color: #fff;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #583599;
+}
+
+/* Friend List and Pending Requests Dropdowns */
+button {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+ul {
+    list-style-type: none;
+    margin-top: 10px;
+    padding-left: 0;
+}
+
+ul li {
+    padding: 8px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+ul li:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #eaeaea;
+}
+
+body.dark-mode h1, 
+body.dark-mode h2 {
+    color: #eaeaea;
+}
+
+body.dark-mode .navbar {
+    background-color: #1a1a24;
+    border-bottom: 2px solid #4a278b;
+}
+
+body.dark-mode .flash {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+body.dark-mode form input {
+    background-color: #333;
+    color: #eaeaea;
+    border: 1px solid #555;
+}
+
+body.dark-mode form input:focus {
+    border-color: #6f42c1;
+}
+
+body.dark-mode form button {
+    background-color: #4a278b;
+}
+
+body.dark-mode form button:hover {
+    background-color: #371b66;
+}
+
+body.dark-mode button {
+    background-color: #333;
+    color: #eaeaea;
+}
+
+body.dark-mode button:hover {
+    background-color: #444;
+}
+
+body.dark-mode ul li {
+    color: #eaeaea;
+}
+
+body.dark-mode ul li:nth-child(even) {
+    background-color: #2c2c2c;
+}
+
+body.dark-mode ul li:hover {
+    background-color: #444;
+}
