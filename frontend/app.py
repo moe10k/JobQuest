@@ -211,13 +211,31 @@ def track_jobs():
     # Pass mock data to the template
     return render_template('tracker.html', applications=applications)
 
-@app.route('/friends', methods=['GET'])
+@app.route('/friends', methods=['GET', 'POST'])
 def friends():
-    if not is_logged_in():
+    if not is_logged_in():  # Ensure user is logged in
         flash('You must login first', 'danger')
         return redirect('/login')
 
-    return render_template('friends.html')
+    # Handle friend request submission
+    if request.method == 'POST':
+        email = request.form.get('email')  # Get the friend's email from the form
+        if not validate_email(email):
+            flash('Invalid email address.', 'danger')
+            return redirect('/friends')
+
+        # Send friend request to RabbitMQ
+        user_id = session.get('user', {}).get('user_id')  # Current user's ID
+        message = f"{user_id},{email}"
+        send_message('send_friendrequest_request_queue', message)
+        response = consume_message('send_friendrequest_response_queue')
+
+        if response == 'success':
+            flash('Friend request sent successfully!', 'success')
+        else:
+            flash('Error sending friend request. Please try again.', 'danger')
+
+    return render_template('friends.html') 
 
 @app.route('/api/friends_list', methods=['GET'])
 def api_friends_list():
