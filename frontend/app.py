@@ -211,6 +211,14 @@ def track_jobs():
     # Pass mock data to the template
     return render_template('tracker.html', applications=applications)
 
+@app.route('/friends', methods=['GET'])
+def friends():
+    if not is_logged_in():
+        flash('You must login first', 'danger')
+        return redirect('/login')
+
+    return render_template('friends.html')
+
 @app.route('/api/friends_list', methods=['GET'])
 def api_friends_list():
     if not is_logged_in():
