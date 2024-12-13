@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/friends.css">
     <title>Friends</title>
 </head>
 <body>
@@ -69,31 +68,74 @@
             }
         });
 
-        document.getElementById('pending-requests-toggle').addEventListener('click', () => {
-            const pendingRequests = document.getElementById('pending-requests');
-            if (pendingRequests.style.display === 'none') {
-                fetch('/api/pending_requests')
-                    .then(response => response.json())
-                    .then(data => {
-                        pendingRequests.innerHTML = '';
-                        if (data.requests.length > 0) {
-                            data.requests.forEach(request => {
-                                const li = document.createElement('li');
-                                li.textContent = request.email;
-                                pendingRequests.appendChild(li);
+
+    document.getElementById('pending-requests-toggle').addEventListener('click', () => {
+        const pendingRequests = document.getElementById('pending-requests');
+        if (pendingRequests.style.display === 'none') {
+            fetch('/api/pending_requests')
+                .then(response => response.json())
+                .then(data => {
+                    pendingRequests.innerHTML = '';
+                    if (data.requests.length > 0) {
+                        data.requests.forEach(request => {
+                            const li = document.createElement('li');
+                            
+                            // Display the request email
+                            const emailText = document.createTextNode(request.email);
+                            li.appendChild(emailText);
+
+                            // Accept button
+                            const acceptButton = document.createElement('button');
+                            acceptButton.textContent = 'Accept';
+                            acceptButton.addEventListener('click', () => {
+                                handleFriendRequest(request.id, 'accepted');
                             });
-                        } else {
-                            pendingRequests.innerHTML = '<li>No pending friend requests.</li>';
-                        }
-                        pendingRequests.style.display = 'block';
-                    })
-                    .catch(error => {
-                        console.error('Error fetching pending requests:', error);
-                    });
-            } else {
-                pendingRequests.style.display = 'none';
-            }
-        });
-    </script>
+                            li.appendChild(acceptButton);
+
+                            // Reject button
+                            const rejectButton = document.createElement('button');
+                            rejectButton.textContent = 'Reject';
+                            rejectButton.addEventListener('click', () => {
+                                handleFriendRequest(request.id, 'rejected');
+                            });
+                            li.appendChild(rejectButton);
+
+                            pendingRequests.appendChild(li);
+                        });
+                    } else {
+                        pendingRequests.innerHTML = '<li>No pending friend requests.</li>';
+                    }
+                    pendingRequests.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching pending requests:', error);
+                });
+        } else {
+            pendingRequests.style.display = 'none';
+        }
+    });
+
+    function handleFriendRequest(requestId, action) {
+        fetch('/api/handle_friend_request', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ request_id: requestId, action }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log(`Friend request ${action} successfully.`);
+                    // Refresh the pending list after action
+                    document.getElementById('pending-requests-toggle').click();
+                } else {
+                    console.error('Error handling friend request:', response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
 </body>
 </html>
