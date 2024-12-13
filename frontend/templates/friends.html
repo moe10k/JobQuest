@@ -43,6 +43,31 @@
     </div>
 
     <script>
+        document.getElementById('friends-list-toggle').addEventListener('click', () => {
+        const friendsList = document.getElementById('friends-list');
+        if (friendsList.style.display === 'none') {
+            fetch('/api/friends_list')
+                .then(response => response.json())
+                .then(data => {
+                    friendsList.innerHTML = '';
+                    if (data.friends.length > 0) {
+                        data.friends.forEach(friend => {
+                            const li = document.createElement('li');
+                            li.textContent = friend; // Assuming the response contains a list of friends' names or emails
+                            friendsList.appendChild(li);
+                        });
+                    } else {
+                        friendsList.innerHTML = '<li>No friends found.</li>';
+                    }
+                    friendsList.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching friends list:', error);
+                });
+        } else {
+            friendsList.style.display = 'none';
+        }
+    });
         document.getElementById('pending-requests-toggle').addEventListener('click', () => {
             const pendingRequests = document.getElementById('pending-requests');
             if (pendingRequests.style.display === 'none') {
