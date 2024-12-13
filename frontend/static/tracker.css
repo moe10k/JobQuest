@@ -253,3 +253,57 @@ table.application-table td {
 .hidden {
     display: none;
 }
+
+/* General container styling */
+.container {
+    margin-top: 3rem;
+    padding: 20px;
+    background-color: var(--container-bg); /* Use light/dark mode variable */
+    box-shadow: 0 4px 8px var(--container-shadow); /* Subtle shadow */
+    border-radius: 10px;
+}
+
+/* Heading styling */
+h2.text-center {
+    font-size: 2.5rem;
+    color: var(--text-color); /* Use light/dark mode variable */
+    margin-bottom: 2rem;
+}
+
+/* Row and column styling */
+.row.text-center {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Placeholder box styling */
+.feature-placeholder {
+    background-color: var(--form-bg); /* Light/dark variable for card */
+    border: 1px solid var(--form-border);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px var(--container-shadow); /* Subtle shadow for cards */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Heading for each feature */
+.feature-placeholder h3 {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+/* Text for feature description */
+.feature-placeholder p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 0;
+}
+
+/* Hover effect for placeholders */
+.feature-placeholder:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px var(--container-shadow);
+}
+
