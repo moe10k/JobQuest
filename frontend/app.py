@@ -263,10 +263,12 @@ def handle_friend_request():
         flash('You must login first', 'danger')
         return redirect('/login')
 
+    data = request.get_json()  # Parse JSON data
+    friend_email = data.get('email')  # Corresponding email
+    action = data.get('action') #accept or reject
+
     user_id = session.get('user', {}).get('user_id')  # Current user's ID
     user_email = session.get('user', {}).get('email')  # Current user's email
-    friend_email = request.form.get('email')  # The corresponding email
-    action = request.json.get('action')  # Either 'accept' or 'reject'
 
     # Handle the action
     message = f"{user_id},{user_email},{friend_email},{action}"

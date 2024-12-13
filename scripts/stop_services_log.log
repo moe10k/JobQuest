@@ -123,3 +123,44 @@
 2024-12-13 13:07:15 - Nginx process stopped.
 2024-12-13 13:07:15 - Stopping Nginx service using systemctl.
 2024-12-13 13:07:15 - Nginx service stopped.
+2024-12-13 14:36:35 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:36:35 - Role set to: backup
+2024-12-13 14:36:35 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 14:36:35 - Stopping Nginx process with PID: 11164
+11165
+11447
+2024-12-13 14:36:35 - Nginx process stopped.
+2024-12-13 14:36:35 - Stopping Nginx service using systemctl.
+2024-12-13 14:36:35 - Nginx service stopped.
+2024-12-13 14:43:02 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:43:02 - Role set to: backup
+2024-12-13 14:43:02 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 14:43:02 - Stopping Nginx process with PID: 11594
+11596
+12097
+2024-12-13 14:43:02 - Nginx process stopped.
+2024-12-13 14:43:02 - Stopping Nginx service using systemctl.
+2024-12-13 14:43:02 - Nginx service stopped.
+2024-12-13 14:43:52 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:43:52 - Role set to: backup
+2024-12-13 14:43:52 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 14:43:52 - Stopping Nginx process with PID: 12286
+2024-12-13 14:43:52 - Nginx process stopped.
+2024-12-13 14:43:52 - Stopping Nginx service using systemctl.
+2024-12-13 14:43:52 - Nginx service stopped.
+2024-12-13 14:44:06 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:44:06 - Role set to: backup
+2024-12-13 14:44:06 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 14:44:06 - Stopping Nginx process with PID: 12401
+2024-12-13 14:44:06 - Nginx process stopped.
+2024-12-13 14:44:06 - Stopping Nginx service using systemctl.
+2024-12-13 14:44:06 - Nginx service stopped.
+2024-12-13 14:50:56 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:50:56 - Role set to: backup
+2024-12-13 14:50:56 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 14:50:56 - Stopping Nginx process with PID: 12652
+12653
+12788
+2024-12-13 14:50:56 - Nginx process stopped.
+2024-12-13 14:50:56 - Stopping Nginx service using systemctl.
+2024-12-13 14:50:57 - Nginx service stopped.
