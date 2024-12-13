@@ -211,42 +211,25 @@ def track_jobs():
     # Pass mock data to the template
     return render_template('tracker.html', applications=applications)
 
-@app.route('/friends', methods=['GET', 'POST'])
-def friends():
-    if not is_logged_in():  # Ensure user is logged in
-        flash('You must login first', 'danger')
-        return redirect('/login')
-    
-    user_id = session.get('user', {}).get('user_id')  # Current user's ID
-    user_email = session.get('user', {}).get('email')  # Current user's email
+@app.route('/api/friends_list', methods=['GET'])
+def api_friends_list():
+    if not is_logged_in():
+        return {'error': 'Not logged in'}, 401
 
-    #Retrive friends list and pending friends list
-    send_message('fetch_pending_friendrequest_request_queue', str(user_id))
-    pending_requests = consume_message('fetch_pending_friendrequest_response_queue') or []
-    print(f"Pending friends: {pending_requests}")
-
+    user_email = session.get('user', {}).get('email')
     send_message('fetch_friendslist_request_queue', user_email)
     friends_list = consume_message('fetch_friendslist_response_queue') or []
-    print(f"Friends : {friends_list}")
+    return {'friends': friends_list}
 
-    # Handle friend request submission
-    if request.method == 'POST':
-        email = request.form.get('email')
-        if not validate_email(email):
-            flash('Invalid email address.', 'danger')
-            return redirect('/friends')
+@app.route('/api/pending_requests', methods=['GET'])
+def api_pending_requests():
+    if not is_logged_in():
+        return {'error': 'Not logged in'}, 401
 
-        # Send friend request to RabbitMQ
-        message = f"{user_id},{email}"
-        send_message('send_friendrequest_request_queue', message)
-        response = consume_message('send_friendrequest_response_queue')
-
-        if response == 'success':
-            flash('Friend request sent successfully!', 'success')
-        else:
-            flash('Error sending friend request. Please try again.', 'danger')
-
-    return render_template('friends.html', friends_list=friends_list, pending_requests=pending_requests)
+    user_id = session.get('user', {}).get('user_id')
+    send_message('fetch_pending_friendrequest_request_queue', str(user_id))
+    pending_requests = consume_message('fetch_pending_friendrequest_response_queue') or []
+    return {'requests': [{'email': email} for email in pending_requests]}
 
 @app.route('/handle_friend_request', methods=['POST'])
 def handle_friend_request():
