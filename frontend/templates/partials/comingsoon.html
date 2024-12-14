@@ -6,7 +6,7 @@
     <title>Coming Soon</title>
     <link rel="stylesheet" href="/static/style.css"> <!-- Link to your CSS file -->
     <style>
-        .coming-soon-container {
+        #coming-soon {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -15,19 +15,12 @@
             text-align: center;
         }
 
-        /* This is gonna prevent navbar from being centered */
-        .navbar {
-            position: relative;
-            top: 0;
-            width: 100%;
-        }
-
-        .coming-soon-container h1 {
+        #coming-soon h1 {
             font-size: 3rem;
             margin: 20px 0;
         }
 
-        .coming-soon-container p {
+        #coming-soon p {
             font-size: 1.2rem;
             color: #555;
         }
@@ -35,7 +28,7 @@
 </head>
 <body>
     {% include 'partials/nav.html' %}
-    <div class="coming-soon-container">
+    <div id="coming-soon">
         <h1>Coming Soon</h1>
         <p>We are working hard to launch this page. Stay tuned!</p>
     </div>
