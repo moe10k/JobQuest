@@ -301,6 +301,10 @@ def logout(): #If not logged in - redirect to Login Page
     flash('You have been logged out.', 'success')
     return redirect('/login')
 
+@app.route('/comingsoon')
+def coming_soon():
+    return render_template('partials/comingsoon.html')
+
 @app.context_processor
 def inject_is_logged_in():
    return dict(is_logged_in=is_logged_in())
