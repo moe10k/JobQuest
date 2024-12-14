@@ -32,3 +32,214 @@
 2024-11-14 16:40:27 - Nginx process stopped.
 2024-11-14 16:40:27 - Stopping Nginx service using systemctl.
 2024-11-14 16:40:27 - Nginx service stopped.
+2024-12-13 10:03:04 - VM IP (tailscale): 100.64.1.5
+2024-12-13 10:03:04 - Role set to: primary
+2024-12-13 10:03:04 - Stopping Gunicorn process with PID: 46621
+46637
+46639
+46640
+46705
+2024-12-13 10:03:05 - Gunicorn process stopped.
+2024-12-13 10:03:05 - Stopping Nginx process with PID: 46668
+46732
+2024-12-13 10:03:05 - Nginx process stopped.
+2024-12-13 10:03:06 - Stopping Nginx service using systemctl.
+2024-12-13 10:03:07 - Nginx service stopped.
+2024-12-13 11:12:37 - VM IP (tailscale): 100.64.1.5
+2024-12-13 11:12:37 - Role set to: primary
+2024-12-13 11:12:37 - Stopping Gunicorn process with PID: 46872
+49670
+51209
+51333
+51377
+2024-12-13 11:12:37 - Gunicorn process stopped.
+2024-12-13 11:12:38 - Stopping Nginx process with PID: 46917
+51481
+2024-12-13 11:12:38 - Nginx process stopped.
+2024-12-13 11:12:38 - Stopping Nginx service using systemctl.
+2024-12-13 11:12:39 - Nginx service stopped.
+2024-12-13 11:37:42 - VM IP (tailscale): 100.64.1.5
+2024-12-13 11:37:42 - Role set to: primary
+2024-12-13 11:37:42 - Stopping Gunicorn process with PID: 51551
+51579
+51585
+51588
+51590
+2024-12-13 11:37:42 - Gunicorn process stopped.
+2024-12-13 11:37:42 - Stopping Nginx process with PID: 51594
+51847
+2024-12-13 11:37:42 - Nginx process stopped.
+2024-12-13 11:37:42 - Stopping Nginx service using systemctl.
+2024-12-13 11:37:42 - Nginx service stopped.
+2024-12-13 12:12:16 - VM IP (tailscale): 100.64.1.5
+2024-12-13 12:12:16 - Role set to: primary
+2024-12-13 12:12:16 - Stopping Gunicorn process with PID: 51990
+52020
+52027
+52029
+52335
+2024-12-13 12:12:16 - Gunicorn process stopped.
+2024-12-13 12:12:16 - Stopping Nginx process with PID: 52032
+52388
+2024-12-13 12:12:16 - Nginx process stopped.
+2024-12-13 12:12:16 - Stopping Nginx service using systemctl.
+2024-12-13 12:12:17 - Nginx service stopped.
+2024-12-13 12:19:12 - VM IP (tailscale): 100.64.1.5
+2024-12-13 12:19:13 - Role set to: primary
+2024-12-13 12:19:13 - Stopping Gunicorn process with PID: 52464
+52492
+52495
+52500
+52503
+2024-12-13 12:19:13 - Gunicorn process stopped.
+2024-12-13 12:19:13 - Stopping Nginx process with PID: 52506
+52607
+2024-12-13 12:19:13 - Nginx process stopped.
+2024-12-13 12:19:13 - Stopping Nginx service using systemctl.
+2024-12-13 12:19:13 - Nginx service stopped.
+2024-12-13 13:03:09 - VM IP (tailscale): 100.64.1.5
+2024-12-13 13:03:09 - Role set to: primary
+2024-12-13 13:03:09 - Stopping Gunicorn process with PID: 52684
+52711
+52718
+52722
+52728
+2024-12-13 13:03:09 - Gunicorn process stopped.
+2024-12-13 13:03:09 - Stopping Nginx process with PID: 52725
+53203
+2024-12-13 13:03:09 - Nginx process stopped.
+2024-12-13 13:03:10 - Stopping Nginx service using systemctl.
+2024-12-13 13:03:10 - Nginx service stopped.
+2024-12-13 13:07:14 - VM IP (tailscale): 100.64.1.5
+2024-12-13 13:07:14 - Role set to: primary
+2024-12-13 13:07:14 - Stopping Gunicorn process with PID: 53274
+53307
+53312
+53316
+53317
+2024-12-13 13:07:15 - Gunicorn process stopped.
+2024-12-13 13:07:15 - Stopping Nginx process with PID: 53314
+53388
+2024-12-13 13:07:15 - Nginx process stopped.
+2024-12-13 13:07:15 - Stopping Nginx service using systemctl.
+2024-12-13 13:07:15 - Nginx service stopped.
+2024-12-13 14:36:35 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:36:35 - Role set to: backup
+2024-12-13 14:36:35 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 14:36:35 - Stopping Nginx process with PID: 11164
+11165
+11447
+2024-12-13 14:36:35 - Nginx process stopped.
+2024-12-13 14:36:35 - Stopping Nginx service using systemctl.
+2024-12-13 14:36:35 - Nginx service stopped.
+2024-12-13 14:43:02 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:43:02 - Role set to: backup
+2024-12-13 14:43:02 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 14:43:02 - Stopping Nginx process with PID: 11594
+11596
+12097
+2024-12-13 14:43:02 - Nginx process stopped.
+2024-12-13 14:43:02 - Stopping Nginx service using systemctl.
+2024-12-13 14:43:02 - Nginx service stopped.
+2024-12-13 14:43:52 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:43:52 - Role set to: backup
+2024-12-13 14:43:52 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 14:43:52 - Stopping Nginx process with PID: 12286
+2024-12-13 14:43:52 - Nginx process stopped.
+2024-12-13 14:43:52 - Stopping Nginx service using systemctl.
+2024-12-13 14:43:52 - Nginx service stopped.
+2024-12-13 14:44:06 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:44:06 - Role set to: backup
+2024-12-13 14:44:06 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 14:44:06 - Stopping Nginx process with PID: 12401
+2024-12-13 14:44:06 - Nginx process stopped.
+2024-12-13 14:44:06 - Stopping Nginx service using systemctl.
+2024-12-13 14:44:06 - Nginx service stopped.
+2024-12-13 14:50:56 - VM IP (tailscale): 100.64.1.4
+2024-12-13 14:50:56 - Role set to: backup
+2024-12-13 14:50:56 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 14:50:56 - Stopping Nginx process with PID: 12652
+12653
+12788
+2024-12-13 14:50:56 - Nginx process stopped.
+2024-12-13 14:50:56 - Stopping Nginx service using systemctl.
+2024-12-13 14:50:57 - Nginx service stopped.
+2024-12-13 16:38:56 - VM IP (tailscale): 100.64.1.4
+2024-12-13 16:38:56 - Role set to: backup
+2024-12-13 16:38:56 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 16:38:56 - Stopping Nginx process with PID: 12976
+12977
+15432
+2024-12-13 16:38:56 - Nginx process stopped.
+2024-12-13 16:38:56 - Stopping Nginx service using systemctl.
+2024-12-13 16:38:56 - Nginx service stopped.
+2024-12-13 16:44:15 - VM IP (tailscale): 100.64.1.4
+2024-12-13 16:44:15 - Role set to: backup
+2024-12-13 16:44:15 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 16:44:15 - Stopping Nginx process with PID: 15593
+15594
+15732
+2024-12-13 16:44:15 - Nginx process stopped.
+2024-12-13 16:44:15 - Stopping Nginx service using systemctl.
+2024-12-13 16:44:15 - Nginx service stopped.
+2024-12-13 16:48:23 - VM IP (tailscale): 100.64.1.4
+2024-12-13 16:48:23 - Role set to: backup
+2024-12-13 16:48:23 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 16:48:23 - Stopping Nginx process with PID: 15844
+15845
+15954
+2024-12-13 16:48:23 - Nginx process stopped.
+2024-12-13 16:48:23 - Stopping Nginx service using systemctl.
+2024-12-13 16:48:23 - Nginx service stopped.
+2024-12-13 17:03:23 - VM IP (tailscale): 100.64.1.4
+2024-12-13 17:03:23 - Role set to: backup
+2024-12-13 17:03:23 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 17:03:23 - Stopping Nginx process with PID: 16064
+16066
+16475
+2024-12-13 17:03:23 - Nginx process stopped.
+2024-12-13 17:03:23 - Stopping Nginx service using systemctl.
+2024-12-13 17:03:23 - Nginx service stopped.
+2024-12-13 19:00:30 - VM IP (tailscale): 100.64.1.4
+2024-12-13 19:00:30 - Role set to: backup
+2024-12-13 19:00:30 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 19:00:30 - Stopping Nginx process with PID: 19015
+2024-12-13 19:00:30 - Nginx process stopped.
+2024-12-13 19:00:30 - Stopping Nginx service using systemctl.
+2024-12-13 19:00:30 - Nginx service stopped.
+2024-12-13 19:12:10 - VM IP (tailscale): 100.64.1.4
+2024-12-13 19:12:10 - Role set to: backup
+2024-12-13 19:12:10 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 19:12:10 - Stopping Nginx process with PID: 19124
+19125
+19422
+2024-12-13 19:12:10 - Nginx process stopped.
+2024-12-13 19:12:10 - Stopping Nginx service using systemctl.
+2024-12-13 19:12:10 - Nginx service stopped.
+2024-12-13 19:29:02 - VM IP (tailscale): 100.64.1.4
+2024-12-13 19:29:02 - Role set to: backup
+2024-12-13 19:29:02 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 19:29:02 - Stopping Nginx process with PID: 19660
+19663
+20161
+2024-12-13 19:29:02 - Nginx process stopped.
+2024-12-13 19:29:02 - Stopping Nginx service using systemctl.
+2024-12-13 19:29:02 - Nginx service stopped.
+2024-12-13 20:12:51 - VM IP (tailscale): 100.64.1.4
+2024-12-13 20:12:51 - Role set to: backup
+2024-12-13 20:12:51 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 20:12:51 - Stopping Nginx process with PID: 20275
+20276
+21216
+2024-12-13 20:12:51 - Nginx process stopped.
+2024-12-13 20:12:51 - Stopping Nginx service using systemctl.
+2024-12-13 20:12:51 - Nginx service stopped.
+2024-12-13 20:46:51 - VM IP (tailscale): 100.64.1.4
+2024-12-13 20:46:51 - Role set to: backup
+2024-12-13 20:46:51 - No Gunicorn process found on 100.64.1.5:7012
+2024-12-13 20:46:51 - Stopping Nginx process with PID: 21726
+21727
+22037
+2024-12-13 20:46:51 - Nginx process stopped.
+2024-12-13 20:46:51 - Stopping Nginx service using systemctl.
+2024-12-13 20:46:51 - Nginx service stopped.

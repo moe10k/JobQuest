@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/friends.css">
     <title>Friends</title>
 </head>
 <body>
@@ -19,48 +20,138 @@
         </form>
     </div>
 
-    <!-- Pending Friend Requests -->
+    <!-- Friends List Dropdown -->
     <div>
-        <h2>Pending Friend Requests</h2>
-        <ul>
-            {% if pending_requests %}
-                {% for email in pending_requests %}
-                    <li>
-                        {{ email }}
-                        <div class="action-buttons">
-                            <form action="/handle_friend_request" method="POST" style="display: inline;">
-                                <input type="hidden" name="request_id" value="{{ loop.index }}"> <!-- Optional if no unique ID -->
-                                <input type="hidden" name="email" value="{{ email }}"> <!-- Include the email -->
-                                <input type="hidden" name="action" value="accepted">
-                                <button type="submit">Accept</button>
-                            </form>
-                            <form action="/handle_friend_request" method="POST" style="display: inline;">
-                                <input type="hidden" name="request_id" value="{{ loop.index }}"> <!-- Optional if no unique ID -->
-                                <input type="hidden" name="email" value="{{ email }}"> <!-- Include the email -->
-                                <input type="hidden" name="action" value="rejected">
-                                <button type="submit" class="reject-button">Reject</button>
-                            </form>
-                        </div>
-                    </li>
-                {% endfor %}
-            {% else %}
-                <li>No pending friend requests.</li>
-            {% endif %}
-        </ul>
+        <h2>Friends</h2>
+        <div>
+            <button id="friends-list-toggle">Your Friends</button>
+            <ul id="friends-list" style="display: none;">
+                <!-- Friends list will be dynamically loaded here -->
+            </ul>
+        </div>
     </div>
 
-    <!-- Friends List -->
+    <!-- Pending Friend Requests Dropdown -->
     <div>
-        <h2>Your Friends</h2>
-        <ul>
-            {% if friends_list %}
-                {% for friend in friends_list %}
-                    <li>{{ friend }}</li>
-                {% endfor %}
-            {% else %}
-                <li>You have no friends yet.</li>
-            {% endif %}
-        </ul>
+        <h2>Pending Friend Requests</h2>
+        <div>
+            <button id="pending-requests-toggle">Pending Requests</button>
+            <ul id="pending-requests" style="display: none;">
+                <!-- Pending friend requests will be dynamically loaded here -->
+            </ul>
+        </div>
     </div>
+
+    <script>
+	function disableButton(buttonId, timeout = 30000) {
+            const button = document.getElementById(buttonId);
+    	    button.disabled = true; // Disable the button
+       	    setTimeout(() => {
+       	        button.disabled = false; // Re-enable the button after timeout
+       	    }, timeout);
+	}	
+
+        document.getElementById('friends-list-toggle').addEventListener('click', () => {
+	disableButton('friends-list-toggle'); // Disable the button for 30 seconds
+        const friendsList = document.getElementById('friends-list');
+        if (friendsList.style.display === 'none') {
+            fetch('/api/friends_list')
+                .then(response => response.json())
+                .then(data => {
+                    friendsList.innerHTML = '';
+                    if (data.friends.length > 0) {
+                        data.friends.forEach(friend => {
+                            const li = document.createElement('li');
+                            li.textContent = friend; // Assuming the response contains a list of friends' names or emails
+                            friendsList.appendChild(li);
+                        });
+                    } else {
+                        friendsList.innerHTML = '<li>No friends found.</li>';
+                    }
+                    friendsList.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching friends list:', error);
+                });
+        } else {
+            friendsList.style.display = 'none';
+        }
+    });
+
+        document.getElementById('pending-requests-toggle').addEventListener('click', () => {
+            disableButton('pending-requests-toggle'); // Disable the button for 30 seconds
+            const pendingRequests = document.getElementById('pending-requests');
+            if (pendingRequests.style.display === 'none') {
+                fetch('/api/pending_requests')
+                    .then(response => response.json())
+                    .then(data => {
+                        pendingRequests.innerHTML = '';
+                        if (data.requests.length > 0) {
+                            data.requests.forEach(request => {
+                                const li = document.createElement('li');
+                                
+                                // Display the request email
+                                const emailText = document.createTextNode(request.email);
+                                li.appendChild(emailText);
+    
+                                // Accept button
+                                const acceptButton = document.createElement('button');
+                                acceptButton.textContent = 'Accept';
+                                acceptButton.addEventListener('click', () => {
+                                    console.log('Accept button clicked');
+                                    handleFriendRequest(request.email, 'accepted');
+                                });
+                                li.appendChild(acceptButton);
+    
+                                // Reject button
+                                const rejectButton = document.createElement('button');
+                                rejectButton.textContent = 'Reject';
+                                rejectButton.addEventListener('click', () => {
+                                    console.log('Reject button clicked');
+                                    handleFriendRequest(request.email, 'rejected');
+                                });
+                                li.appendChild(rejectButton);
+    
+                                pendingRequests.appendChild(li);
+                            });
+                        } else {
+                            pendingRequests.innerHTML = '<li>No pending friend requests.</li>';
+                        }
+                        pendingRequests.style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Error fetching pending requests:', error);
+                    });
+            } else {
+                pendingRequests.style.display = 'none';
+            }
+        });
+
+        document.querySelector('form[action="/friends"]').addEventListener('submit', (event) => {
+            disableButton(event.target.querySelector('button').id = 'send-request'); // Disable the button for 30 seconds
+        });
+    
+        function handleFriendRequest(email, action) {
+            fetch('/handle_friend_request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email, action }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log(`Friend request ${action} successfully.`);
+                        // Refresh the pending list after action
+                        document.getElementById('pending-requests-toggle').click();
+                    } else {
+                        console.error('Error handling friend request:', response.statusText);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
 </body>
 </html>

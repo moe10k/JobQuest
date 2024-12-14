@@ -216,27 +216,16 @@ def friends():
     if not is_logged_in():  # Ensure user is logged in
         flash('You must login first', 'danger')
         return redirect('/login')
-    
-    user_id = session.get('user', {}).get('user_id')  # Current user's ID
-    user_email = session.get('user', {}).get('email')  # Current user's email
-
-    #Retrive friends list and pending friends list
-    send_message('fetch_pending_friendrequest_request_queue', str(user_id))
-    pending_requests = consume_message('fetch_pending_friendrequest_response_queue') or []
-    print(f"Pending friends: {pending_requests}")
-
-    send_message('fetch_friendslist_request_queue', user_email)
-    friends_list = consume_message('fetch_friendslist_response_queue') or []
-    print(f"Friends : {friends_list}")
 
     # Handle friend request submission
     if request.method == 'POST':
-        email = request.form.get('email')
+        email = request.form.get('email')  # Get the friend's email from the form
         if not validate_email(email):
             flash('Invalid email address.', 'danger')
             return redirect('/friends')
 
         # Send friend request to RabbitMQ
+        user_id = session.get('user', {}).get('user_id')  # Current user's ID
         message = f"{user_id},{email}"
         send_message('send_friendrequest_request_queue', message)
         response = consume_message('send_friendrequest_response_queue')
@@ -246,18 +235,40 @@ def friends():
         else:
             flash('Error sending friend request. Please try again.', 'danger')
 
-    return render_template('friends.html', friends_list=friends_list, pending_requests=pending_requests)
+    return render_template('friends.html') 
+
+@app.route('/api/friends_list', methods=['GET'])
+def api_friends_list():
+    if not is_logged_in():
+        return {'error': 'Not logged in'}, 401
+
+    user_email = session.get('user', {}).get('email')
+    send_message('fetch_friendslist_request_queue', user_email)
+    friends_list = consume_message('fetch_friendslist_response_queue') or []
+    return {'friends': friends_list}
+
+@app.route('/api/pending_requests', methods=['GET'])
+def api_pending_requests():
+    if not is_logged_in():
+        return {'error': 'Not logged in'}, 401
+
+    user_id = session.get('user', {}).get('user_id')
+    send_message('fetch_pending_friendrequest_request_queue', str(user_id))
+    pending_requests = consume_message('fetch_pending_friendrequest_response_queue') or []
+    return {'requests': [{'email': email} for email in pending_requests]}
 
 @app.route('/handle_friend_request', methods=['POST'])
 def handle_friend_request():
     if not is_logged_in():  # Ensure user is logged in
         flash('You must login first', 'danger')
         return redirect('/login')
-    
+
+    data = request.get_json()  # Parse JSON data
+    friend_email = data.get('email')  # Corresponding email
+    action = data.get('action') #accept or reject
+
     user_id = session.get('user', {}).get('user_id')  # Current user's ID
     user_email = session.get('user', {}).get('email')  # Current user's email
-    friend_email = request.form.get('email')  # The corresponding email
-    action = request.form.get('action')  # Either 'accept' or 'reject'
 
     # Handle the action
     message = f"{user_id},{user_email},{friend_email},{action}"
@@ -280,44 +291,6 @@ def profile():
     return render_template('profile.html')
 
 
-# @app.route('/tracker', methods=['GET', 'POST'])
-# def track_jobs():
-#     # if request.method == 'POST':
-#     #     # Extract form data
-#     #     job_name = request.form.get('job_name')
-#     #     date_applied = request.form.get('date_applied')
-#     #     response_received = request.form.get('response_received')
-#     #     response_method = request.form.get('response_method', '').strip()
-#     #     interview_scheduled = request.form.get('interview_scheduled')
-#     #     number_of_interviews = request.form.get('number_of_interviews', '').strip()
-#     #     offer_received = request.form.get('offer_received')
-#     #     date_received = request.form.get('date_received', '').strip()
-
-#     #     # Validate required fields
-#     #     if not job_name or not date_applied or not response_received or not interview_scheduled or not offer_received:
-#     #         flash("Please fill out all required fields.", "error")
-#     #         return redirect('/tracker')
-
-#     #     # Add application to the in-memory list
-#     #     applications.append({
-#     #         "job_name": job_name,
-#     #         "date_applied": date_applied,
-#     #         "response_received": response_received,
-#     #         "response_method": response_method if response_received == 'Yes' else '-',
-#     #         "interview_scheduled": interview_scheduled,
-#     #         "number_of_interviews": int(number_of_interviews) if number_of_interviews.isdigit() else '-',
-#     #         "offer_received": offer_received,
-#     #         "date_received": date_received if offer_received == 'Yes' else '-'
-#     #     })
-
-#     #     flash("Job application added successfully!", "success")
-#     #     return redirect('/tracker')
-
-#     # # Render the tracker page
-#     # return render_template('tracker.html', user={"username": "JohnDoe"}, applications=applications)
-#     return render_template('tracker.html')
-
-
 @app.route('/logout')
 def logout(): #If not logged in - redirect to Login Page
     if not is_logged_in():
@@ -327,6 +300,10 @@ def logout(): #If not logged in - redirect to Login Page
     session.clear()
     flash('You have been logged out.', 'success')
     return redirect('/login')
+
+@app.route('/comingsoon')
+def coming_soon():
+    return render_template('partials/comingsoon.html')
 
 @app.context_processor
 def inject_is_logged_in():

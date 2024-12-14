@@ -15,8 +15,13 @@
     <!-- Flash Message Section -->
     {% include 'partials/flash.html' %}
 
+    <!-- popup section-->
+    {% if show_popup %}
+        {% include 'partials/popup.html' %}
+    {% endif %}
+
     <div class="container">
-        <h1>Welcome to your dashboard!</h1>
+        <h1>Welcome to your dashboard, {{ user.username }}!</h1>
     
         <!-- Profile Button -->
         <div class="button-section">

@@ -41,7 +41,7 @@ def send_message(queue_name, message):  # All queue_names and messages are decla
     except Exception as e:
         print(f"Error sending message: {e}")
 
-def consume_message(queue_name, delay=50):  # All queue_names and messages are declared inside app.py specific functions
+def consume_message(queue_name, delay=30):  # All queue_names and messages are declared inside app.py specific functions
     try:
         connection = get_connection()
         channel = connection.channel()
