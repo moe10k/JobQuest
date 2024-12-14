@@ -4,37 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coming Soon</title>
+    <link rel="stylesheet" href="/static/style.css"> <!-- Link to your CSS file -->
     <style>
-        body {
-            margin: 0;
-            padding: 0;
+        .coming-soon-container {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
-            color: #333;
-        }
-        .coming-soon {
             text-align: center;
         }
-        .coming-soon h1 {
-            font-size: 3rem;
-            margin: 0;
+
+        /* This is gonna prevent navbar from being centered */
+        .navbar {
+            position: relative;
+            top: 0;
+            width: 100%;
         }
-        .coming-soon p {
+
+        .coming-soon-container h1 {
+            font-size: 3rem;
+            margin: 20px 0;
+        }
+
+        .coming-soon-container p {
             font-size: 1.2rem;
             color: #555;
         }
     </style>
 </head>
 <body>
-
-    <!-- Navigation Bar -->
     {% include 'partials/nav.html' %}
-    
-    <div class="coming-soon">
+    <div class="coming-soon-container">
         <h1>Coming Soon</h1>
         <p>We are working hard to launch this page. Stay tuned!</p>
     </div>
